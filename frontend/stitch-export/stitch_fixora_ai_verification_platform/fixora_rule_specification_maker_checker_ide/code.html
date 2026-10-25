@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIXORA — Rule Specification &amp; Maker-Checker IDE</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Verbatim Tailwind Config -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-bright": "#fbf8ff",
+            "primary-fixed": "#e1dfff",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#271900",
+            "on-surface-variant": "#464556",
+            "surface-container-low": "#f3f2ff",
+            "on-error-container": "#93000a",
+            "on-tertiary-fixed-variant": "#5e4200",
+            "on-secondary": "#ffffff",
+            "primary": "#403de6",
+            "on-tertiary-container": "#fff8f3",
+            "primary-fixed-dim": "#c1c1ff",
+            "primary-container": "#5b5bff",
+            "error": "#ba1a1a",
+            "surface": "#fbf8ff",
+            "secondary-fixed-dim": "#2addcd",
+            "on-background": "#121a37",
+            "inverse-on-surface": "#efefff",
+            "inverse-surface": "#282f4d",
+            "outline-variant": "#c6c4d8",
+            "surface-variant": "#dde1ff",
+            "secondary": "#006a62",
+            "on-primary": "#ffffff",
+            "surface-container-highest": "#dde1ff",
+            "on-secondary-container": "#007168",
+            "error-container": "#ffdad6",
+            "outline": "#767587",
+            "on-surface": "#121a37",
+            "surface-dim": "#d2d8ff",
+            "on-primary-fixed": "#08006b",
+            "on-secondary-fixed": "#00201d",
+            "secondary-container": "#57fae9",
+            "on-tertiary": "#ffffff",
+            "surface-tint": "#4543ea",
+            "on-primary-fixed-variant": "#2920d3",
+            "tertiary-container": "#966b00",
+            "surface-container": "#ecedff",
+            "tertiary-fixed-dim": "#ffba20",
+            "secondary-fixed": "#57fae9",
+            "tertiary-fixed": "#ffdea8",
+            "on-error": "#ffffff",
+            "tertiary": "#775400",
+            "inverse-primary": "#c1c1ff",
+            "on-primary-container": "#fbf8ff",
+            "background": "#fbf8ff",
+            "on-secondary-fixed-variant": "#005049",
+            "surface-container-high": "#e4e7ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.5rem",
+            "space-sm": "0.5rem",
+            "gutter-sm": "1rem",
+            "margin-lg": "3rem",
+            "space-xs": "0.25rem",
+            "margin-sm": "1rem",
+            "gutter-lg": "2rem",
+            "space-xl": "2rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "label-md": ["JetBrains Mono"],
+            "body-lg": ["Inter"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-lg": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "fontWeight": "700" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-xl": ["40px", { "lineHeight": "48px", "fontWeight": "700" }],
+            "label-md": ["11px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "headline-xl-mobile": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #c6c4d8;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #767587;
+    }
+    .code-editor {
+      font-family: 'JetBrains Mono', monospace;
+      counter-reset: line-numbering;
+    }
+    .line-row::before {
+      counter-increment: line-numbering;
+      content: counter(line-numbering);
+      display: inline-block;
+      width: 2rem;
+      text-align: right;
+      margin-right: 1.25rem;
+      color: #767587;
+      opacity: 0.6;
+      font-size: 11px;
+      user-select: none;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased font-body-md text-body-md overflow-x-hidden selection:bg-primary-fixed-dim selection:text-on-primary-fixed">
+<!-- Top Navigation Bar (Shared Component: TopAppBar with exact styling tokens) -->
+<header class="bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md text-primary dark:text-inverse-primary docked full-width top-0 sticky z-40 border-b border-outline-variant/30 dark:border-outline-variant/10 shadow-sm">
+<div class="flex justify-between items-center w-full px-space-lg h-16 max-w-full">
+<!-- Brand & Left Utility -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs cursor-pointer">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="verified_user">verified_user</span>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">FIXORA</span>
+</div>
+<div class="h-5 w-px bg-outline-variant/40 mx-space-xs"></div>
+<!-- System Status & Badge -->
+<div class="flex items-center gap-space-xs text-body-sm font-body-sm bg-surface-container-low px-2.5 py-1 rounded-full border border-outline-variant/50">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Statutory Engine v2.4 Online</span>
+</div>
+</div>
+<!-- Center System Context / Global Search -->
+<div class="hidden lg:flex items-center gap-space-sm w-96 px-3 py-1.5 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/40 rounded-xl shadow-xs">
+<span class="material-symbols-outlined text-outline text-lg" data-icon="search">search</span>
+<input class="bg-transparent text-body-sm font-body-sm text-on-surface focus:outline-none w-full placeholder:text-outline/70 border-none p-0 focus:ring-0" placeholder="Global search rules, circulars, clauses (Press ⌘K)" type="text"/>
+<span class="text-label-sm font-label-sm text-outline px-1.5 py-0.5 rounded bg-surface-container border border-outline-variant/30">⌘K</span>
+</div>
+<!-- Right Utility Decks & Actions -->
+<div class="flex items-center gap-space-sm">
+<!-- Theme Switcher Mock -->
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors duration-150 flex items-center justify-center" id="themeToggle" title="Toggle Visual Mode">
+<span class="material-symbols-outlined text-lg" data-icon="light_mode">light_mode</span>
+</button>
+<!-- Notification Feed -->
+<button class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors duration-150 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<div class="h-5 w-px bg-outline-variant/40"></div>
+<!-- Ask FIXORA Intelligent Assistant Button (Exact Shared Token Text) -->
+<button class="flex items-center gap-space-xs px-3.5 py-1.5 rounded-xl bg-surface-container text-primary font-headline-sm text-headline-sm hover:bg-surface-container-high transition-colors duration-150 border border-primary/20">
+<span class="material-symbols-outlined text-primary text-base" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-label-lg font-label-lg font-semibold">Ask FIXORA</span>
+</button>
+<!-- Officer Session Anchor -->
+<div class="flex items-center gap-space-sm pl-2">
+<div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-label-md border border-primary/20">
+            VS
+          </div>
+<div class="hidden xl:flex flex-col text-left leading-tight">
+<span class="text-headline-sm font-headline-sm text-xs font-semibold text-on-surface">Dr. V. Sharma</span>
+<span class="text-label-sm font-label-sm text-outline">AICTE SCR-84920</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Statutory AI Advisory Scrim Banner -->
+<div class="w-full bg-surface-container-lowest border-b border-outline-variant/30 px-space-lg py-2 flex items-center justify-between text-body-sm">
+<div class="flex items-center gap-space-sm text-on-surface-variant">
+<div class="flex items-center justify-center w-5 h-5 rounded-md bg-primary-container text-on-primary-container">
+<span class="material-symbols-outlined text-sm" data-icon="gavel">gavel</span>
+</div>
+<span>
+<strong class="text-on-surface font-semibold font-headline-sm">[AI Assistive Finding: Confidence Score 98.4%]</strong>
+        All rule logic executes against verified statutory gazettes. Algorithmic outputs denote potential anomalies and mandate maker-checker endorsement.
+      </span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container text-primary font-medium border border-outline-variant/30">
+        Source: Gazette of India S.O. 124(E)
+      </span>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-base" data-icon="close">close</span></button>
+</div>
+</div>
+<!-- Primary Workspace: Top Breadcrumbs & Rule Meta Header Bar -->
+<section class="bg-surface-container-lowest border-b border-outline-variant/40 px-space-lg py-3 shadow-xs">
+<!-- Breadcrumb Hierarchy -->
+<nav class="flex items-center gap-1.5 text-label-md font-label-md text-outline mb-1.5">
+<span class="hover:text-primary cursor-pointer">Scrutiny Scopes</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="hover:text-primary cursor-pointer">Registry Admin</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="hover:text-primary cursor-pointer">Statutory Rule Packs</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="hover:text-primary cursor-pointer text-on-surface-variant">PACK-CADRE-2025</span>
+<span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-semibold">RULE-CAD-2025-08</span>
+</nav>
+<!-- Active Rule Headline + Action Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight">
+            RULE-CAD-2025-08: Faculty Cadre Ratio &amp; Cadre Distribution Disparity
+          </h1>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-primary/10 text-primary border border-primary/20 font-semibold">
+            v2.4 Draft
+          </span>
+</div>
+<!-- Metadata Badges -->
+<div class="flex items-center gap-space-md mt-2 flex-wrap text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="menu_book">menu_book</span>
+            Handbook Clause: <strong class="text-on-surface font-semibold">APH 2025–26 Clause 7.1</strong>
+</span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="tune">tune</span>
+            Type: <strong class="text-on-surface font-semibold">Ratio &amp; Headcount</strong>
+</span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span>
+            Severity: <strong class="text-error font-semibold">High / Discrepancy</strong>
+</span>
+<span class="text-outline-variant">•</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 border border-amber-500/25">
+<span class="material-symbols-outlined text-xs" data-icon="hourglass_top">hourglass_top</span>
+            Status: In Review (Pending Checker Approval)
+          </span>
+</div>
+</div>
+<!-- Action Toolbar -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-body-md font-body-md bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant/40 transition-colors">
+<span class="material-symbols-outlined text-base text-primary" data-icon="check_circle">check_circle</span>
+<span>Validate YAML</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-body-md font-body-md bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant/40 transition-colors">
+<span class="material-symbols-outlined text-base text-secondary" data-icon="play_arrow">play_arrow</span>
+<span>Run Test Harness <span class="text-label-sm font-label-sm opacity-60 ml-0.5 font-normal">(⌘Enter)</span></span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-body-md font-body-md bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant/40 transition-colors">
+<span class="material-symbols-outlined text-base" data-icon="history">history</span>
+<span>Revert to v2.3</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-body-md font-body-md text-white font-medium shadow-md transition-all hover:brightness-105 active:scale-95" style="background: linear-gradient(135deg, #5B5BFF 0%, #A855F7 100%);">
+<span class="material-symbols-outlined text-base" data-icon="save">save</span>
+<span>Save Revision</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Three-Pane Power IDE Layout -->
+<main class="w-full flex flex-col xl:flex-row h-[calc(100vh-142px)] overflow-hidden bg-surface">
+<!-- LEFT PANE (300px Fixed): Rule Directory & Search -->
+<aside class="w-full xl:w-[300px] shrink-0 border-r border-outline-variant/40 bg-surface-container-lowest flex flex-col h-full overflow-hidden">
+<!-- Search & Filter Controls -->
+<div class="p-space-md border-b border-outline-variant/30 space-y-2.5">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-outline text-lg" data-icon="filter_list">filter_list</span>
+<input class="w-full pl-8 pr-3 py-1.5 rounded-xl text-body-sm font-body-sm bg-surface-container-low border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary/20 placeholder:text-outline text-on-surface" placeholder="Search rule by ID, title..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<select class="w-full text-label-sm font-label-sm py-1 px-2.5 rounded-lg bg-surface border border-outline-variant/40 text-on-surface-variant focus:border-primary">
+<option>All Rule Types</option>
+<option selected="">Cadre Ratio (4)</option>
+<option>Built Space (3)</option>
+<option>Document Validity (5)</option>
+<option>Land Acreage (2)</option>
+</select>
+</div>
+<!-- Rule Pack Context Card -->
+<div class="p-2.5 rounded-xl bg-surface-container border border-outline-variant/40 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="folder_zip">folder_zip</span>
+<div>
+<p class="text-label-md font-label-md font-semibold text-on-surface">PACK-CADRE-2025</p>
+<p class="text-label-sm font-label-sm text-outline">v2.4 Production • 14 rules</p>
+</div>
+</div>
+<span class="text-label-sm font-label-sm px-1.5 py-0.5 rounded bg-surface-container-lowest text-primary font-semibold border border-outline-variant/30">Active</span>
+</div>
+</div>
+<!-- Rule Directory List -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-space-sm space-y-1.5">
+<!-- Rule Item 1: Active Selected -->
+<div class="p-2.5 rounded-xl bg-primary-fixed/30 border border-primary/30 relative cursor-pointer shadow-xs transition-all">
+<div class="flex items-start justify-between gap-1">
+<span class="text-label-sm font-label-sm font-bold text-primary">RULE-CAD-2025-08</span>
+<span class="text-label-sm font-label-sm px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-800 border border-amber-500/20">In Review</span>
+</div>
+<p class="text-body-sm font-body-sm font-semibold text-on-surface mt-1 line-clamp-1">Faculty Cadre Ratio Disparity</p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-outline">
+<span class="flex items-center gap-0.5 text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Cadre</span>
+<span>•</span>
+<span class="text-rose-600 font-medium">Severity: High</span>
+</div>
+</div>
+<!-- Rule Item 2 -->
+<div class="p-2.5 rounded-xl hover:bg-surface-container-low border border-transparent hover:border-outline-variant/40 cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-1">
+<span class="text-label-sm font-label-sm font-medium text-outline">RULE-CAD-2025-01</span>
+<span class="text-label-sm font-label-sm px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-800 border border-emerald-500/20">Approved</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-1 line-clamp-1">Principal / Director Qualification Norms</p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-outline">
+<span>Eligibility</span>
+<span>•</span>
+<span class="text-rose-600">Severity: High</span>
+</div>
+</div>
+<!-- Rule Item 3 -->
+<div class="p-2.5 rounded-xl hover:bg-surface-container-low border border-transparent hover:border-outline-variant/40 cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-1">
+<span class="text-label-sm font-label-sm font-medium text-outline">RULE-CAD-2025-04</span>
+<span class="text-label-sm font-label-sm px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-800 border border-emerald-500/20">Approved</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-1 line-clamp-1">Adjunct &amp; Industry Expert Headcount Cap</p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-outline">
+<span>Headcount</span>
+<span>•</span>
+<span class="text-amber-600">Severity: Medium</span>
+</div>
+</div>
+<!-- Rule Item 4 -->
+<div class="p-2.5 rounded-xl hover:bg-surface-container-low border border-transparent hover:border-outline-variant/40 cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-1">
+<span class="text-label-sm font-label-sm font-medium text-outline">RULE-CAD-2025-11</span>
+<span class="text-label-sm font-label-sm px-1.5 py-0.2 rounded-full bg-surface-container-highest text-on-surface-variant border border-outline-variant/30">Draft</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-1 line-clamp-1">Mandatory AICTE Faculty Cadre Pay Scale Endorsement</p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-outline">
+<span>Affidavit</span>
+<span>•</span>
+<span class="text-blue-600">Severity: Low</span>
+</div>
+</div>
+<!-- Rule Item 5 -->
+<div class="p-2.5 rounded-xl hover:bg-surface-container-low border border-transparent hover:border-outline-variant/40 cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-1">
+<span class="text-label-sm font-label-sm font-medium text-outline">RULE-CAD-2025-15</span>
+<span class="text-label-sm font-label-sm px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-800 border border-emerald-500/20">Approved</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-1 line-clamp-1">Student-to-Faculty Ratio Baseline (1:15 &amp; 1:20)</p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-outline">
+<span>Ratio</span>
+<span>•</span>
+<span class="text-rose-600">Severity: High</span>
+</div>
+</div>
+</div>
+<!-- Left Pane Footnote -->
+<div class="p-space-sm border-t border-outline-variant/30 bg-surface-container-low text-label-sm font-label-sm text-outline flex items-center justify-between">
+<span>Registry Sync: Active</span>
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="cloud_done">cloud_done</span>
+</div>
+</aside>
+<!-- CENTER PANE (Dual-Section): YAML Logic Editor & Live Test Panel -->
+<section class="flex-1 flex flex-col h-full overflow-hidden border-r border-outline-variant/40">
+<!-- Top Half: YAML Logic Code Editor (60% Height) -->
+<div class="h-[60%] flex flex-col bg-surface-container-lowest border-b border-outline-variant/40">
+<!-- Editor Tabs Bar -->
+<div class="flex items-center justify-between border-b border-outline-variant/30 bg-surface-container-low px-space-md">
+<div class="flex items-center">
+<button class="flex items-center gap-2 px-3.5 py-2.5 border-b-2 border-primary bg-surface-container-lowest text-on-surface font-label-md text-label-md font-semibold text-xs">
+<span class="material-symbols-outlined text-sm text-amber-500" data-icon="code">code</span>
+              rule_specification.yaml
+            </button>
+<button class="flex items-center gap-2 px-3.5 py-2.5 border-b-2 border-transparent text-outline hover:text-on-surface font-label-md text-label-md text-xs">
+<span class="material-symbols-outlined text-sm" data-icon="description">description</span>
+              documentation.md
+            </button>
+<button class="flex items-center gap-2 px-3.5 py-2.5 border-b-2 border-transparent text-outline hover:text-on-surface font-label-md text-label-md text-xs">
+<span class="material-symbols-outlined text-sm" data-icon="schema">schema</span>
+              schema_definition.json
+            </button>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="text-label-sm font-label-sm text-outline">YAML 1.2 Strict</span>
+<button class="p-1 hover:bg-surface-container rounded text-outline" title="Format Code">
+<span class="material-symbols-outlined text-sm" data-icon="format_align_left">format_align_left</span>
+</button>
+<button class="p-1 hover:bg-surface-container rounded text-outline" title="Expand Fullscreen">
+<span class="material-symbols-outlined text-sm" data-icon="fullscreen">fullscreen</span>
+</button>
+</div>
+</div>
+<!-- Code View Area -->
+<div class="flex-1 overflow-y-auto custom-scrollbar code-editor bg-surface-container-lowest text-on-surface p-space-md text-[13px] leading-relaxed">
+<div class="line-row"><span class="text-indigo-600 font-semibold">id</span>: <span class="text-emerald-700">RULE-CAD-2025-08</span></div>
+<div class="line-row"><span class="text-indigo-600 font-semibold">title</span>: <span class="text-emerald-700">"Faculty Cadre Ratio Disparity"</span></div>
+<div class="line-row"><span class="text-indigo-600 font-semibold">handbook_reference</span>:</div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">edition</span>: <span class="text-emerald-700">"APH 2025-26"</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">clause</span>: <span class="text-emerald-700">"Clause 7.1"</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">sub_clause</span>: <span class="text-emerald-700">"Appendix 7 - Cadre Structure"</span></div>
+<div class="line-row"><span class="text-indigo-600 font-semibold">rule_type</span>: <span class="text-emerald-700">"COMPUTED_RATIO_ANALYSIS"</span></div>
+<div class="line-row"><span class="text-indigo-600 font-semibold">severity</span>: <span class="text-rose-600 font-semibold">"HIGH_DISCREPANCY"</span></div>
+<div class="line-row"><span class="text-indigo-600 font-semibold">parameters</span>:</div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">ug_ratio_baseline</span>: <span class="text-purple-700 font-semibold">15</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">cadre_distribution</span>: [<span class="text-purple-700 font-semibold">1</span>, <span class="text-purple-700 font-semibold">2</span>, <span class="text-purple-700 font-semibold">6</span>]  <span class="text-outline italic"># Professor : Associate : Assistant</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">cadre_floor_rounding</span>: <span class="text-emerald-700">"CEIL_INTERMEDIATE"</span></div>
+<div class="line-row"><span class="text-indigo-600 font-semibold">message_template</span>:</div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">advisory_title</span>: <span class="text-emerald-700">"Faculty Cadre Ratio Disparity Flagged"</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">body_template</span>: <span class="text-emerald-700">"Declared {declared_faculty_count} faculty against approved student intake {approved_intake} yields a ratio of 1:{computed_ratio}. Statutory norm mandates 1:{mandated_ratio} with cadre distribution {mandated_cadre_tuple}."</span></div>
+<div class="line-row"><span class="text-indigo-600 font-semibold">condition_logic</span>: <span class="text-amber-700 font-medium">"computed_ratio &gt; parameters.ug_ratio_baseline or professor_count &lt; mandated_professors"</span></div>
+<div class="line-row"><span class="text-indigo-600 font-semibold">audit_trail</span>:</div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">gazette_reference</span>: <span class="text-emerald-700">"AICTE Notification F-12/2024"</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">enforcement_cycle</span>: <span class="text-purple-700">2025</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">maker_id</span>: <span class="text-emerald-700">"SCR-71024"</span></div>
+<div class="line-row"><span class="text-indigo-600 font-semibold">execution_harness</span>:</div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">dry_run_dataset</span>: <span class="text-emerald-700">"DS-REGULATORY-BENCHMARK-2025"</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">confidence_threshold</span>: <span class="text-purple-700 font-semibold">0.95</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">diagnostic_classification</span>: <span class="text-emerald-700">"possible anomaly"</span></div>
+<div class="line-row">  <span class="text-indigo-600 font-semibold">escalation_level</span>: <span class="text-emerald-700">"requires manual verification"</span></div>
+<div class="line-row"><span class="text-outline italic"># End of Statutory Rule Specification</span></div>
+</div>
+<!-- Editor Validation Footer Bar -->
+<div class="px-space-md py-1.5 bg-surface-container border-t border-outline-variant/30 flex items-center justify-between text-label-sm font-label-sm">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1.5 text-emerald-700 font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Syntax Valid • Complies with Schema v2.4
+            </span>
+<span class="text-outline-variant">|</span>
+<span class="text-on-surface-variant font-medium">0 Errors</span>
+<span class="text-on-surface-variant font-medium">0 Warnings</span>
+</div>
+<div class="flex items-center gap-space-sm text-outline">
+<span>Ln 28, Col 39</span>
+<span>UTF-8</span>
+<span>Spaces: 2</span>
+</div>
+</div>
+</div>
+<!-- Bottom Half: Live Test Panel (Sample Case Execution Harness - 40% Height) -->
+<div class="h-[40%] flex flex-col bg-surface-container-low overflow-hidden">
+<!-- Harness Header & Selector -->
+<div class="p-space-md border-b border-outline-variant/30 bg-surface-container-lowest flex items-center justify-between flex-wrap gap-2">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="science">science</span>
+<span class="text-headline-sm font-headline-sm text-sm font-bold text-on-surface">Sample Case Execution Harness</span>
+</div>
+<!-- Test Case Dropdown Selector -->
+<select class="text-label-sm font-label-sm py-1.5 px-3 rounded-lg bg-surface-container-low border border-outline-variant/50 text-on-surface font-medium focus:border-primary">
+<option selected="">Sample Case: Apex Institute of Tech (PID-1-9284102)</option>
+<option>Sample Case: Malabar College of Engg (PID-1-4820199)</option>
+<option>Sample Case: Kalinga Institute of Tech (PID-1-3104928)</option>
+</select>
+</div>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-body-sm font-body-sm font-semibold text-white shadow-sm hover:brightness-105 active:scale-95" style="background: linear-gradient(135deg, #006a62 0%, #007168 100%);">
+<span class="material-symbols-outlined text-sm" data-icon="play_circle">play_circle</span>
+<span>Run Test Case</span>
+<span class="text-label-sm font-label-sm opacity-70 font-normal">⌘↵</span>
+</button>
+</div>
+<!-- Harness Execution Output & Evidence Matcher -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-space-md space-y-3">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Metric 1: Finding -->
+<div class="p-3 rounded-xl bg-surface-container-lowest border border-outline-variant/40 shadow-xs">
+<p class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Harness Verdict</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-rose-500/10 text-rose-700 font-semibold border border-rose-500/25">
+                  Discrepancy Detected
+                </span>
+<span class="text-label-sm font-label-sm text-rose-600 font-semibold">High Urgency</span>
+</div>
+</div>
+<!-- Metric 2: Confidence -->
+<div class="p-3 rounded-xl bg-surface-container-lowest border border-outline-variant/40 shadow-xs">
+<p class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Statistical Confidence</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-headline-sm font-headline-sm text-lg font-bold text-on-surface">98.4%</span>
+<span class="text-label-sm font-label-sm text-secondary font-medium">[High Assurance]</span>
+</div>
+</div>
+<!-- Metric 3: Cadre Breakdown -->
+<div class="p-3 rounded-xl bg-surface-container-lowest border border-outline-variant/40 shadow-xs">
+<p class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Evaluated Cadre Ratio</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-headline-sm font-headline-sm text-lg font-bold text-rose-600">1:17.1</span>
+<span class="text-label-sm font-label-sm text-outline">(Mandate: 1:15 max)</span>
+</div>
+</div>
+</div>
+<!-- Parameter Comparison Table -->
+<div class="p-3 rounded-xl bg-surface-container-lowest border border-outline-variant/40">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-md font-label-md font-bold text-on-surface">Evaluated Parameters vs Statutory Thresholds</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container text-primary border border-outline-variant/30">
+                Cross-referenced with State DTE Registry ↗
+              </span>
+</div>
+<div class="grid grid-cols-4 gap-2 text-label-sm font-label-sm border-t border-outline-variant/20 pt-2 text-on-surface-variant">
+<div>Approved Intake: <strong class="text-on-surface font-semibold">480 Students</strong></div>
+<div>Declared Faculty: <strong class="text-rose-600 font-semibold">28 Members</strong></div>
+<div>Mandated Minimum: <strong class="text-on-surface font-semibold">32 Members</strong></div>
+<div>Cadre Disparity: <strong class="text-rose-600 font-semibold">-4 Faculty Deficit</strong></div>
+</div>
+</div>
+<!-- Advisory Message Preview (Template Execution) -->
+<div class="p-3 rounded-xl bg-surface-container border-l-4 border-primary text-body-sm font-body-sm space-y-1">
+<div class="flex items-center gap-2 text-label-md font-label-md font-bold text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="report">report</span>
+<span>Formatted Output Preview: Faculty Cadre Ratio Disparity Flagged</span>
+</div>
+<p class="text-on-surface text-xs leading-relaxed">
+              Declared <strong>28</strong> faculty against approved student intake <strong>480</strong> yields a computed ratio of <strong>1:17.14</strong>. Statutory norm mandates <strong>1:15</strong> with cadre distribution <strong>[Prof: 4, Assoc: 7, Asst: 21]</strong>. Data point differs from National Faculty Database records. Requires manual verification.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT PANE (360px Fixed): Version History & Maker-Checker Governance -->
+<aside class="w-full xl:w-[360px] shrink-0 bg-surface-container-lowest flex flex-col h-full overflow-hidden">
+<!-- Top Section: Maker-Checker Approval Governance Card -->
+<div class="p-space-md border-b border-outline-variant/40 space-y-3 bg-surface-container-lowest">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="admin_panel_settings">admin_panel_settings</span>
+<h2 class="text-headline-sm font-headline-sm text-sm font-bold text-on-surface">Maker-Checker Governance</h2>
+</div>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 border border-amber-500/25 font-semibold">
+            Stage: In Review
+          </span>
+</div>
+<!-- Maker Dossier Block -->
+<div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/40 space-y-2 text-label-sm font-label-sm">
+<div class="flex items-center justify-between">
+<span class="text-outline">Originating Maker:</span>
+<span class="font-semibold text-on-surface">Dr. P. Nair (SCR-71024)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-outline">Submission Timestamp:</span>
+<span class="font-medium text-on-surface">14 Feb 2025 • 16:30 IST</span>
+</div>
+<div class="border-t border-outline-variant/30 pt-1.5 mt-1.5">
+<span class="text-outline block mb-1">Maker Change Summary:</span>
+<p class="text-body-sm font-body-sm text-xs text-on-surface bg-surface-container-lowest p-2 rounded-lg border border-outline-variant/30">
+              "Updated Appendix 7 rounding rule to CEIL_INTERMEDIATE as per AICTE Gazette Notification No. F-12/2024."
+            </p>
+</div>
+</div>
+<!-- Checker Endorsement & Action Form -->
+<div class="space-y-2">
+<label class="block text-label-sm font-label-sm font-bold text-on-surface">
+            Checker Written Justification / Scrutiny Endorsement <span class="text-error">*</span>
+</label>
+<textarea class="w-full text-body-sm font-body-sm p-2.5 rounded-xl border border-outline-variant/50 focus:border-primary focus:ring-1 focus:ring-primary/20 text-on-surface placeholder:text-outline bg-surface text-xs resize-none" placeholder="Record official justification, gazette clause validation notes, or rectification instructions..." rows="2"></textarea>
+<!-- Governance Action Buttons Stack -->
+<div class="space-y-1.5 pt-1">
+<button class="w-full py-2.5 px-3 rounded-xl text-body-sm font-body-sm font-semibold text-white shadow-md transition-all hover:brightness-105 active:scale-95 flex items-center justify-center gap-2" style="background: linear-gradient(135deg, #5B5BFF 0%, #A855F7 100%);">
+<span class="material-symbols-outlined text-base" data-icon="verified">verified</span>
+<span>Approve &amp; Release (v2.4.0)</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="py-2 px-2.5 rounded-xl text-label-md font-label-md font-semibold text-rose-600 bg-rose-500/10 border border-rose-500/25 hover:bg-rose-500/20 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="close">close</span>
+<span>Reject with Notes</span>
+</button>
+<button class="py-2 px-2.5 rounded-xl text-label-md font-label-md font-semibold text-primary bg-primary/10 border border-primary/25 hover:bg-primary/20 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="edit_note">edit_note</span>
+<span>Request Fix</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Version History & Diff Viewer -->
+<div class="flex-1 flex flex-col overflow-hidden bg-surface-container-low">
+<!-- Diff Header & Version Switcher -->
+<div class="p-space-sm border-b border-outline-variant/30 bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-1 text-label-md font-label-md font-bold text-on-surface">
+<span class="material-symbols-outlined text-base text-primary" data-icon="difference">difference</span>
+<span>Specification Diff</span>
+</div>
+<div class="flex items-center gap-1 text-label-sm font-label-sm bg-surface-container-lowest p-0.5 rounded-lg border border-outline-variant/40">
+<button class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">v2.4 Draft</button>
+<span class="text-outline">vs</span>
+<button class="px-2 py-0.5 rounded text-outline hover:text-on-surface">v2.3 Prod</button>
+</div>
+</div>
+<!-- Inline Visual Diff Box -->
+<div class="p-space-sm overflow-y-auto custom-scrollbar flex-1 space-y-2">
+<div class="rounded-xl border border-outline-variant/40 bg-surface-container-lowest p-2.5 text-xs font-mono">
+<p class="text-label-sm font-label-sm text-outline mb-1.5 font-sans font-semibold">Lines 11–13 Modification:</p>
+<!-- Red Deletion Line -->
+<div class="bg-rose-50 text-rose-800 p-1.5 rounded flex items-center gap-1.5 border border-rose-200">
+<span class="font-bold text-rose-600 select-none">-</span>
+<span class="line-through text-rose-700">cadre_floor_rounding: "ROUND_HALF_UP"</span>
+</div>
+<!-- Green Addition Line 1 -->
+<div class="bg-emerald-50 text-emerald-800 p-1.5 rounded flex items-center gap-1.5 border border-emerald-200 mt-1">
+<span class="font-bold text-emerald-600 select-none">+</span>
+<span class="font-semibold text-emerald-800">cadre_floor_rounding: "CEIL_INTERMEDIATE"</span>
+</div>
+<!-- Green Addition Line 2 -->
+<div class="bg-emerald-50 text-emerald-800 p-1.5 rounded flex items-center gap-1.5 border border-emerald-200 mt-1">
+<span class="font-bold text-emerald-600 select-none">+</span>
+<span class="font-semibold text-emerald-800">ug_ratio_baseline: 15</span>
+</div>
+</div>
+<!-- Prior Versions Timeline Card -->
+<div class="space-y-1.5 pt-1">
+<span class="text-label-sm font-label-sm font-bold text-outline uppercase tracking-wider block">Prior Approved Releases</span>
+<div class="p-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-between text-label-sm font-label-sm">
+<div>
+<span class="font-bold text-on-surface">v2.3 Release</span>
+<p class="text-outline text-xs">Approved by Dr. V. Sharma (SCR-84920)</p>
+</div>
+<span class="text-outline text-xs">02 Jan 2025</span>
+</div>
+<div class="p-2 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-between text-label-sm font-label-sm opacity-75">
+<div>
+<span class="font-bold text-on-surface">v2.2 Release</span>
+<p class="text-outline text-xs">Approved by Scrutiny Bureau Core</p>
+</div>
+<span class="text-outline text-xs">18 Nov 2024</span>
+</div>
+</div>
+</div>
+<!-- Audit Hash Footer -->
+<div class="p-space-sm border-t border-outline-variant/30 bg-surface-container text-label-sm font-label-sm text-outline flex items-center justify-between">
+<span class="font-mono text-xs">SHA-256: 8b4f...91e2</span>
+<span class="flex items-center gap-1 text-primary cursor-pointer hover:underline">
+<span class="material-symbols-outlined text-xs" data-icon="lock">lock</span>
+            Cryptographically Sealed
+          </span>
+</div>
+</div>
+</aside>
+</main>
+<!-- Interactive Script for Theme and Hotkeys -->
+<script>
+    // Theme toggle interaction
+    const themeBtn = document.getElementById('themeToggle');
+    themeBtn?.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      const icon = themeBtn.querySelector('.material-symbols-outlined');
+      if (icon) {
+        icon.textContent = isDark ? 'dark_mode' : 'light_mode';
+      }
+    });
+
+    // Keyboard shortcut simulator (⌘Enter)
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        alert('Test Harness Executed: RULE-CAD-2025-08 dry-run completed against Sample Case Apex Institute (PID-1-9284102). Result: Possible Anomaly (Confidence 98.4%).');
+      }
+    });
+  </script>
+</body></html>

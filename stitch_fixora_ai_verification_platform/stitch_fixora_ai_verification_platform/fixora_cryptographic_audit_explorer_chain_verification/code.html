@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIXORA - Cryptographic Audit Explorer &amp; Ledger Verification</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed-variant": "#005049",
+            "on-secondary-container": "#007168",
+            "surface-dim": "#d2d8ff",
+            "on-tertiary-fixed-variant": "#5e4200",
+            "surface-container": "#ecedff",
+            "on-error-container": "#93000a",
+            "background": "#fbf8ff",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#efefff",
+            "on-surface": "#121a37",
+            "tertiary-container": "#966b00",
+            "secondary": "#006a62",
+            "tertiary-fixed-dim": "#ffba20",
+            "surface-variant": "#dde1ff",
+            "secondary-fixed": "#57fae9",
+            "secondary-container": "#57fae9",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#282f4d",
+            "error": "#ba1a1a",
+            "surface-container-high": "#e4e7ff",
+            "on-tertiary-fixed": "#271900",
+            "inverse-primary": "#c1c1ff",
+            "surface": "#fbf8ff",
+            "outline-variant": "#c6c4d8",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f3f2ff",
+            "error-container": "#ffdad6",
+            "primary-fixed": "#e1dfff",
+            "primary": "#403de6",
+            "tertiary": "#775400",
+            "outline": "#767587",
+            "surface-container-highest": "#dde1ff",
+            "secondary-fixed-dim": "#2addcd",
+            "surface-tint": "#4543ea",
+            "primary-fixed-dim": "#c1c1ff",
+            "on-primary-fixed": "#08006b",
+            "on-primary-container": "#fbf8ff",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#ffdea8",
+            "surface-bright": "#fbf8ff",
+            "on-secondary-fixed": "#00201d",
+            "on-background": "#121a37",
+            "primary-container": "#5b5bff",
+            "on-surface-variant": "#464556",
+            "on-primary-fixed-variant": "#2920d3",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#fff8f3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-sm": "1rem",
+            "margin": "2rem",
+            "gutter-lg": "2rem",
+            "gutter-sm": "1rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "margin-lg": "3rem",
+            "space-xl": "2rem",
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-lg": ["JetBrains Mono"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "label-md": ["JetBrains Mono"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+            "headline-xl": ["40px", { "lineHeight": "48px", "fontWeight": "700" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "fontWeight": "700" }],
+            "label-md": ["11px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "headline-xl-mobile": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "500" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(220, 225, 255, 0.2);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(91, 91, 255, 0.25);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md text-body-md antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- ================= TOP NAV BAR (SHARED COMPONENT) ================= -->
+<header class="w-full px-space-lg max-w-full flex justify-between items-center h-16 sticky top-0 z-50 bg-surface-container-lowest/80 dark:bg-inverse-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center text-on-primary shadow-sm shadow-primary/30">
+<span class="material-symbols-outlined" style="font-size: 22px;">shield_locked</span>
+</div>
+<div>
+<span class="text-headline-sm font-headline-sm font-bold tracking-tight text-on-surface dark:text-inverse-on-surface">FIXORA Regulatory Intelligence</span>
+<div class="flex items-center gap-space-xs text-body-sm font-body-sm text-on-surface-variant dark:text-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>SWRO Node 04 Bangalore</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">CHAIN SYNC: 100%</span>
+</div>
+</div>
+</div>
+<!-- Navigation Links from Shared Components JSON -->
+<nav class="hidden xl:flex items-center gap-space-md ml-space-md text-body-md font-body-md">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-normal pb-1 transition-colors" href="#">Scrutiny Dossiers</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-normal pb-1 transition-colors" href="#">Standards Engine</a>
+<a class="text-primary dark:text-inverse-primary border-b-2 border-primary dark:border-inverse-primary pb-1 font-semibold" href="#">Registry Audit</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-normal pb-1 transition-colors" href="#">Institutional Cadre</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-normal pb-1 transition-colors" href="#">Intelligence Reports</a>
+</nav>
+</div>
+<!-- Top Right Actions -->
+<div class="flex items-center gap-space-sm">
+<!-- Search Bar -->
+<div class="relative hidden md:flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline">search</span>
+<input class="h-9 w-64 lg:w-72 pl-9 pr-12 rounded-xl border border-outline-variant/60 bg-surface-container-lowest dark:bg-inverse-surface text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Search blocks, hashes, dockets (⌘K)..." type="text"/>
+<kbd class="absolute right-2 px-1.5 py-0.5 text-label-sm font-label-sm bg-surface-container text-on-surface-variant rounded border border-outline-variant/40">⌘K</kbd>
+</div>
+<!-- Ask FIXORA AI Assistant CTA -->
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-container-high/70 hover:bg-surface-container-high border border-outline-variant/40 text-primary dark:text-inverse-primary font-headline-sm text-body-sm transition-all shadow-xs">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary" style="font-size: 16px;">neurology</span>
+<span class="hidden sm:inline">Ask FIXORA</span>
+</button>
+<!-- Theme Switcher -->
+<button class="p-2 rounded-xl text-on-surface-variant hover:bg-surface-container-high/60 transition-colors" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Theme">
+<span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+</button>
+<!-- Trailing Action & Status Icons -->
+<button class="p-2 rounded-xl text-on-surface-variant hover:bg-surface-container-high/60 transition-colors relative" title="Statutory Notifications">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 rounded-xl text-secondary hover:bg-secondary-fixed/30 transition-colors" title="Accredited Verification Authority Node">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</button>
+<div class="h-6 w-px bg-outline-variant/40 mx-1"></div>
+<!-- Officer Profile Anchor -->
+<div class="flex items-center gap-space-sm pl-1">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center font-label-md text-on-primary-fixed border border-primary/20">
+          VS
+        </div>
+<div class="hidden lg:flex flex-col text-left">
+<span class="text-body-sm font-body-sm font-semibold text-on-surface leading-tight">Dr. V. Sharma</span>
+<span class="text-label-sm font-label-sm text-outline">AICTE ID: SCR-84920</span>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= STATUTORY ADVISORY MANDATORY BANNER ================= -->
+<aside class="w-full bg-surface-container-low border-b border-outline-variant/30 px-space-lg py-2 flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/25 shrink-0">
+<span class="material-symbols-outlined" style="font-size: 13px;">verified</span>
+<span>Advisory only</span>
+</span>
+<p class="leading-relaxed">
+        Cryptographic audit trail immutably records all AI inference events, human scrutiny endorsements, and external registry synchronizations under statutory governance protocols.
+      </p>
+</div>
+<div class="hidden md:flex items-center gap-3 shrink-0 font-label-sm text-label-sm text-outline">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+<span>Keccak-256 Ledger Live</span>
+</span>
+<span>•</span>
+<span>Block Time ~3.2s</span>
+</div>
+</aside>
+<!-- ================= MAIN LAYOUT WITH SIDEBAR & WORKSPACE ================= -->
+<div class="flex flex-1 overflow-hidden">
+<!-- ================= SIDE NAV BAR (SHARED COMPONENT) ================= -->
+<aside class="hidden lg:flex h-[calc(100vh-6.5rem)] flex-col justify-between py-space-md px-space-sm w-64 shrink-0 overflow-y-auto bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant/30 custom-scroll">
+<div>
+<!-- SideNav Header Seal -->
+<div class="px-space-md py-space-sm mb-space-md flex items-center gap-space-sm bg-surface-container-lowest dark:bg-surface-container-low rounded-xl border border-outline-variant/20 shadow-xs">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<div class="overflow-hidden">
+<div class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface truncate">Statutory Panel</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant dark:text-surface-variant text-[11px] truncate">AI Verification Node #402</div>
+</div>
+</div>
+<!-- Primary Tabs from Shared JSON -->
+<div class="space-y-1">
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-outline">folder_open</span>
+<span>Dossier Overview</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-outline">domain</span>
+<span>Infrastructure &amp; Land</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-outline">groups</span>
+<span>Cadre &amp; Faculty Ratio</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-outline">local_fire_department</span>
+<span>Building &amp; Fire Clearance</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-outline">map</span>
+<span>Geospatial Cross-Check</span>
+</a>
+<!-- Active Tab: Audit Trail & Ledger -->
+<a class="bg-primary-fixed dark:bg-primary/20 text-on-primary-fixed dark:text-inverse-primary font-medium rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+<span>Audit Trail &amp; Ledger</span>
+</a>
+</div>
+<div class="my-space-md pt-space-sm border-t border-outline-variant/20 px-space-md">
+<button class="w-full py-2 px-3 rounded-xl bg-primary hover:bg-primary/90 text-on-primary text-body-sm font-headline-sm font-semibold flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.99]">
+<span class="material-symbols-outlined" style="font-size: 16px;">add_circle</span>
+<span>New Scrutiny Dossier</span>
+</button>
+</div>
+</div>
+<!-- SideNav Footer Tabs -->
+<div class="space-y-1 pt-space-md border-t border-outline-variant/20 text-body-sm font-body-sm">
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-outline">gavel</span>
+<span>Advisory Standards</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-outline">tune</span>
+<span>System Status</span>
+</a>
+</div>
+</aside>
+<!-- ================= CANVAS CONTENT WORKSPACE ================= -->
+<main class="flex-1 overflow-y-auto px-space-lg lg:px-space-xl py-space-lg custom-scroll bg-background">
+<!-- Breadcrumbs & Header -->
+<section class="mb-space-lg">
+<div class="flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant mb-space-xs">
+<span>Scrutiny Scopes</span>
+<span class="material-symbols-outlined text-outline" style="font-size: 14px;">chevron_right</span>
+<span>Registry Admin</span>
+<span class="material-symbols-outlined text-outline" style="font-size: 14px;">chevron_right</span>
+<span class="text-primary font-medium">Cryptographic Audit Explorer</span>
+</div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mt-1">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">Cryptographic Audit Explorer &amp; Immutable Ledger</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1 max-w-3xl">
+              Real-time tamper-evident event log recording statutory maker-checker determinations, AI scoring inferences, and registry calls.
+            </p>
+</div>
+<!-- Primary Actions Cluster -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="px-4 py-2.5 rounded-xl text-on-primary font-headline-sm text-body-md font-medium flex items-center gap-2 transition-all active:scale-[0.98] shadow-md shadow-primary/25" onclick="toggleVerificationModal()" style="background: linear-gradient(135deg, #403de6 0%, #7c3aed 100%);">
+<span class="material-symbols-outlined">verified</span>
+<span>Verify Chain Integrity</span>
+</button>
+<button class="px-3.5 py-2.5 rounded-xl border border-outline-variant/60 bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-headline-sm text-body-md font-medium flex items-center gap-2 transition-all shadow-xs" onclick="triggerExportNotice()">
+<span class="material-symbols-outlined text-outline">file_download</span>
+<span>Export Ledger (JSON-LD)</span>
+</button>
+</div>
+</div>
+</section>
+<!-- ================= INTERACTIVE CHAIN INTEGRITY MODAL / HERO BANNER ================= -->
+<section class="mb-space-lg transition-all duration-300" id="integrityBanner">
+<div class="p-space-lg rounded-2xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface shadow-sm relative overflow-hidden">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-secondary/15 text-secondary flex items-center justify-center shrink-0" id="statusIconHolder">
+<span class="material-symbols-outlined" style="font-size: 28px;">gpp_good</span>
+</div>
+<div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface" id="statusTitle">
+                    Chain Integrity Verified: 1,420 Blocks Valid
+                  </h2>
+<span class="font-label-md text-label-md px-2.5 py-0.5 rounded-full bg-secondary-container/30 text-secondary border border-secondary/30 font-semibold" id="statusBadge">
+                    Zero Anomaly Detected
+                  </span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant dark:text-surface-variant mt-1" id="statusDesc">
+                  Merkle Root verified against SHA-256 genesis hash (<span class="font-label-sm font-mono text-primary font-medium">0x9f4a...88c1</span>). Zero tampering or broken links detected across statutory nodes.
+                </p>
+<div class="flex items-center gap-3 mt-2 text-label-sm font-label-sm text-outline">
+<span>Last Merkle Proof Recalculated: 4 mins ago</span>
+<span>•</span>
+<span>Consensus Witness: SWRO Bangalore &amp; AICTE HQ Delhi</span>
+</div>
+</div>
+</div>
+<!-- Interactive Simulation Switches -->
+<div class="flex flex-col sm:flex-row items-center gap-2.5 self-stretch md:self-auto shrink-0 pt-2 md:pt-0">
+<button class="w-full sm:w-auto px-3 py-2 rounded-xl border border-error/30 bg-error/5 hover:bg-error/10 text-error font-headline-sm text-body-sm font-medium flex items-center justify-center gap-1.5 transition-all" id="simTamperBtn" onclick="toggleTamperSimulation()">
+<span class="material-symbols-outlined" style="font-size: 16px;">bug_report</span>
+<span id="simBtnText">Simulate Broken Block 0x7b4e</span>
+</button>
+<button class="w-full sm:w-auto px-3 py-2 rounded-xl border border-outline-variant/40 bg-surface-container-low hover:bg-surface-container-high text-on-surface font-headline-sm text-body-sm flex items-center justify-center gap-1.5 transition-all" onclick="copyGenesisHash()" title="Copy Genesis Proof">
+<span class="material-symbols-outlined" style="font-size: 16px;">content_copy</span>
+<span>Copy Genesis Hash</span>
+</button>
+</div>
+</div>
+<!-- Tamper Diagnostic Drawer (hidden by default) -->
+<div class="hidden mt-4 pt-4 border-t border-error/20 bg-error/5 -mx-space-lg -mb-space-lg px-space-lg pb-space-lg text-body-sm" id="tamperDiagnosticPanel">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error shrink-0">report_problem</span>
+<div>
+<p class="font-headline-sm font-semibold text-error">Simulated Cryptographic Anomaly in Block #1418</p>
+<p class="text-on-surface-variant mt-0.5">
+                  Payload SHA-256 digest <span class="font-mono text-error font-medium">0x7b4e...48a2</span> mismatches recorded Merkle child root. In live protocol, this triggers immediate automatic lock of maker-checker signature docket and flags the node for statutory re-indexing.
+                </p>
+<button class="mt-2 text-primary font-headline-sm font-semibold text-body-sm hover:underline" onclick="toggleTamperSimulation()">
+                  Re-verify and restore genuine ledger state →
+                </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= CHAIN HEALTH SUMMARY STRIP ================= -->
+<section class="mb-space-lg grid grid-cols-2 md:grid-cols-5 gap-space-sm bg-surface-container-low dark:bg-inverse-surface/50 p-space-sm rounded-2xl border border-outline-variant/30">
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-space-md rounded-xl border border-outline-variant/20 flex flex-col justify-between">
+<span class="text-label-md font-label-md text-outline">TOTAL LOGGED EVENTS</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="text-headline-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface">48,290</span>
+<span class="text-label-sm font-label-sm text-secondary font-semibold">+18 today</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-space-md rounded-xl border border-outline-variant/20 flex flex-col justify-between">
+<span class="text-label-md font-label-md text-outline">MERKLE HEIGHT</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="text-headline-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface">1,420</span>
+<span class="text-label-sm font-label-sm text-outline">Blocks</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-space-md rounded-xl border border-outline-variant/20 flex flex-col justify-between">
+<span class="text-label-md font-label-md text-outline">HASH ALGORITHM</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="text-headline-sm font-headline-sm font-bold text-primary dark:text-inverse-primary">SHA-256 Keccak</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-space-md rounded-xl border border-outline-variant/20 flex flex-col justify-between">
+<span class="text-label-md font-label-md text-outline">GENESIS TIMESTAMP</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface">01 Jan 2025</span>
+</div>
+</div>
+<div class="col-span-2 md:col-span-1 bg-surface-container-lowest dark:bg-inverse-surface p-space-md rounded-xl border border-outline-variant/20 flex flex-col justify-between">
+<span class="text-label-md font-label-md text-outline">CURRENT STATUS</span>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="text-headline-sm font-headline-sm font-bold text-secondary">Sealed &amp; Synced</span>
+</div>
+</div>
+</section>
+<!-- ================= FILTER TOOLBAR ================= -->
+<section class="mb-space-lg p-space-md rounded-2xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface shadow-xs">
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<!-- Filters Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-space-sm flex-1">
+<!-- Actor Filter -->
+<div class="flex flex-col">
+<label class="text-label-sm font-label-sm text-outline mb-1">ACTOR</label>
+<select class="h-10 px-3 rounded-xl border border-outline-variant/50 bg-background dark:bg-inverse-surface text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option selected="">All Actors</option>
+<option>Dr. V. Sharma</option>
+<option>Dr. P. Nair</option>
+<option>Automated Ingestion Bot</option>
+<option>System Gateway Node</option>
+</select>
+</div>
+<!-- Role Filter -->
+<div class="flex flex-col">
+<label class="text-label-sm font-label-sm text-outline mb-1">STATUTORY ROLE</label>
+<select class="h-10 px-3 rounded-xl border border-outline-variant/50 bg-background dark:bg-inverse-surface text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option selected="">All Roles</option>
+<option>Scrutiny Officer</option>
+<option>Maker Analyst</option>
+<option>Lead Checker</option>
+<option>AICTE Regional Admin</option>
+</select>
+</div>
+<!-- Event Type Filter -->
+<div class="flex flex-col">
+<label class="text-label-sm font-label-sm text-outline mb-1">EVENT TYPE</label>
+<select class="h-10 px-3 rounded-xl border border-outline-variant/50 bg-background dark:bg-inverse-surface text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option selected="">All Events</option>
+<option>AI Inference / Anomaly Flag</option>
+<option>Maker Endorsement</option>
+<option>Checker Approval</option>
+<option>Registry API Query</option>
+<option>Rule Pack Version Update</option>
+<option>Manual Rectification Request</option>
+</select>
+</div>
+<!-- Application Docket Filter -->
+<div class="flex flex-col">
+<label class="text-label-sm font-label-sm text-outline mb-1">DOCKET / APP ID</label>
+<input class="h-10 px-3 rounded-xl border border-outline-variant/50 bg-background dark:bg-inverse-surface text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="e.g. PID-1-9284102" type="text"/>
+</div>
+<!-- Date Range Filter -->
+<div class="flex flex-col">
+<label class="text-label-sm font-label-sm text-outline mb-1">CYCLE TIMEFRAME</label>
+<select class="h-10 px-3 rounded-xl border border-outline-variant/50 bg-background dark:bg-inverse-surface text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option selected="">AY 2025-26 Cycle</option>
+<option>Last 24 Hours</option>
+<option>Last 7 Days</option>
+<option>Custom Window...</option>
+</select>
+</div>
+</div>
+<!-- View Switcher -->
+<div class="flex items-center self-end xl:self-center gap-1 p-1 bg-surface-container-low dark:bg-inverse-surface rounded-xl border border-outline-variant/40 shrink-0">
+<button class="px-3 py-1.5 rounded-lg text-body-sm font-headline-sm font-semibold flex items-center gap-1.5 transition-all bg-surface-container-lowest text-primary shadow-xs" id="viewTimelineBtn" onclick="switchView('timeline')">
+<span class="material-symbols-outlined" style="font-size: 16px;">reorder</span>
+<span>Vertical Timeline</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg text-body-sm font-headline-sm font-semibold flex items-center gap-1.5 transition-all text-on-surface-variant hover:text-on-surface" id="viewTableBtn" onclick="switchView('table')">
+<span class="material-symbols-outlined" style="font-size: 16px;">table_chart</span>
+<span>Ledger Table</span>
+</button>
+</div>
+</div>
+</section>
+<!-- ================= VIEW 1: VERTICAL TIMELINE VIEW ================= -->
+<section class="space-y-space-md" id="timelineContainer">
+<!-- Timeline Stepper Track Container -->
+<div class="relative pl-6 sm:pl-8 before:content-[''] before:absolute before:left-3 sm:before:left-4 before:top-4 before:bottom-4 before:w-0.5 before:bg-outline-variant/40 space-y-6">
+<!-- Entry 1: Block #1420 (Checker Approval) -->
+<div class="relative group">
+<!-- Node Pin -->
+<div class="absolute -left-6 sm:-left-8 top-5 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center shadow-md ring-4 ring-background">
+<span class="material-symbols-outlined" style="font-size: 16px;">check_circle</span>
+</div>
+<article class="p-space-lg rounded-2xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface shadow-xs hover:border-primary/40 transition-all">
+<!-- Header Row -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-space-sm border-b border-outline-variant/20">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-sm font-body-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">schedule</span>
+<span>Today, 14:32:08 IST</span>
+</span>
+<span class="px-2.5 py-0.5 rounded-full text-label-md font-label-md font-semibold bg-secondary/10 text-secondary border border-secondary/25">
+                    Checker Approval &amp; Release
+                  </span>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-primary/10 text-primary border border-primary/20">
+                    Block #1420
+                  </span>
+</div>
+<!-- Copyable Hash Chip -->
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-primary dark:text-inverse-primary font-mono text-label-sm flex items-center gap-1.5 transition-colors border border-outline-variant/30" onclick="copyHash('0x8f4d92a184e1b0c99f8d31e2')" title="Click to copy SHA-256 hash">
+<span>0x8f4d...31e2</span>
+<span class="material-symbols-outlined text-outline" style="font-size: 14px;">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Body: Actor, Action & Target -->
+<div class="py-space-md grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<!-- Actor Info (4 cols) -->
+<div class="lg:col-span-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-fixed text-on-primary-fixed font-headline-sm font-bold flex items-center justify-center shrink-0">
+                    VS
+                  </div>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface">Dr. V. Sharma</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Lead Checker • Scrutiny Officer</p>
+<span class="text-label-sm font-label-sm text-outline">AICTE ID: SCR-84920</span>
+</div>
+</div>
+<!-- Action Description & Target Docket (8 cols) -->
+<div class="lg:col-span-8">
+<p class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface font-medium leading-relaxed">
+                    Approved Cadre Ratio Disparity finding and dispatched 7-day rectification notice to <span class="text-primary font-semibold">Apex Institute of Technology</span> (<span class="font-mono text-label-sm bg-surface-container-low px-1.5 py-0.5 rounded">PID-1-9284102</span>).
+                  </p>
+<!-- Statutory AI Advisory Card attached to determination -->
+<div class="mt-3 p-3 rounded-xl bg-surface-container-low border-l-4 border-primary text-body-sm flex items-start justify-between gap-3">
+<div>
+<span class="font-label-sm font-semibold text-primary block">[AI Assistive Finding: Confidence Score 96.8%]</span>
+<p class="text-on-surface-variant mt-0.5">Faculty CAD cadre shortfall verified across 3 departments against 1:15 norms. Mismatch detected with National Faculty Database records.</p>
+</div>
+<span class="font-label-sm font-mono text-outline shrink-0 bg-surface-container-lowest px-2 py-1 rounded border border-outline-variant/30">
+                      RULE-CAD-2025-08 v2.4
+                    </span>
+</div>
+</div>
+</div>
+<!-- Footer: Prev Hash Link & Proof Controls -->
+<div class="pt-space-sm border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-2 text-label-sm font-label-sm">
+<div class="flex items-center gap-2 text-outline">
+<span>Prev Hash:</span>
+<span class="font-mono text-on-surface-variant font-medium">0x3d1a...99b4</span>
+<span class="flex items-center text-secondary gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">link</span>
+<span>Valid Link</span>
+</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-primary hover:underline font-headline-sm font-semibold flex items-center gap-1" onclick="inspectPayload('Block #1420', '0x8f4d92a184e1b0c99f8d31e2')">
+<span>Inspect Block Payload</span>
+<span class="material-symbols-outlined" style="font-size: 14px;">open_in_new</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Entry 2: Block #1419 (AI Inference Flag) -->
+<div class="relative group">
+<!-- Node Pin -->
+<div class="absolute -left-6 sm:-left-8 top-5 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md ring-4 ring-background">
+<span class="material-symbols-outlined" style="font-size: 16px;">neurology</span>
+</div>
+<article class="p-space-lg rounded-2xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface shadow-xs hover:border-primary/40 transition-all">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-space-sm border-b border-outline-variant/20">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-sm font-body-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">schedule</span>
+<span>Today, 13:10:44 IST</span>
+</span>
+<span class="px-2.5 py-0.5 rounded-full text-label-md font-label-md font-semibold bg-tertiary-container/15 text-tertiary border border-tertiary/25">
+                    AI Inference / Anomaly Flag
+                  </span>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-primary/10 text-primary border border-primary/20">
+                    Block #1419
+                  </span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-primary dark:text-inverse-primary font-mono text-label-sm flex items-center gap-1.5 transition-colors border border-outline-variant/30" onclick="copyHash('0x3d1a89c25f7e44a199b4')">
+<span>0x3d1a...99b4</span>
+<span class="material-symbols-outlined text-outline" style="font-size: 14px;">content_copy</span>
+</button>
+</div>
+</div>
+<div class="py-space-md grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<div class="lg:col-span-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest text-primary font-headline-sm font-bold flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface">Automated Ingestion Bot</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Statutory AI Inference Engine</p>
+<span class="text-label-sm font-label-sm text-outline">Engine ID: AIE-8841</span>
+</div>
+</div>
+<div class="lg:col-span-8">
+<p class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface font-medium leading-relaxed">
+                    Geospatial land plot polygon boundary discrepancy detected: Deeded land deed <span class="text-on-surface font-semibold">12.4 Acres</span> differs from digitized Survey of India Khasra boundary (<span class="font-mono text-label-sm bg-surface-container-low px-1.5 py-0.5 rounded">11.1 Acres</span>).
+                  </p>
+<div class="mt-3 p-3 rounded-xl bg-surface-container-low border-l-4 border-tertiary-container text-body-sm flex items-start justify-between gap-3">
+<div>
+<span class="font-label-sm font-semibold text-tertiary block">[AI Assistive Finding: Confidence Score 94.2%]</span>
+<p class="text-on-surface-variant mt-0.5">Plot survey bounds show non-contiguous agricultural enclave. Requires manual verification by Land &amp; Works committee.</p>
+</div>
+<span class="font-label-sm font-mono text-outline shrink-0 bg-surface-container-lowest px-2 py-1 rounded border border-outline-variant/30">
+                      Claude-3.5-Sonnet-Reg-Engine v4.2
+                    </span>
+</div>
+</div>
+</div>
+<div class="pt-space-sm border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-2 text-label-sm font-label-sm">
+<div class="flex items-center gap-2 text-outline">
+<span>Prev Hash:</span>
+<span class="font-mono text-on-surface-variant font-medium">0x6e2c...11a0</span>
+<span class="flex items-center text-secondary gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">link</span>
+<span>Valid Link</span>
+</span>
+</div>
+<button class="text-primary hover:underline font-headline-sm font-semibold flex items-center gap-1" onclick="inspectPayload('Block #1419', '0x3d1a89c25f7e44a199b4')">
+<span>Inspect Block Payload</span>
+<span class="material-symbols-outlined" style="font-size: 14px;">open_in_new</span>
+</button>
+</div>
+</article>
+</div>
+<!-- Entry 3: Block #1418 (Registry API Query) -->
+<div class="relative group">
+<div class="absolute -left-6 sm:-left-8 top-5 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow-md ring-4 ring-background">
+<span class="material-symbols-outlined" style="font-size: 16px;">database</span>
+</div>
+<article class="p-space-lg rounded-2xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface shadow-xs hover:border-primary/40 transition-all">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-space-sm border-b border-outline-variant/20">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-sm font-body-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">schedule</span>
+<span>Today, 11:45:19 IST</span>
+</span>
+<span class="px-2.5 py-0.5 rounded-full text-label-md font-label-md font-semibold bg-secondary-container/20 text-on-secondary-container border border-secondary-container/40">
+                    Registry API Query
+                  </span>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-primary/10 text-primary border border-primary/20">
+                    Block #1418
+                  </span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-primary dark:text-inverse-primary font-mono text-label-sm flex items-center gap-1.5 transition-colors border border-outline-variant/30" onclick="copyHash('0x6e2cf049e211a0bb')">
+<span>0x6e2c...11a0</span>
+<span class="material-symbols-outlined text-outline" style="font-size: 14px;">content_copy</span>
+</button>
+</div>
+</div>
+<div class="py-space-md grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<div class="lg:col-span-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface font-headline-sm font-bold flex items-center justify-center shrink-0">
+                    SG
+                  </div>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface">System Gateway Node</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Statutory Data Interoperability Broker</p>
+<span class="text-label-sm font-label-sm text-outline">Endpoint: SWRO-GW-04</span>
+</div>
+</div>
+<div class="lg:col-span-8">
+<p class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface font-medium leading-relaxed">
+                    Synchronized statutory fire safety NOC validity record from <span class="text-primary font-semibold">State Fire &amp; Rescue Services e-Portal</span> for docket <span class="font-mono text-label-sm bg-surface-container-low px-1.5 py-0.5 rounded">APP-2025-9842</span>. Certificate status confirmed: Active (Expires 31-Dec-2026).
+                  </p>
+<div class="mt-3 flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-lg bg-surface-container-low text-label-sm font-label-sm text-on-surface-variant border border-outline-variant/30">
+                      Source: State Fire &amp; Emergency Services ↗
+                    </span>
+<span class="px-2.5 py-1 rounded-lg bg-secondary/10 text-secondary text-label-sm font-label-sm font-medium border border-secondary/20">
+                      HTTP 200 OK • Response Latency 142ms
+                    </span>
+</div>
+</div>
+</div>
+<div class="pt-space-sm border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-2 text-label-sm font-label-sm">
+<div class="flex items-center gap-2 text-outline">
+<span>Prev Hash:</span>
+<span class="font-mono text-on-surface-variant font-medium">0x55ac...44c2</span>
+<span class="flex items-center text-secondary gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">link</span>
+<span>Valid Link</span>
+</span>
+</div>
+<button class="text-primary hover:underline font-headline-sm font-semibold flex items-center gap-1" onclick="inspectPayload('Block #1418', '0x6e2cf049e211a0bb')">
+<span>Inspect Block Payload</span>
+<span class="material-symbols-outlined" style="font-size: 14px;">open_in_new</span>
+</button>
+</div>
+</article>
+</div>
+<!-- Entry 4: Block #1417 (Maker Endorsement) -->
+<div class="relative group">
+<div class="absolute -left-6 sm:-left-8 top-5 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary-fixed-dim text-on-primary-fixed flex items-center justify-center shadow-md ring-4 ring-background">
+<span class="material-symbols-outlined" style="font-size: 16px;">draw</span>
+</div>
+<article class="p-space-lg rounded-2xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface shadow-xs hover:border-primary/40 transition-all">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-space-sm border-b border-outline-variant/20">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-sm font-body-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">schedule</span>
+<span>Yesterday, 17:15:22 IST</span>
+</span>
+<span class="px-2.5 py-0.5 rounded-full text-label-md font-label-md font-semibold bg-primary-fixed text-on-primary-fixed border border-primary/25">
+                    Maker Endorsement
+                  </span>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-primary/10 text-primary border border-primary/20">
+                    Block #1417
+                  </span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-primary dark:text-inverse-primary font-mono text-label-sm flex items-center gap-1.5 transition-colors border border-outline-variant/30" onclick="copyHash('0x55ac912044c2de7')">
+<span>0x55ac...44c2</span>
+<span class="material-symbols-outlined text-outline" style="font-size: 14px;">content_copy</span>
+</button>
+</div>
+</div>
+<div class="py-space-md grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<div class="lg:col-span-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high text-on-surface font-headline-sm font-bold flex items-center justify-center shrink-0">
+                    PN
+                  </div>
+<div>
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface">Dr. P. Nair</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Maker Analyst • Senior Inspector</p>
+<span class="text-label-sm font-label-sm text-outline">AICTE ID: SCR-77104</span>
+</div>
+</div>
+<div class="lg:col-span-8">
+<p class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface font-medium leading-relaxed">
+                    Endorsed laboratory carpet area computation report for <span class="text-primary font-semibold">Vidyasagar Technical Campus</span> (<span class="font-mono text-label-sm bg-surface-container-low px-1.5 py-0.5 rounded">APP-2025-8419</span>). AI floor plan extraction matches physical inspection log with zero area shortfall.
+                  </p>
+</div>
+</div>
+<div class="pt-space-sm border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-2 text-label-sm font-label-sm">
+<div class="flex items-center gap-2 text-outline">
+<span>Prev Hash:</span>
+<span class="font-mono text-on-surface-variant font-medium">0x12bb...90e3</span>
+<span class="flex items-center text-secondary gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">link</span>
+<span>Valid Link</span>
+</span>
+</div>
+<button class="text-primary hover:underline font-headline-sm font-semibold flex items-center gap-1" onclick="inspectPayload('Block #1417', '0x55ac912044c2de7')">
+<span>Inspect Block Payload</span>
+<span class="material-symbols-outlined" style="font-size: 14px;">open_in_new</span>
+</button>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- ================= VIEW 2: LEDGER TABLE VIEW (TOGGLEABLE) ================= -->
+<section class="hidden" id="tableContainer">
+<div class="rounded-2xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface overflow-hidden shadow-xs">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-body-sm font-body-sm">
+<thead class="bg-surface-container-low dark:bg-inverse-surface border-b border-outline-variant/30 text-label-sm font-label-sm text-outline">
+<tr>
+<th class="py-3 px-4">BLOCK #</th>
+<th class="py-3 px-4">TIMESTAMP</th>
+<th class="py-3 px-4">ACTOR &amp; ROLE</th>
+<th class="py-3 px-4">EVENT TYPE</th>
+<th class="py-3 px-4">TARGET DOCKET</th>
+<th class="py-3 px-4">MODEL / RULE PACK</th>
+<th class="py-3 px-4">SHORT HASH</th>
+<th class="py-3 px-4 text-center">INTEGRITY</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 text-on-surface dark:text-inverse-on-surface">
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3.5 px-4 font-mono font-semibold text-primary">#1420</td>
+<td class="py-3.5 px-4 text-on-surface-variant whitespace-nowrap">Today, 14:32:08</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">Dr. V. Sharma</div>
+<div class="text-[11px] text-outline">Lead Checker (SCR-84920)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm font-medium bg-secondary/10 text-secondary border border-secondary/20">
+                      Checker Approval
+                    </span>
+</td>
+<td class="py-3.5 px-4 font-mono text-label-sm">PID-1-9284102</td>
+<td class="py-3.5 px-4 text-label-sm font-mono text-on-surface-variant">RULE-CAD-2025-08</td>
+<td class="py-3.5 px-4">
+<button class="font-mono text-primary hover:underline text-label-sm" onclick="copyHash('0x8f4d92a184e1b0c9')">0x8f4d...31e2</button>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Linked</span>
+</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3.5 px-4 font-mono font-semibold text-primary">#1419</td>
+<td class="py-3.5 px-4 text-on-surface-variant whitespace-nowrap">Today, 13:10:44</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">Automated Ingestion Bot</div>
+<div class="text-[11px] text-outline">AI Node #402</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm font-medium bg-tertiary-container/15 text-tertiary border border-tertiary/20">
+                      AI Anomaly Flag
+                    </span>
+</td>
+<td class="py-3.5 px-4 font-mono text-label-sm">PID-1-9284102</td>
+<td class="py-3.5 px-4 text-label-sm font-mono text-on-surface-variant">Claude-Sonnet-Reg v4.2</td>
+<td class="py-3.5 px-4">
+<button class="font-mono text-primary hover:underline text-label-sm" onclick="copyHash('0x3d1a89c25f7e44a1')">0x3d1a...99b4</button>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Linked</span>
+</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3.5 px-4 font-mono font-semibold text-primary">#1418</td>
+<td class="py-3.5 px-4 text-on-surface-variant whitespace-nowrap">Today, 11:45:19</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">System Gateway Node</div>
+<div class="text-[11px] text-outline">SWRO-GW-04</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm font-medium bg-secondary-container/20 text-on-secondary-container border border-secondary-container/30">
+                      Registry API Query
+                    </span>
+</td>
+<td class="py-3.5 px-4 font-mono text-label-sm">APP-2025-9842</td>
+<td class="py-3.5 px-4 text-label-sm font-mono text-on-surface-variant">GATEWAY-NOC-SYNC</td>
+<td class="py-3.5 px-4">
+<button class="font-mono text-primary hover:underline text-label-sm" onclick="copyHash('0x6e2cf049e211a0bb')">0x6e2c...11a0</button>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Linked</span>
+</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3.5 px-4 font-mono font-semibold text-primary">#1417</td>
+<td class="py-3.5 px-4 text-on-surface-variant whitespace-nowrap">Yesterday, 17:15:22</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">Dr. P. Nair</div>
+<div class="text-[11px] text-outline">Maker Analyst (SCR-77104)</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm font-medium bg-primary-fixed text-on-primary-fixed border border-primary/20">
+                      Maker Endorsement
+                    </span>
+</td>
+<td class="py-3.5 px-4 font-mono text-label-sm">APP-2025-8419</td>
+<td class="py-3.5 px-4 text-label-sm font-mono text-on-surface-variant">RULE-INF-2025-01</td>
+<td class="py-3.5 px-4">
+<button class="font-mono text-primary hover:underline text-label-sm" onclick="copyHash('0x55ac912044c2de7')">0x55ac...44c2</button>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Linked</span>
+</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-high/40 transition-colors">
+<td class="py-3.5 px-4 font-mono font-semibold text-primary">#1416</td>
+<td class="py-3.5 px-4 text-on-surface-variant whitespace-nowrap">Yesterday, 14:02:11</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">AICTE Regional Admin</div>
+<div class="text-[11px] text-outline">HQ Council Node</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm font-medium bg-surface-container-high text-on-surface border border-outline-variant/30">
+                      Rule Pack Version Update
+                    </span>
+</td>
+<td class="py-3.5 px-4 font-mono text-label-sm">AICTE-CORE-STANDARDS</td>
+<td class="py-3.5 px-4 text-label-sm font-mono text-on-surface-variant">RULE-ENGINE-V2.4</td>
+<td class="py-3.5 px-4">
+<button class="font-mono text-primary hover:underline text-label-sm" onclick="copyHash('0x12bb90e38a4d91')">0x12bb...90e3</button>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Linked</span>
+</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-space-md border-t border-outline-variant/30 flex items-center justify-between text-body-sm text-outline bg-surface-container-low">
+<span>Showing recent 5 of 1,420 registered ledger blocks</span>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 rounded-lg border border-outline-variant/40 bg-surface-container-lowest text-on-surface text-label-sm font-medium hover:bg-surface-container-high">Previous</button>
+<button class="px-3 py-1 rounded-lg border border-outline-variant/40 bg-surface-container-lowest text-on-surface text-label-sm font-medium hover:bg-surface-container-high">Next</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Spacer -->
+<div class="h-12"></div>
+</main>
+</div>
+<!-- ================= INSPECT BLOCK PAYLOAD MODAL ================= -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-on-surface/40 backdrop-blur-xs transition-opacity" id="payloadModal">
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/30 shadow-2xl w-full max-w-2xl overflow-hidden">
+<div class="px-space-lg py-space-md border-b border-outline-variant/20 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">data_object</span>
+<h4 class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface" id="payloadModalTitle">Block Payload Inspector</h4>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container text-on-surface-variant" onclick="closePayloadModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-space-lg space-y-4">
+<div>
+<label class="text-label-sm font-label-sm text-outline block mb-1">RECORDED SHA-256 DIGEST</label>
+<div class="font-mono text-label-sm p-2 rounded-lg bg-surface-container-low border border-outline-variant/30 text-primary break-all" id="payloadHashHolder">
+            0x8f4d92a184e1b0c99f8d31e2472910fa31
+          </div>
+</div>
+<div>
+<label class="text-label-sm font-label-sm text-outline block mb-1">CANONICAL JSON PAYLOAD WITNESS</label>
+<pre class="p-3 rounded-xl bg-surface-container-low text-on-surface font-mono text-[11px] leading-relaxed overflow-x-auto max-h-56 custom-scroll border border-outline-variant/20">{
+  "protocol": "FIXORA-STATUTORY-CHAIN-V2",
+  "block_height": 1420,
+  "action_type": "CHECKER_DETERMINATION_RELEASE",
+  "actor": {
+    "name": "Dr. V. Sharma",
+    "reg_id": "SCR-84920",
+    "role": "LEAD_CHECKER"
+  },
+  "docket_id": "PID-1-9284102",
+  "institution": "Apex Institute of Technology",
+  "ai_confidence_score": 0.968,
+  "statutory_rule_ref": "RULE-CAD-2025-08-v2.4",
+  "discrepancy_category": "CADRE_RATIO_DISPARITY",
+  "rectification_window_days": 7,
+  "merkle_witness_signature": "0x44ae8...bf29"
+}</pre>
+</div>
+<div class="p-3 rounded-xl bg-secondary/10 border border-secondary/20 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">verified</span>
+<span class="text-body-sm font-body-sm font-medium text-secondary">Merkle Inclusion Proof Validated</span>
+</div>
+<span class="text-label-sm font-label-sm text-outline font-mono">Proof Height: 11 nodes</span>
+</div>
+</div>
+<div class="px-space-lg py-space-sm bg-surface-container-low border-t border-outline-variant/20 flex justify-end">
+<button class="px-4 py-2 rounded-xl bg-primary text-on-primary font-headline-sm text-body-sm font-semibold" onclick="closePayloadModal()">
+          Dismiss Inspector
+        </button>
+</div>
+</div>
+</div>
+<!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none" id="toastNotification">
+<div class="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-inverse-surface text-inverse-on-surface shadow-lg text-body-sm border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary" style="font-size: 18px;">check_circle</span>
+<span id="toastMessage">Hash copied to clipboard</span>
+</div>
+</div>
+<!-- Inline Script for Interactive Scrutiny Controls -->
+<script>
+    // Theme toggle
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        themeIcon.textContent = 'dark_mode';
+      } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+        themeIcon.textContent = 'light_mode';
+      }
+    }
+
+    // View Switcher: Vertical Timeline vs Table
+    function switchView(view) {
+      const timelineView = document.getElementById('timelineContainer');
+      const tableView = document.getElementById('tableContainer');
+      const timelineBtn = document.getElementById('viewTimelineBtn');
+      const tableBtn = document.getElementById('viewTableBtn');
+
+      if (view === 'timeline') {
+        timelineView.classList.remove('hidden');
+        tableView.classList.add('hidden');
+        
+        timelineBtn.className = "px-3 py-1.5 rounded-lg text-body-sm font-headline-sm font-semibold flex items-center gap-1.5 transition-all bg-surface-container-lowest text-primary shadow-xs";
+        tableBtn.className = "px-3 py-1.5 rounded-lg text-body-sm font-headline-sm font-semibold flex items-center gap-1.5 transition-all text-on-surface-variant hover:text-on-surface";
+      } else {
+        timelineView.classList.add('hidden');
+        tableView.classList.remove('hidden');
+
+        tableBtn.className = "px-3 py-1.5 rounded-lg text-body-sm font-headline-sm font-semibold flex items-center gap-1.5 transition-all bg-surface-container-lowest text-primary shadow-xs";
+        timelineBtn.className = "px-3 py-1.5 rounded-lg text-body-sm font-headline-sm font-semibold flex items-center gap-1.5 transition-all text-on-surface-variant hover:text-on-surface";
+      }
+    }
+
+    // Interactive Broken Block Simulation Toggle
+    let isTampered = false;
+    function toggleTamperSimulation() {
+      isTampered = !isTampered;
+      const title = document.getElementById('statusTitle');
+      const badge = document.getElementById('statusBadge');
+      const desc = document.getElementById('statusDesc');
+      const iconHolder = document.getElementById('statusIconHolder');
+      const simBtnText = document.getElementById('simBtnText');
+      const tamperPanel = document.getElementById('tamperDiagnosticPanel');
+
+      if (isTampered) {
+        title.textContent = "Tampered Payload Warning: Broken Entry #1,418";
+        title.classList.add('text-error');
+        badge.textContent = "Cryptographic Mismatch Detected";
+        badge.className = "font-label-md text-label-md px-2.5 py-0.5 rounded-full bg-error/10 text-error border border-error/30 font-semibold";
+        desc.innerHTML = 'Chain validation halted at Block #1418. Hash discrepancy with state authority source: <span class="font-mono text-error font-medium">0x7b4e...48a2</span>. Requires manual scrutiny verification.';
+        iconHolder.className = "w-12 h-12 rounded-xl bg-error/15 text-error flex items-center justify-center shrink-0";
+        iconHolder.innerHTML = '<span class="material-symbols-outlined" style="font-size: 28px;">gpp_bad</span>';
+        simBtnText.textContent = "Re-verify & Restore Chain";
+        tamperPanel.classList.remove('hidden');
+        showToast("Simulation Active: Broken link injected at Block #1418");
+      } else {
+        title.textContent = "Chain Integrity Verified: 1,420 Blocks Valid";
+        title.classList.remove('text-error');
+        badge.textContent = "Zero Anomaly Detected";
+        badge.className = "font-label-md text-label-md px-2.5 py-0.5 rounded-full bg-secondary-container/30 text-secondary border border-secondary/30 font-semibold";
+        desc.innerHTML = 'Merkle Root verified against SHA-256 genesis hash (<span class="font-label-sm font-mono text-primary font-medium">0x9f4a...88c1</span>). Zero tampering or broken links detected across statutory nodes.';
+        iconHolder.className = "w-12 h-12 rounded-xl bg-secondary/15 text-secondary flex items-center justify-center shrink-0";
+        iconHolder.innerHTML = '<span class="material-symbols-outlined" style="font-size: 28px;">gpp_good</span>';
+        simBtnText.textContent = "Simulate Broken Block 0x7b4e";
+        tamperPanel.classList.add('hidden');
+        showToast("Chain Re-verified: All 1,420 blocks match Merkle consensus");
+      }
+    }
+
+    // Modal verification trigger
+    function toggleVerificationModal() {
+      const banner = document.getElementById('integrityBanner');
+      banner.scrollIntoView({ behavior: 'smooth' });
+      banner.classList.add('ring-2', 'ring-primary');
+      setTimeout(() => banner.classList.remove('ring-2', 'ring-primary'), 1200);
+      showToast("Chain verified against SWRO Node 04 consensus engine.");
+    }
+
+    // Copy Hash helper with Toast
+    function copyHash(hashStr) {
+      navigator.clipboard?.writeText(hashStr);
+      showToast("Digest " + hashStr.substring(0, 10) + "... copied");
+    }
+
+    function copyGenesisHash() {
+      navigator.clipboard?.writeText("0x9f4a21e784c0174bb0982df41e57c1a890488c1");
+      showToast("Genesis SHA-256 hash copied to clipboard");
+    }
+
+    function triggerExportNotice() {
+      showToast("Generating signed JSON-LD certificate bundle...");
+    }
+
+    // Block Payload Inspector Modal
+    function inspectPayload(blockLabel, hashStr) {
+      document.getElementById('payloadModalTitle').textContent = "Payload Inspector - " + blockLabel;
+      document.getElementById('payloadHashHolder').textContent = hashStr;
+      document.getElementById('payloadModal').classList.remove('hidden');
+    }
+
+    function closePayloadModal() {
+      document.getElementById('payloadModal').classList.add('hidden');
+    }
+
+    // Micro toast
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      const text = document.getElementById('toastMessage');
+      text.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2600);
+    }
+  </script>
+</body></html>

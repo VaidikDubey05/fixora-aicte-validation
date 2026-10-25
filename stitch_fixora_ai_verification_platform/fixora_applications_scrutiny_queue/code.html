@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIXORA — Institutional Applications Scrutiny Queue</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#5e4200",
+            "secondary": "#006a62",
+            "on-secondary-fixed": "#00201d",
+            "on-surface": "#121a37",
+            "on-secondary-container": "#007168",
+            "primary-fixed-dim": "#c1c1ff",
+            "primary-container": "#5b5bff",
+            "on-primary-fixed-variant": "#2920d3",
+            "surface-bright": "#fbf8ff",
+            "surface-tint": "#4543ea",
+            "surface-container-high": "#e4e7ff",
+            "outline": "#767587",
+            "secondary-fixed": "#57fae9",
+            "on-tertiary-fixed": "#271900",
+            "background": "#fbf8ff",
+            "inverse-primary": "#c1c1ff",
+            "secondary-container": "#57fae9",
+            "tertiary-container": "#966b00",
+            "tertiary-fixed-dim": "#ffba20",
+            "secondary-fixed-dim": "#2addcd",
+            "primary": "#403de6",
+            "surface": "#fbf8ff",
+            "surface-container-low": "#f3f2ff",
+            "surface-container-lowest": "#ffffff",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#e1dfff",
+            "surface-container-highest": "#dde1ff",
+            "on-surface-variant": "#464556",
+            "surface-container": "#ecedff",
+            "on-secondary-fixed-variant": "#005049",
+            "on-tertiary": "#ffffff",
+            "on-background": "#121a37",
+            "on-secondary": "#ffffff",
+            "on-error": "#ffffff",
+            "inverse-on-surface": "#efefff",
+            "on-primary-fixed": "#08006b",
+            "tertiary": "#775400",
+            "outline-variant": "#c6c4d8",
+            "error": "#ba1a1a",
+            "surface-dim": "#d2d8ff",
+            "on-primary-container": "#fbf8ff",
+            "surface-variant": "#dde1ff",
+            "inverse-surface": "#282f4d",
+            "on-tertiary-container": "#fff8f3",
+            "on-primary": "#ffffff",
+            "tertiary-fixed": "#ffdea8"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "margin-sm": "1rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "margin-lg": "3rem",
+            "gutter": "1.5rem",
+            "gutter-sm": "1rem",
+            "space-xl": "2rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "gutter-lg": "2rem"
+          },
+          fontFamily: {
+            "label-md": ["JetBrains Mono"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-lg": ["JetBrains Mono"],
+            "body-md": ["Inter"]
+          },
+          fontSize: {
+            "label-md": ["11px", { lineHeight: "16px", fontWeight: "500" }],
+            "label-sm": ["10px", { lineHeight: "14px", fontWeight: "500" }],
+            "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "headline-lg-mobile": ["22px", { lineHeight: "30px", fontWeight: "700" }],
+            "headline-lg": ["28px", { lineHeight: "36px", fontWeight: "700" }],
+            "headline-sm": ["16px", { lineHeight: "24px", fontWeight: "600" }],
+            "headline-xl": ["40px", { lineHeight: "48px", fontWeight: "700" }],
+            "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }],
+            "headline-xl-mobile": ["30px", { lineHeight: "38px", fontWeight: "700" }],
+            "label-lg": ["13px", { lineHeight: "18px", fontWeight: "600" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #c6c4d8;
+      border-radius: 9999px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #464556;
+    }
+  </style>
+</head>
+<body class="bg-background dark:bg-inverse-surface text-on-surface dark:text-inverse-on-surface antialiased font-body-md text-body-md transition-colors duration-200 min-h-screen flex flex-col">
+<!-- TOP STATUTORY BANNER (Shared Component TopAppBar & Regulatory Mandate) -->
+<header class="bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md border-b border-outline-variant/30 dark:border-outline-variant/10 shadow-sm docked full-width top-0 sticky z-40">
+<!-- Statutory Advisory Strip -->
+<div class="bg-primary-fixed dark:bg-inverse-surface border-b border-outline-variant/30 dark:border-outline-variant/10 px-space-lg py-1.5 flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary text-white text-[10px] font-bold">i</span>
+<p class="font-body-sm text-body-sm text-on-primary-fixed dark:text-inverse-on-surface">
+<strong class="font-semibold">[Statutory Advisory]:</strong> AI findings are analytical recommendations requiring human endorsement. Scrutiny Officers hold final clearance authority under AICTE Regulations 2024.
+        </p>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-outline-variant">
+<div class="flex items-center gap-1.5 font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span>SWRO Core Engine: Live Synced (AY 2025-26)</span>
+</div>
+<div class="h-3 w-px bg-outline-variant/40"></div>
+<div class="font-label-sm text-label-sm">
+          Node: <span class="text-primary dark:text-inverse-primary font-semibold">BLR-CENTRAL-09</span>
+</div>
+</div>
+</div>
+<!-- Main Navigation Bar Shell -->
+<div class="flex justify-between items-center w-full px-space-lg h-16 max-w-full">
+<!-- Brand & Hub Identity -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary text-28px" data-icon="verified_user">verified_user</span>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">FIXORA</span>
+<span class="ml-1 px-2 py-0.5 rounded-full text-[10px] font-label-sm font-semibold bg-secondary-fixed/50 dark:bg-secondary-container/30 text-secondary dark:text-secondary-fixed border border-secondary/20">
+            AI Scrutiny Bureau
+          </span>
+</div>
+<div class="hidden xl:flex items-center gap-2 px-3 py-1 bg-surface-container-low dark:bg-surface-variant/20 rounded-lg border border-outline-variant/30 text-xs">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="hub">hub</span>
+<span class="font-medium text-on-surface-variant dark:text-outline-variant">South-Western Regional Office (SWRO)</span>
+</div>
+</div>
+<!-- Quick Search & Center Global Status -->
+<div class="flex-1 max-w-md mx-8 hidden lg:block">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-lg" data-icon="search">search</span>
+<input class="w-full h-9 pl-9 pr-12 rounded-xl border border-outline-variant/40 dark:border-outline/30 bg-surface-container-lowest dark:bg-surface-variant/10 text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Search by PID, Institution, Application ID (Press ⌘K)..." type="text"/>
+<kbd class="absolute right-3 px-1.5 py-0.5 text-[10px] font-label-sm font-medium bg-surface-container dark:bg-surface-variant/30 text-on-surface-variant rounded border border-outline-variant/40">⌘K</kbd>
+</div>
+</div>
+<!-- Trailing Action & Profile Cluster -->
+<div class="flex items-center gap-3">
+<!-- Interactive Theme Switcher -->
+<button class="p-2 rounded-xl text-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors" id="themeToggleBtn" title="Toggle Theme">
+<span class="material-symbols-outlined" data-icon="dark_mode" id="themeIcon">dark_mode</span>
+</button>
+<!-- Notification Bell -->
+<button class="relative p-2 rounded-xl text-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span>
+</button>
+<!-- Ask FIXORA Trigger Button (From JSON trailing_action_text) -->
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-primary to-purple-600 text-white font-headline-sm text-sm font-semibold shadow-sm hover:brightness-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+<span>Ask FIXORA</span>
+</button>
+<div class="h-6 w-px bg-outline-variant/40 mx-1"></div>
+<!-- User Profile Pill -->
+<div class="flex items-center gap-2.5 pl-1">
+<div class="w-8 h-8 rounded-full bg-primary-fixed dark:bg-primary-container text-primary dark:text-on-primary-container font-headline-sm font-bold flex items-center justify-center text-xs border border-primary/20">
+            VS
+          </div>
+<div class="hidden sm:block text-left">
+<p class="font-headline-sm text-xs font-semibold leading-tight text-on-surface dark:text-inverse-on-surface">Dr. V. Sharma</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant dark:text-outline-variant">Scrutiny Officer</p>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- WORKSPACE WRAPPER (DRAWER + MAIN CANVASES) -->
+<div class="flex flex-1 overflow-hidden">
+<!-- NAVIGATION DRAWER (Shared Component exact specification) -->
+<aside class="w-72 h-auto flex flex-col justify-between p-space-md bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant/40 dark:border-outline/20 shadow-md flex-shrink-0">
+<div class="space-y-6">
+<!-- Officer Badge Card -->
+<div class="p-3.5 rounded-xl bg-surface-container-low dark:bg-surface-variant/20 border border-outline-variant/40 dark:border-outline/20 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">
+            VS
+          </div>
+<div class="overflow-hidden">
+<div class="flex items-center gap-1">
+<span class="text-label-lg font-label-lg font-bold truncate text-on-surface dark:text-inverse-on-surface">Dr. V. Sharma</span>
+<span class="material-symbols-outlined text-sm text-primary" data-icon="verified">verified</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">Scrutiny Officer</p>
+<p class="text-label-sm font-label-sm text-primary font-medium">AICTE ID: SCR-84920</p>
+</div>
+</div>
+<!-- Bureau Scope Quick Tag -->
+<div class="px-2">
+<div class="flex items-center justify-between text-[11px] font-label-md text-outline uppercase tracking-wider mb-2 font-semibold">
+<span>Operational Bureau</span>
+<span class="text-secondary font-bold">SWRO</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container/60 dark:bg-surface-variant/10 text-xs text-on-surface-variant flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="truncate">Karnataka &amp; Kerala Region Dockets</span>
+</div>
+</div>
+<!-- Navigation Tabs (from JSON: Institution Portal, Scrutiny Scopes, Verification Bureau, Registry Admin) -->
+<nav class="space-y-1.5">
+<!-- Item 1: Institution Portal -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm text-label-lg font-label-lg transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="apartment">apartment</span>
+<span>Institution Portal</span>
+</a>
+<!-- Item 2: Scrutiny Scopes (ACTIVE COMPONENT) -->
+<a class="flex items-center justify-between bg-primary-fixed dark:bg-primary-container text-on-primary-fixed dark:text-on-primary-container font-semibold rounded-lg px-space-md py-space-sm text-label-lg font-label-lg shadow-sm" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span>Scrutiny Scopes</span>
+</div>
+<span class="px-2 py-0.5 rounded-full text-xs font-label-sm font-bold bg-primary text-white">142</span>
+</a>
+<!-- Item 3: Verification Bureau -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm text-label-lg font-label-lg transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="policy">policy</span>
+<span>Verification Bureau</span>
+</a>
+<!-- Item 4: Registry Admin -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm text-label-lg font-label-lg transition-colors duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span>Registry Admin</span>
+</a>
+</nav>
+<!-- AI Engine Live Telemetry Widget -->
+<div class="p-3.5 rounded-xl border border-outline-variant/40 bg-surface-container-low dark:bg-surface-variant/10 space-y-2.5">
+<div class="flex items-center justify-between text-xs">
+<span class="font-headline-sm font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="neurology">neurology</span>
+              AI Verification Core
+            </span>
+<span class="font-label-sm text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">99.1% HEALTH</span>
+</div>
+<div class="w-full bg-surface-container dark:bg-surface-variant/30 h-1.5 rounded-full overflow-hidden">
+<div class="bg-gradient-to-r from-primary to-secondary h-full rounded-full w-[84%]"></div>
+</div>
+<div class="flex justify-between text-[11px] font-label-sm text-outline">
+<span>OCR Queue: 6 pending</span>
+<span>Cadastral: Active</span>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Action -->
+<div class="pt-4 border-t border-outline-variant/30 space-y-2">
+<a class="flex items-center gap-2 px-3 py-2 text-xs font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span>Regulatory Manual 2024-25</span>
+</a>
+<div class="text-[10px] font-label-sm text-outline px-3">
+          AICTE Central v4.8.2-b12 • SECURED
+        </div>
+</div>
+</aside>
+<!-- PRIMARY CONTENT CANVAS (1440px target container) -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-background dark:bg-inverse-surface">
+<!-- PAGE HEADER SECTION -->
+<div class="p-space-lg lg:p-space-xl border-b border-outline-variant/30 bg-surface-container-lowest/50 dark:bg-surface-variant/5 backdrop-blur-sm">
+<!-- Breadcrumb & SLA Flag -->
+<div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+<nav class="flex items-center gap-1.5 text-xs font-label-md text-outline">
+<span class="hover:text-primary transition-colors cursor-pointer">Scrutiny Scopes</span>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+<span class="text-on-surface dark:text-inverse-on-surface font-semibold">Applications Scrutiny Queue</span>
+</nav>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-label-sm font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span>
+<span>Statutory SLA: 72 Hours Window</span>
+</span>
+</div>
+</div>
+<!-- Title & Subtitle + Top Action Buttons -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface dark:text-inverse-on-surface tracking-tight">
+              Institutional Applications Queue
+            </h1>
+<p class="text-body-md font-body-md text-on-surface-variant dark:text-outline-variant mt-1">
+              South-Western Regional Office • AY 2025–26 Cycle • <span class="font-semibold text-primary dark:text-inverse-primary">142 Active Dockets</span> • Regulatory Scrutiny Bureau
+            </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-outline-variant/50 bg-surface-container-lowest dark:bg-surface-variant/20 text-on-surface dark:text-inverse-on-surface font-label-lg text-xs font-semibold hover:bg-surface-container transition-all shadow-sm">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+<span>Export Dataset (CSV/PDF)</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-white font-label-lg text-xs font-semibold hover:bg-primary/90 transition-all shadow-sm hover:shadow-md">
+<span class="material-symbols-outlined text-sm animate-spin-hover" data-icon="sync">sync</span>
+<span>Refresh Queue</span>
+</button>
+</div>
+</div>
+<!-- Quick Stats Bento Pills -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Stat 1: Total -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest dark:bg-surface-variant/20 border border-outline-variant/40 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm text-outline uppercase font-semibold">Total Applications</p>
+<h3 class="text-headline-md font-headline-md font-bold mt-0.5 text-on-surface dark:text-inverse-on-surface">142</h3>
+</div>
+<div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+</div>
+</div>
+<!-- Stat 2: Urgent Review -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest dark:bg-surface-variant/20 border border-outline-variant/40 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm text-rose-600 dark:text-rose-400 uppercase font-semibold">Urgent Scrutiny (&gt;75)</p>
+<h3 class="text-headline-md font-headline-md font-bold mt-0.5 text-on-surface dark:text-inverse-on-surface">34</h3>
+</div>
+<div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-600 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="priority_high">priority_high</span>
+</div>
+</div>
+<!-- Stat 3: Cadastral In-Flight -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest dark:bg-surface-variant/20 border border-outline-variant/40 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm text-secondary uppercase font-semibold">Cadastral In-Flight</p>
+<h3 class="text-headline-md font-headline-md font-bold mt-0.5 text-on-surface dark:text-inverse-on-surface">18</h3>
+</div>
+<div class="w-10 h-10 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+</div>
+</div>
+<!-- Stat 4: Overdue SLA -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest dark:bg-surface-variant/20 border border-outline-variant/40 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm text-amber-600 dark:text-amber-400 uppercase font-semibold">Approaching SLA (&lt;24h)</p>
+<h3 class="text-headline-md font-headline-md font-bold mt-0.5 text-on-surface dark:text-inverse-on-surface">21</h3>
+</div>
+<div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="hourglass_top">hourglass_top</span>
+</div>
+</div>
+</div>
+</div>
+<!-- COMPREHENSIVE REGULATORY TOOLBAR -->
+<div class="p-space-lg border-b border-outline-variant/30 space-y-3 bg-surface-container-lowest/30 dark:bg-surface-variant/5">
+<!-- Primary Filter Row (Status, Category, Region, Assigned) -->
+<div class="flex flex-wrap items-center justify-between gap-3">
+<!-- Filters Group -->
+<div class="flex flex-wrap items-center gap-2">
+<span class="text-xs font-label-sm text-outline uppercase font-semibold mr-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+              Filters:
+            </span>
+<!-- Status Chips Dropdown/Pills -->
+<div class="inline-flex items-center rounded-xl bg-surface-container-low dark:bg-surface-variant/30 p-1 border border-outline-variant/40">
+<button class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-surface-container shadow-xs text-primary dark:text-inverse-primary">
+                All (142)
+              </button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                Mismatch Detected (28)
+              </button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                In Verification (56)
+              </button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Ready for Scrutiny (42)
+              </button>
+<button class="px-2.5 py-1 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                Rectification (16)
+              </button>
+</div>
+<!-- Category Filter Selector -->
+<div class="relative">
+<select class="appearance-none pl-3 pr-8 py-1.5 text-xs font-medium rounded-xl border border-outline-variant/40 bg-surface-container-lowest dark:bg-surface-variant/20 text-on-surface dark:text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option>Category: All Programmes</option>
+<option>Extension of Approval (EoA)</option>
+<option>Increase in Intake</option>
+<option>New Programme</option>
+<option>Closure / Consolidation</option>
+</select>
+<span class="material-symbols-outlined text-xs text-outline absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+<!-- Region Filter -->
+<div class="relative">
+<select class="appearance-none pl-3 pr-8 py-1.5 text-xs font-medium rounded-xl border border-outline-variant/40 bg-surface-container-lowest dark:bg-surface-variant/20 text-on-surface dark:text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option>Region: Karnataka &amp; Kerala</option>
+<option>Karnataka (Bangalore Urban)</option>
+<option>Karnataka (Bangalore Rural)</option>
+<option>Karnataka (Mysuru)</option>
+<option>Kerala (Ernakulam)</option>
+</select>
+<span class="material-symbols-outlined text-xs text-outline absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+<!-- Assigned Officer Filter -->
+<div class="relative">
+<select class="appearance-none pl-3 pr-8 py-1.5 text-xs font-medium rounded-xl border border-outline-variant/40 bg-surface-container-lowest dark:bg-surface-variant/20 text-on-surface dark:text-inverse-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option>Assignee: All Officers</option>
+<option>Dr. V. Sharma [Me: 38]</option>
+<option>Prof. K. Rao [42]</option>
+<option>Unassigned [14]</option>
+</select>
+<span class="material-symbols-outlined text-xs text-outline absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Right side View & Bulk Control Deck -->
+<div class="flex items-center gap-2">
+<!-- Saved Views Dropdown -->
+<div class="relative">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-outline-variant/40 bg-surface-container-lowest dark:bg-surface-variant/20 text-xs font-medium hover:bg-surface-container">
+<span class="material-symbols-outlined text-sm text-amber-500" data-icon="bookmark">bookmark</span>
+<span>Saved View: Critical Deficiencies (&gt;80)</span>
+<span class="material-symbols-outlined text-xs" data-icon="arrow_drop_down">arrow_drop_down</span>
+</button>
+</div>
+<!-- Columns Visibility Popover Button -->
+<button class="p-1.5 rounded-xl border border-outline-variant/40 bg-surface-container-lowest dark:bg-surface-variant/20 text-on-surface-variant hover:text-on-surface hover:bg-surface-container" title="Columns Configuration">
+<span class="material-symbols-outlined text-lg" data-icon="view_column">view_column</span>
+</button>
+<!-- State Demonstration Switcher Tabs -->
+<div class="flex items-center border border-outline-variant/40 rounded-xl p-0.5 bg-surface-container-low dark:bg-surface-variant/30 text-xs">
+<button class="px-2.5 py-1 rounded-lg font-semibold bg-white dark:bg-surface-container text-primary dark:text-inverse-primary shadow-xs" id="viewTableBtn" onclick="switchState('table')">
+                Live Data
+              </button>
+<button class="px-2.5 py-1 rounded-lg font-medium text-on-surface-variant hover:text-on-surface" id="viewSkeletonBtn" onclick="switchState('skeleton')">
+                Skeleton
+              </button>
+<button class="px-2.5 py-1 rounded-lg font-medium text-on-surface-variant hover:text-on-surface" id="viewEmptyBtn" onclick="switchState('empty')">
+                Empty
+              </button>
+</div>
+</div>
+</div>
+<!-- Active Batch Selection Action Bar (Sticky when active items present) -->
+<div class="p-2.5 px-4 rounded-xl bg-primary-fixed/60 dark:bg-primary-container/40 border border-primary/30 flex items-center justify-between text-xs transition-all" id="bulkActionBar">
+<div class="flex items-center gap-3">
+<span class="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white font-bold text-[10px]">2</span>
+<span class="font-semibold text-on-primary-fixed dark:text-inverse-on-surface">
+              2 Dockets Selected for Collective Action
+            </span>
+<span class="text-outline text-[11px]">• APP-2025-9842, APP-2025-8419</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 text-xs font-medium hover:bg-surface-container">
+              Assign Officer
+            </button>
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 text-xs font-medium hover:bg-surface-container">
+              Export Dossiers (PDF)
+            </button>
+<button class="px-2.5 py-1 rounded-lg bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20 text-xs font-medium hover:bg-rose-500/20">
+              Issue Clarification Notice
+            </button>
+<button class="p-1 text-on-surface-variant hover:text-on-surface" title="Clear selection">
+<span class="material-symbols-outlined text-base" data-icon="close">close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MAIN DATA CONTAINER (TABLE / SKELETON / EMPTY) -->
+<div class="flex-1 p-space-lg lg:p-space-xl overflow-x-auto relative">
+<!-- 1. LIVE DATA TABLE (DEFAULT) -->
+<div class="bg-surface-container-lowest dark:bg-surface-variant/10 rounded-2xl border border-outline-variant/40 shadow-sm overflow-hidden" id="liveTableView">
+<table class="w-full text-left border-collapse">
+<!-- Table Header -->
+<thead>
+<tr class="bg-surface-container-low/70 dark:bg-surface-variant/30 border-b border-outline-variant/40 text-[11px] font-label-md uppercase tracking-wider text-outline select-none">
+<th class="py-3 px-3 w-10 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+</th>
+<th class="py-3 px-3 font-semibold w-24">
+<div class="flex items-center gap-1 cursor-pointer hover:text-on-surface">
+<span>Priority</span>
+<span class="material-symbols-outlined text-xs" data-icon="unfold_more">unfold_more</span>
+</div>
+</th>
+<th class="py-3 px-3 font-semibold w-36">Docket ID</th>
+<th class="py-3 px-4 font-semibold min-w-[240px]">Institution &amp; PID</th>
+<th class="py-3 px-3 font-semibold">Category</th>
+<th class="py-3 px-3 font-semibold">Status</th>
+<th class="py-3 px-4 font-semibold min-w-[200px]">Top AI Discrepancy Finding</th>
+<th class="py-3 px-3 font-semibold min-w-[170px]">Verification Pipeline</th>
+<th class="py-3 px-3 font-semibold">Officer</th>
+<th class="py-3 px-3 font-semibold">SLA Window</th>
+<th class="py-3 px-3 font-semibold text-right pr-4">Action</th>
+</tr>
+</thead>
+<!-- Table Body -->
+<tbody class="divide-y divide-outline-variant/20 font-body-sm text-xs">
+<!-- ROW 1: High Priority (With Interactive Quick-Peek Preview Card) -->
+<tr class="hover:bg-surface-container-low/60 dark:hover:bg-surface-variant/20 transition-colors group bg-rose-500/5">
+<td class="py-3 px-3 text-center">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+</td>
+<!-- Priority Score 89 (Red / Coral) -->
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full text-xs font-label-md font-bold bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300 border border-rose-300/40">
+                      89
+                    </span>
+<span class="material-symbols-outlined text-rose-600 text-sm" data-icon="emergency" title="Statutory Priority: High">emergency</span>
+</div>
+</td>
+<!-- Application ID -->
+<td class="py-3 px-3 font-label-md font-medium text-primary dark:text-inverse-primary">
+<div class="flex items-center gap-1">
+<span>APP-2025-9842</span>
+<button class="opacity-0 group-hover:opacity-100 text-outline hover:text-on-surface" title="Copy Docket ID">
+<span class="material-symbols-outlined text-xs" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</td>
+<!-- Institution & PID -->
+<td class="py-3 px-4">
+<div>
+<span class="font-headline-sm text-xs font-bold text-on-surface dark:text-inverse-on-surface hover:text-primary cursor-pointer">
+                      Apex Institute of Technology, Bangalore
+                    </span>
+<div class="flex items-center gap-2 mt-0.5 text-[11px] text-outline">
+<span class="font-label-sm px-1.5 py-0.2 rounded bg-surface-container dark:bg-surface-variant/40">PID-1-9284102</span>
+<span>Bangalore Urban • KR</span>
+</div>
+</div>
+</td>
+<!-- Category -->
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-surface-container dark:bg-surface-variant/30 text-on-surface-variant font-medium text-[11px]">
+                    Increase in Intake
+                  </span>
+</td>
+<!-- Status Chip -->
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+<span class="material-symbols-outlined text-xs" data-icon="rule">rule</span>
+<span>Mismatch Detected</span>
+</span>
+</td>
+<!-- Top AI Discrepancy Finding (Analytical & Non-Accusatory) -->
+<td class="py-3 px-4">
+<div class="space-y-0.5">
+<div class="flex items-center gap-1 font-semibold text-rose-700 dark:text-rose-400">
+<span class="material-symbols-outlined text-xs" data-icon="warning">warning</span>
+<span>Cadre ratio disparity: 1:19 vs 1:15 required</span>
+</div>
+<p class="text-[11px] text-outline truncate max-w-xs">Fire NOC validity expired on 15-Nov-2024</p>
+</div>
+</td>
+<!-- Verification Pipeline Status -->
+<td class="py-3 px-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">GIS: Pass</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20">Cadre: Alert</span>
+</div>
+</td>
+<!-- Assigned Officer -->
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-full bg-primary/20 text-primary font-bold text-[10px] flex items-center justify-center">
+                      VS
+                    </div>
+<span class="font-medium text-xs">Dr. V. Sharma</span>
+</div>
+</td>
+<!-- SLA Countdown -->
+<td class="py-3 px-3 font-label-md text-xs text-rose-600 dark:text-rose-400 font-semibold whitespace-nowrap">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="schedule">schedule</span>
+<span>14h left</span>
+</div>
+</td>
+<!-- Actions -->
+<td class="py-3 px-3 text-right pr-4">
+<div class="flex items-center justify-end gap-1.5">
+<button class="px-2.5 py-1 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-all shadow-xs">
+                      Open Docket
+                    </button>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container">
+<span class="material-symbols-outlined text-sm" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- EXPANDED ROW QUICK-PEEK INSPECTION HUD (Anchored below Apex Institute) -->
+<tr class="bg-surface-container-low/40 dark:bg-surface-variant/10 border-l-4 border-l-primary">
+<td class="p-4 px-6" colspan="11">
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-outline-variant/50 p-4 shadow-sm flex flex-col lg:flex-row gap-6 items-start justify-between">
+<!-- AI Pre-Check Signals Panel -->
+<div class="flex-1 space-y-3">
+<div class="flex items-center gap-3">
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-primary-fixed text-on-primary-fixed dark:bg-primary-container dark:text-on-primary-container">
+                          AI Assistive Finding: Confidence 98.4%
+                        </span>
+<span class="text-xs text-outline font-label-sm">
+                          Source: <span class="underline decoration-dotted">National Faculty Database (AISHE API)</span> ↗
+                        </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+<div class="p-2.5 rounded-lg bg-surface-container-low dark:bg-surface-variant/20 border border-outline-variant/30">
+<p class="text-outline font-label-sm text-[10px] uppercase font-bold">Faculty Cadre Disparity</p>
+<p class="font-medium mt-0.5 text-on-surface dark:text-inverse-on-surface">Calculated: 1 Professor, 3 Associate, 18 Asst.</p>
+<p class="text-rose-600 dark:text-rose-400 text-[11px] mt-0.5">Deficit: 2 Professors in CSE branch</p>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low dark:bg-surface-variant/20 border border-outline-variant/30">
+<p class="text-outline font-label-sm text-[10px] uppercase font-bold">Land Parcel Geo-Fencing</p>
+<p class="font-medium mt-0.5 text-emerald-600 dark:text-emerald-400">Status: Verified Contiguous (7.4 Acres)</p>
+<p class="text-[11px] text-outline mt-0.5">Matches Survey of India Cadastral GIS</p>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low dark:bg-surface-variant/20 border border-outline-variant/30">
+<p class="text-outline font-label-sm text-[10px] uppercase font-bold">Statutory Financial Deposit</p>
+<p class="font-medium mt-0.5 text-on-surface dark:text-inverse-on-surface">FDR ₹35,00,000 Validated</p>
+<p class="text-emerald-600 dark:text-emerald-400 text-[11px] mt-0.5">SBI Lien Registered until 2030</p>
+</div>
+</div>
+</div>
+<!-- Fast Regulatory Action Deck -->
+<div class="flex flex-col sm:flex-row lg:flex-col gap-2 w-full lg:w-48 flex-shrink-0 pt-2 lg:pt-0">
+<button class="w-full px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary/90 flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span>
+<span>Launch Full Dossier</span>
+</button>
+<button class="w-full px-3 py-1.5 rounded-lg border border-rose-300 text-rose-700 dark:text-rose-400 bg-rose-50/50 dark:bg-rose-950/20 text-xs font-medium hover:bg-rose-100 flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="rate_review">rate_review</span>
+<span>Flag for SAC Panel</span>
+</button>
+<button class="w-full px-3 py-1.5 rounded-lg border border-outline-variant text-on-surface-variant text-xs font-medium hover:bg-surface-container flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="mail">mail</span>
+<span>Request Clarification</span>
+</button>
+</div>
+</div>
+</td>
+</tr>
+<!-- ROW 2: High Priority -->
+<tr class="hover:bg-surface-container-low/60 dark:hover:bg-surface-variant/20 transition-colors group">
+<td class="py-3 px-3 text-center">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+</td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full text-xs font-label-md font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300 border border-amber-300/40">
+                      78
+                    </span>
+<span class="material-symbols-outlined text-amber-600 text-sm" data-icon="priority_high">priority_high</span>
+</div>
+</td>
+<td class="py-3 px-3 font-label-md font-medium text-primary dark:text-inverse-primary">
+<div class="flex items-center gap-1">
+<span>APP-2025-8419</span>
+<button class="opacity-0 group-hover:opacity-100 text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-xs" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-headline-sm text-xs font-bold text-on-surface dark:text-inverse-on-surface hover:text-primary cursor-pointer">
+                      R.V. College of Engineering
+                    </span>
+<div class="flex items-center gap-2 mt-0.5 text-[11px] text-outline">
+<span class="font-label-sm px-1.5 py-0.2 rounded bg-surface-container dark:bg-surface-variant/40">PID-1-4920194</span>
+<span>Mysuru Road • Bangalore Urban</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-surface-container dark:bg-surface-variant/30 text-on-surface-variant font-medium text-[11px]">
+                    New Programme AI-DS
+                  </span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-primary/10 text-primary dark:text-inverse-primary border border-primary/20">
+<span class="material-symbols-outlined text-xs" data-icon="hourglass_empty">hourglass_empty</span>
+<span>In Verification Pipeline</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="space-y-0.5">
+<div class="flex items-center gap-1 font-semibold text-amber-700 dark:text-amber-400">
+<span class="material-symbols-outlined text-xs" data-icon="info">info</span>
+<span>Requires manual verification: Lab square footage</span>
+</div>
+<p class="text-[11px] text-outline truncate max-w-xs">Floor plan annexure 4B blurred OCR index</p>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">GIS: Pass</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-primary/10 text-primary border border-primary/20">Lab OCR: 62%</span>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-full bg-secondary/20 text-secondary font-bold text-[10px] flex items-center justify-center">
+                      KR
+                    </div>
+<span class="font-medium text-xs">Prof. K. Rao</span>
+</div>
+</td>
+<td class="py-3 px-3 font-label-md text-xs text-on-surface-variant dark:text-outline-variant whitespace-nowrap">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="schedule">schedule</span>
+<span>28h left</span>
+</div>
+</td>
+<td class="py-3 px-3 text-right pr-4">
+<div class="flex items-center justify-end gap-1.5">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-high text-on-surface dark:text-inverse-on-surface text-xs font-semibold hover:bg-primary hover:text-white transition-all">
+                      Open Docket
+                    </button>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 3: Medium Priority Ready for Scrutiny -->
+<tr class="hover:bg-surface-container-low/60 dark:hover:bg-surface-variant/20 transition-colors group">
+<td class="py-3 px-3 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+</td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full text-xs font-label-md font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 border border-blue-300/40">
+                      52
+                    </span>
+<span class="material-symbols-outlined text-blue-600 text-sm" data-icon="remove">remove</span>
+</div>
+</td>
+<td class="py-3 px-3 font-label-md font-medium text-primary dark:text-inverse-primary">
+<div class="flex items-center gap-1">
+<span>APP-2025-7201</span>
+<button class="opacity-0 group-hover:opacity-100 text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-xs" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-headline-sm text-xs font-bold text-on-surface dark:text-inverse-on-surface hover:text-primary cursor-pointer">
+                      BMS College of Engineering
+                    </span>
+<div class="flex items-center gap-2 mt-0.5 text-[11px] text-outline">
+<span class="font-label-sm px-1.5 py-0.2 rounded bg-surface-container dark:bg-surface-variant/40">PID-1-1049281</span>
+<span>Basavanagudi • Bangalore Urban</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-surface-container dark:bg-surface-variant/30 text-on-surface-variant font-medium text-[11px]">
+                    Extension of Approval (EoA)
+                  </span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span>
+<span>Ready for Scrutiny</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-medium">
+<span class="material-symbols-outlined text-xs" data-icon="verified">verified</span>
+<span>No statutory anomalies detected</span>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">GIS: 100%</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">Cadre: 1:14.2</span>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-full bg-primary/20 text-primary font-bold text-[10px] flex items-center justify-center">
+                      VS
+                    </div>
+<span class="font-medium text-xs">Dr. V. Sharma</span>
+</div>
+</td>
+<td class="py-3 px-3 font-label-md text-xs text-on-surface-variant dark:text-outline-variant whitespace-nowrap">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="schedule">schedule</span>
+<span>49h left</span>
+</div>
+</td>
+<td class="py-3 px-3 text-right pr-4">
+<div class="flex items-center justify-end gap-1.5">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-high text-on-surface dark:text-inverse-on-surface text-xs font-semibold hover:bg-primary hover:text-white transition-all">
+                      Open Docket
+                    </button>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 4: Low Priority Compliant -->
+<tr class="hover:bg-surface-container-low/60 dark:hover:bg-surface-variant/20 transition-colors group">
+<td class="py-3 px-3 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+</td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full text-xs font-label-md font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 border border-emerald-300/40">
+                      24
+                    </span>
+<span class="material-symbols-outlined text-emerald-600 text-sm" data-icon="south">south</span>
+</div>
+</td>
+<td class="py-3 px-3 font-label-md font-medium text-primary dark:text-inverse-primary">
+<div class="flex items-center gap-1">
+<span>APP-2025-6310</span>
+<button class="opacity-0 group-hover:opacity-100 text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-xs" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-headline-sm text-xs font-bold text-on-surface dark:text-inverse-on-surface hover:text-primary cursor-pointer">
+                      PES University Electronic City Campus
+                    </span>
+<div class="flex items-center gap-2 mt-0.5 text-[11px] text-outline">
+<span class="font-label-sm px-1.5 py-0.2 rounded bg-surface-container dark:bg-surface-variant/40">PID-1-5819201</span>
+<span>Hosur Road • Bangalore Urban</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-surface-container dark:bg-surface-variant/30 text-on-surface-variant font-medium text-[11px]">
+                    EoA &amp; NRI Quota
+                  </span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span>
+<span>Ready for Scrutiny</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-medium">
+<span class="material-symbols-outlined text-xs" data-icon="verified">verified</span>
+<span>All parameters fully compliant</span>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">All Nodes Cleared</span>
+</div>
+</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-surface-container text-on-surface-variant">
+                    Unassigned
+                  </span>
+</td>
+<td class="py-3 px-3 font-label-md text-xs text-on-surface-variant dark:text-outline-variant whitespace-nowrap">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="schedule">schedule</span>
+<span>61h left</span>
+</div>
+</td>
+<td class="py-3 px-3 text-right pr-4">
+<div class="flex items-center justify-end gap-1.5">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-high text-on-surface dark:text-inverse-on-surface text-xs font-semibold hover:bg-primary hover:text-white transition-all">
+                      Open Docket
+                    </button>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 5: Overdue SLA with Cadastral Anomaly -->
+<tr class="hover:bg-surface-container-low/60 dark:hover:bg-surface-variant/20 transition-colors group bg-amber-500/5">
+<td class="py-3 px-3 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+</td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full text-xs font-label-md font-bold bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300 border border-rose-300/40">
+                      84
+                    </span>
+<span class="material-symbols-outlined text-rose-600 text-sm" data-icon="emergency">emergency</span>
+</div>
+</td>
+<td class="py-3 px-3 font-label-md font-medium text-primary dark:text-inverse-primary">
+<div class="flex items-center gap-1">
+<span>APP-2025-5192</span>
+<button class="opacity-0 group-hover:opacity-100 text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-xs" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-headline-sm text-xs font-bold text-on-surface dark:text-inverse-on-surface hover:text-primary cursor-pointer">
+                      Dayananda Sagar College of Engineering
+                    </span>
+<div class="flex items-center gap-2 mt-0.5 text-[11px] text-outline">
+<span class="font-label-sm px-1.5 py-0.2 rounded bg-surface-container dark:bg-surface-variant/40">PID-1-3829105</span>
+<span>Kumaraswamy Layout • Bangalore</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-surface-container dark:bg-surface-variant/30 text-on-surface-variant font-medium text-[11px]">
+                    Increase in Intake
+                  </span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20">
+<span class="material-symbols-outlined text-xs" data-icon="build">build</span>
+<span>Rectification Underway</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="space-y-0.5">
+<div class="flex items-center gap-1 font-semibold text-rose-700 dark:text-rose-400">
+<span class="material-symbols-outlined text-xs" data-icon="crop_free">crop_free</span>
+<span>Cadastral perimeter variance: 0.4 acre discrepancy</span>
+</div>
+<p class="text-[11px] text-outline truncate max-w-xs">Cross-referenced with Survey of India GIS dataset</p>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-rose-500/10 text-rose-700 dark:text-rose-400">GIS: Variance</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">NOC: Valid</span>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-full bg-primary/20 text-primary font-bold text-[10px] flex items-center justify-center">
+                      VS
+                    </div>
+<span class="font-medium text-xs">Dr. V. Sharma</span>
+</div>
+</td>
+<td class="py-3 px-3 font-label-md text-xs text-rose-600 dark:text-rose-400 font-bold whitespace-nowrap">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="warning">warning</span>
+<span>6h overdue</span>
+</div>
+</td>
+<td class="py-3 px-3 text-right pr-4">
+<div class="flex items-center justify-end gap-1.5">
+<button class="px-2.5 py-1 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-all shadow-xs">
+                      Open Docket
+                    </button>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 6: MS Ramaiah Institute -->
+<tr class="hover:bg-surface-container-low/60 dark:hover:bg-surface-variant/20 transition-colors group">
+<td class="py-3 px-3 text-center">
+<input class="rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+</td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full text-xs font-label-md font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300 border border-amber-300/40">
+                      66
+                    </span>
+<span class="material-symbols-outlined text-amber-600 text-sm" data-icon="priority_high">priority_high</span>
+</div>
+</td>
+<td class="py-3 px-3 font-label-md font-medium text-primary dark:text-inverse-primary">
+<div class="flex items-center gap-1">
+<span>APP-2025-4418</span>
+<button class="opacity-0 group-hover:opacity-100 text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-xs" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-headline-sm text-xs font-bold text-on-surface dark:text-inverse-on-surface hover:text-primary cursor-pointer">
+                      M.S. Ramaiah Institute of Technology
+                    </span>
+<div class="flex items-center gap-2 mt-0.5 text-[11px] text-outline">
+<span class="font-label-sm px-1.5 py-0.2 rounded bg-surface-container dark:bg-surface-variant/40">PID-1-2918402</span>
+<span>MSR Nagar • Bangalore Urban</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<span class="px-2 py-0.5 rounded-lg bg-surface-container dark:bg-surface-variant/30 text-on-surface-variant font-medium text-[11px]">
+                    New Programme Cyber Sec
+                  </span>
+</td>
+<td class="py-3 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+<span class="material-symbols-outlined text-xs" data-icon="rule">rule</span>
+<span>Mismatch Detected</span>
+</span>
+</td>
+<td class="py-3 px-4">
+<div class="space-y-0.5">
+<div class="flex items-center gap-1 font-semibold text-amber-700 dark:text-amber-400">
+<span class="material-symbols-outlined text-xs" data-icon="school">school</span>
+<span>Faculty roster: 1 Assistant Professor dual-listed</span>
+</div>
+<p class="text-[11px] text-outline truncate max-w-xs">Appears in concurrent institution registration</p>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-rose-500/10 text-rose-700 dark:text-rose-400">AISHE: Conflict</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">GIS: Verified</span>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-1.5">
+<div class="w-6 h-6 rounded-full bg-secondary/20 text-secondary font-bold text-[10px] flex items-center justify-center">
+                      KR
+                    </div>
+<span class="font-medium text-xs">Prof. K. Rao</span>
+</div>
+</td>
+<td class="py-3 px-3 font-label-md text-xs text-on-surface-variant dark:text-outline-variant whitespace-nowrap">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="schedule">schedule</span>
+<span>37h left</span>
+</div>
+</td>
+<td class="py-3 px-3 text-right pr-4">
+<div class="flex items-center justify-end gap-1.5">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-high text-on-surface dark:text-inverse-on-surface text-xs font-semibold hover:bg-primary hover:text-white transition-all">
+                      Open Docket
+                    </button>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- TABLE FOOTER & PAGINATION -->
+<div class="p-4 bg-surface-container-low/50 dark:bg-surface-variant/20 border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-body-sm text-on-surface-variant">
+<div class="flex items-center gap-4">
+<span>Showing <strong class="text-on-surface dark:text-inverse-on-surface">1–10</strong> of <strong class="text-on-surface dark:text-inverse-on-surface">142</strong> dockets</span>
+<div class="flex items-center gap-2">
+<span class="text-outline">Rows per page:</span>
+<select class="px-2 py-1 rounded-lg border border-outline-variant/40 bg-surface-container-lowest dark:bg-surface-variant/20 text-xs font-semibold focus:outline-none">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+<option>100</option>
+</select>
+</div>
+</div>
+<!-- Page Navigation -->
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg border border-outline-variant/40 hover:bg-surface-container text-outline hover:text-on-surface disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-3 py-1 rounded-lg bg-primary text-white font-semibold shadow-xs">1</button>
+<button class="px-3 py-1 rounded-lg border border-transparent hover:border-outline-variant/40 hover:bg-surface-container">2</button>
+<button class="px-3 py-1 rounded-lg border border-transparent hover:border-outline-variant/40 hover:bg-surface-container">3</button>
+<span class="px-1 text-outline">...</span>
+<button class="px-3 py-1 rounded-lg border border-transparent hover:border-outline-variant/40 hover:bg-surface-container">15</button>
+<button class="p-1.5 rounded-lg border border-outline-variant/40 hover:bg-surface-container text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 2. SKELETON LOADING STATE PREVIEW (Hidden by default, toggleable) -->
+<div class="hidden bg-surface-container-lowest dark:bg-surface-variant/10 rounded-2xl border border-outline-variant/40 shadow-sm overflow-hidden p-6 space-y-4" id="skeletonView">
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/20">
+<div class="h-5 bg-outline-variant/30 rounded w-48 animate-pulse"></div>
+<div class="h-8 bg-outline-variant/30 rounded w-32 animate-pulse"></div>
+</div>
+<!-- Repeater skeleton rows -->
+<div class="space-y-3">
+<div class="h-12 bg-surface-container/60 dark:bg-surface-variant/30 rounded-xl animate-pulse"></div>
+<div class="h-12 bg-surface-container/60 dark:bg-surface-variant/30 rounded-xl animate-pulse"></div>
+<div class="h-12 bg-surface-container/60 dark:bg-surface-variant/30 rounded-xl animate-pulse"></div>
+<div class="h-12 bg-surface-container/60 dark:bg-surface-variant/30 rounded-xl animate-pulse"></div>
+<div class="h-12 bg-surface-container/60 dark:bg-surface-variant/30 rounded-xl animate-pulse"></div>
+</div>
+<div class="pt-4 flex justify-between items-center text-xs text-outline">
+<div class="h-4 bg-outline-variant/30 rounded w-28 animate-pulse"></div>
+<div class="h-6 bg-outline-variant/30 rounded w-40 animate-pulse"></div>
+</div>
+</div>
+<!-- 3. EMPTY STATE PREVIEW (Hidden by default, toggleable) -->
+<div class="hidden bg-surface-container-lowest dark:bg-surface-variant/10 rounded-2xl border border-outline-variant/40 shadow-sm p-12 text-center max-w-lg mx-auto" id="emptyView">
+<div class="w-16 h-16 rounded-2xl bg-surface-container dark:bg-surface-variant/30 text-outline mx-auto flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl" data-icon="search_off">search_off</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface dark:text-inverse-on-surface font-semibold">
+            No Statutory Dockets Match Current Filters
+          </h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant mt-2 max-w-sm mx-auto">
+            No institutional applications match the selected regional parameters or deficiency category. Try broadening your criteria or reset the view.
+          </p>
+<div class="mt-6 flex items-center justify-center gap-3">
+<button class="px-4 py-2 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-all" onclick="switchState('table')">
+              Reset Filters to All Dockets
+            </button>
+<button class="px-4 py-2 rounded-xl border border-outline-variant text-xs font-medium hover:bg-surface-container">
+              View Archived AY 2024–25
+            </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- SCRIPT FOR THEME TOGGLING & INTERACTIVE STATES -->
+<script>
+    // Theme Toggle Functionality
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlEl = document.documentElement;
+
+    themeBtn.addEventListener('click', () => {
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        themeIcon.textContent = 'dark_mode';
+      } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+        themeIcon.textContent = 'light_mode';
+      }
+    });
+
+    // Interactive State Switcher for Table, Skeleton, and Empty
+    function switchState(state) {
+      const table = document.getElementById('liveTableView');
+      const skeleton = document.getElementById('skeletonView');
+      const empty = document.getElementById('emptyView');
+      
+      const btnTable = document.getElementById('viewTableBtn');
+      const btnSkeleton = document.getElementById('viewSkeletonBtn');
+      const btnEmpty = document.getElementById('viewEmptyBtn');
+
+      // Reset active classes
+      [btnTable, btnSkeleton, btnEmpty].forEach(b => {
+        b.className = 'px-2.5 py-1 rounded-lg font-medium text-on-surface-variant hover:text-on-surface';
+      });
+
+      // Hide all
+      table.classList.add('hidden');
+      skeleton.classList.add('hidden');
+      empty.classList.add('hidden');
+
+      if (state === 'table') {
+        table.classList.remove('hidden');
+        btnTable.className = 'px-2.5 py-1 rounded-lg font-semibold bg-white dark:bg-surface-container text-primary dark:text-inverse-primary shadow-xs';
+      } else if (state === 'skeleton') {
+        skeleton.classList.remove('hidden');
+        btnSkeleton.className = 'px-2.5 py-1 rounded-lg font-semibold bg-white dark:bg-surface-container text-primary dark:text-inverse-primary shadow-xs';
+      } else if (state === 'empty') {
+        empty.classList.remove('hidden');
+        btnEmpty.className = 'px-2.5 py-1 rounded-lg font-semibold bg-white dark:bg-surface-container text-primary dark:text-inverse-primary shadow-xs';
+      }
+    }
+  </script>
+</body></html>

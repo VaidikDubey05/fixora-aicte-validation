@@ -1,0 +1,1123 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Fixora",
+    "description": "AI-assisted application validation and document verification for AICTE EoA",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "summary": "Authenticate user and issue JWT",
+        "operationId": "login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": { "type": "string" },
+                    "token_type": { "type": "string" },
+                    "expires_in": { "type": "integer" },
+                    "user": { "$ref": "#/components/schemas/UserResponse" }
+                  },
+                  "required": ["access_token", "token_type", "user"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "summary": "Get authenticated user profile",
+        "operationId": "get_me",
+        "responses": {
+          "200": {
+            "description": "User profile",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications": {
+      "get": {
+        "summary": "List applications with filters",
+        "operationId": "list_applications",
+        "parameters": [
+          { "name": "status", "in": "query", "schema": { "type": "string" } },
+          { "name": "state", "in": "query", "schema": { "type": "string" } },
+          { "name": "category", "in": "query", "schema": { "type": "string" } },
+          { "name": "severity", "in": "query", "schema": { "type": "string" } },
+          { "name": "assignee", "in": "query", "schema": { "type": "string" } },
+          { "name": "q", "in": "query", "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "page_size", "in": "query", "schema": { "type": "integer", "default": 20 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": { "type": "array", "items": { "$ref": "#/components/schemas/ApplicationSummary" } },
+                    "total": { "type": "integer" },
+                    "page": { "type": "integer" },
+                    "page_size": { "type": "integer" }
+                  },
+                  "required": ["items", "total", "page", "page_size"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create new application",
+        "operationId": "create_application",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "institution_id": { "type": "string" },
+                  "academic_year": { "type": "string" },
+                  "application_type": { "type": "string" },
+                  "category": { "type": "string" },
+                  "metadata": { "type": "object" }
+                },
+                "required": ["academic_year", "application_type", "category"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Application created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplicationDetail" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications/{id}": {
+      "get": {
+        "summary": "Get application detail",
+        "operationId": "get_application",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application detail",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplicationDetail" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications/{id}/submit": {
+      "post": {
+        "summary": "Submit application for scrutiny",
+        "operationId": "submit_application",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application submitted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplicationDetail" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications/{id}/documents": {
+      "post": {
+        "summary": "Upload multipart document to application",
+        "operationId": "upload_document",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": { "type": "string", "format": "binary" },
+                  "category": { "type": "string" },
+                  "document_type": { "type": "string" }
+                },
+                "required": ["file", "category"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Document uploaded",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DocumentItem" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications/{id}/validate": {
+      "post": {
+        "summary": "Trigger automated pipeline validation",
+        "operationId": "validate_application",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "202": {
+            "description": "Validation started",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task_id": { "type": "string" },
+                    "status": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications/{id}/status": {
+      "get": {
+        "summary": "Get pipeline processing stage status",
+        "operationId": "get_application_status",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pipeline status",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PipelineStatus" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications/{id}/checklist": {
+      "get": {
+        "summary": "Get application statutory checklist",
+        "operationId": "get_application_checklist",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Checklist response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "application_id": { "type": "string" },
+                    "checklist": { "type": "array", "items": { "$ref": "#/components/schemas/ChecklistItem" } },
+                    "overall_status": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications/{id}/findings": {
+      "get": {
+        "summary": "Get application advisory findings",
+        "operationId": "get_application_findings",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Findings list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": { "type": "array", "items": { "$ref": "#/components/schemas/FindingItem" } },
+                    "total": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications/{id}/take-review": {
+      "post": {
+        "summary": "Assign application to current officer for review",
+        "operationId": "take_application_review",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Review assigned",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApplicationDetail" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/applications/{id}/report.pdf": {
+      "get": {
+        "summary": "Download application summary PDF report",
+        "operationId": "get_application_report_pdf",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDF Stream",
+            "content": { "application/pdf": { "schema": { "type": "string", "format": "binary" } } }
+          }
+        }
+      }
+    },
+    "/api/documents/{id}": {
+      "get": {
+        "summary": "Get document metadata",
+        "operationId": "get_document",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document metadata",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DocumentItem" } } }
+          }
+        }
+      }
+    },
+    "/api/documents/{id}/file": {
+      "get": {
+        "summary": "Securely stream document file",
+        "operationId": "get_document_file",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "File stream",
+            "content": { "*/*": { "schema": { "type": "string", "format": "binary" } } }
+          }
+        }
+      }
+    },
+    "/api/documents/{id}/fields": {
+      "get": {
+        "summary": "Get extracted document fields",
+        "operationId": "get_document_fields",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "document_id": { "type": "string" },
+                    "fields": { "type": "array", "items": { "type": "object" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/documents/{id}/ocr": {
+      "get": {
+        "summary": "Get OCR pages with bounding boxes",
+        "operationId": "get_document_ocr",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OCR response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DocumentOcrResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/documents/{id}/pages/{n}/image": {
+      "get": {
+        "summary": "Render document page as PNG image",
+        "operationId": "get_document_page_image",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "n", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "PNG image",
+            "content": { "image/png": { "schema": { "type": "string", "format": "binary" } } }
+          }
+        }
+      }
+    },
+    "/api/documents/{id}/verify": {
+      "post": {
+        "summary": "Trigger document verification with registry",
+        "operationId": "verify_document",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verification result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "document_id": { "type": "string" },
+                    "status": { "type": "string" },
+                    "simulated": { "type": "boolean" },
+                    "source": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/findings/{id}": {
+      "get": {
+        "summary": "Get finding detail",
+        "operationId": "get_finding",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Finding detail",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FindingItem" } } }
+          }
+        }
+      }
+    },
+    "/api/findings/{id}/actions": {
+      "post": {
+        "summary": "Record officer statutory action on finding",
+        "operationId": "post_finding_action",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": { "type": "string" },
+                  "reason": { "type": "string" }
+                },
+                "required": ["action", "reason"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Action recorded",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/FindingItem" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/verification/queue": {
+      "get": {
+        "summary": "Get verification bureau queue",
+        "operationId": "get_verification_queue",
+        "responses": {
+          "200": {
+            "description": "Verification queue items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": { "type": "array", "items": { "$ref": "#/components/schemas/VerificationQueueItem" } },
+                    "total": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/verification/{id}/manual-confirm": {
+      "post": {
+        "summary": "Officer manual confirmation for verification record",
+        "operationId": "manual_confirm_verification",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": { "type": "string" }
+                },
+                "required": ["reason"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Manual confirmation saved",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "status": { "type": "string" } } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/inspection/queue": {
+      "get": {
+        "summary": "Get inspection queue items",
+        "operationId": "get_inspection_queue",
+        "responses": {
+          "200": {
+            "description": "Inspection queue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": { "type": "array", "items": { "$ref": "#/components/schemas/InspectionQueueItem" } },
+                    "total": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rule-packs": {
+      "get": {
+        "summary": "List rule packs",
+        "operationId": "list_rule_packs",
+        "responses": {
+          "200": {
+            "description": "Rule packs list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": { "type": "array", "items": { "$ref": "#/components/schemas/RulePackItem" } },
+                    "total": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create draft rule pack",
+        "operationId": "create_rule_pack",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "version": { "type": "string" },
+                  "category": { "type": "string" },
+                  "yaml_content": { "type": "string" },
+                  "jurisdiction": { "type": "string" }
+                },
+                "required": ["name", "version", "category", "yaml_content"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Rule pack created",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RulePackItem" } } }
+          }
+        }
+      }
+    },
+    "/api/rule-packs/{id}": {
+      "get": {
+        "summary": "Get rule pack detail",
+        "operationId": "get_rule_pack",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rule pack detail",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RulePackItem" } } }
+          }
+        }
+      }
+    },
+    "/api/rule-packs/{id}/submit": {
+      "post": {
+        "summary": "Submit rule pack for maker-checker review",
+        "operationId": "submit_rule_pack",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rule pack submitted",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RulePackItem" } } }
+          }
+        }
+      }
+    },
+    "/api/rule-packs/{id}/approve": {
+      "post": {
+        "summary": "Approve rule pack version",
+        "operationId": "approve_rule_pack",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rule pack approved",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RulePackItem" } } }
+          }
+        }
+      }
+    },
+    "/api/rule-packs/{id}/test": {
+      "post": {
+        "summary": "Test rule pack evaluation against sample context",
+        "operationId": "test_rule_pack",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sample_context": { "type": "object" },
+                  "yaml_content": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test evaluation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "passed": { "type": "boolean" },
+                    "findings": { "type": "array", "items": { "type": "object" } },
+                    "details": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/alerts": {
+      "get": {
+        "summary": "Get statutory alerts",
+        "operationId": "get_alerts",
+        "responses": {
+          "200": {
+            "description": "Alerts list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": { "type": "array", "items": { "$ref": "#/components/schemas/AlertItem" } },
+                    "total": { "type": "integer" },
+                    "unread_count": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/alerts/{id}/ack": {
+      "post": {
+        "summary": "Acknowledge alert",
+        "operationId": "ack_alert",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Alert acknowledged",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "id": { "type": "string" }, "acknowledged": { "type": "boolean" } } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/alerts/stream": {
+      "get": {
+        "summary": "Server-Sent Events (SSE) streaming endpoint for real-time alerts",
+        "operationId": "stream_alerts",
+        "responses": {
+          "200": {
+            "description": "SSE Event stream",
+            "content": {
+              "text/event-stream": {
+                "schema": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat": {
+      "post": {
+        "summary": "Send query to Ask Fixora AI assistant",
+        "operationId": "chat",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": { "type": "string" },
+                  "history": { "type": "array", "items": { "type": "object" } }
+                },
+                "required": ["message"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Chat response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "reply": { "type": "string" },
+                    "clause_citation": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analytics/overview": {
+      "get": {
+        "summary": "Get system and model operational analytics",
+        "operationId": "get_analytics_overview",
+        "responses": {
+          "200": {
+            "description": "Analytics overview",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AnalyticsOverview" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/audit": {
+      "get": {
+        "summary": "Query cryptographic audit event ledger",
+        "operationId": "get_audit_events",
+        "parameters": [
+          { "name": "event_type", "in": "query", "schema": { "type": "string" } },
+          { "name": "application_id", "in": "query", "schema": { "type": "string" } },
+          { "name": "actor_id", "in": "query", "schema": { "type": "string" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "page_size", "in": "query", "schema": { "type": "integer", "default": 20 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Audit event list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": { "type": "array", "items": { "$ref": "#/components/schemas/AuditEventItem" } },
+                    "total": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/audit/verify-chain": {
+      "get": {
+        "summary": "Verify cryptographic hash chain integrity",
+        "operationId": "verify_audit_chain",
+        "responses": {
+          "200": {
+            "description": "Chain verification result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": { "type": "boolean" },
+                    "total_events": { "type": "integer" },
+                    "genesis_hash": { "type": "string" },
+                    "latest_hash": { "type": "string" },
+                    "tampered_index": { "type": ["integer", "null"] }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string" },
+          "full_name": { "type": "string" },
+          "role": { "type": "string", "enum": ["institution", "scrutiny_officer", "verification_officer", "admin"] },
+          "institution_id": { "type": ["string", "null"] },
+          "is_active": { "type": "boolean" }
+        },
+        "required": ["id", "email", "full_name", "role", "is_active"]
+      },
+      "ApplicationSummary": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "institution_id": { "type": "string" },
+          "institution_name": { "type": "string" },
+          "program_name": { "type": "string" },
+          "academic_year": { "type": "string" },
+          "state": { "type": "string" },
+          "priority_score": { "type": "number" },
+          "severity": { "type": "string" },
+          "findings_count": { "type": "integer" },
+          "deficiency_count": { "type": "integer" },
+          "assigned_officer_name": { "type": ["string", "null"] },
+          "submitted_at": { "type": ["string", "null"] },
+          "created_at": { "type": "string" }
+        },
+        "required": ["id", "academic_year", "state", "created_at"]
+      },
+      "ApplicationDetail": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "institution_id": { "type": "string" },
+          "institution_name": { "type": "string" },
+          "program_name": { "type": "string" },
+          "academic_year": { "type": "string" },
+          "application_type": { "type": "string" },
+          "category": { "type": "string" },
+          "state": { "type": "string" },
+          "priority_score": { "type": "number" },
+          "severity": { "type": "string" },
+          "documents": { "type": "array", "items": { "$ref": "#/components/schemas/DocumentItem" } },
+          "findings": { "type": "array", "items": { "$ref": "#/components/schemas/FindingItem" } },
+          "checklist": { "type": "array", "items": { "$ref": "#/components/schemas/ChecklistItem" } },
+          "metadata": { "type": "object" },
+          "assigned_officer_name": { "type": ["string", "null"] },
+          "submitted_at": { "type": ["string", "null"] },
+          "created_at": { "type": "string" }
+        },
+        "required": ["id", "academic_year", "state", "documents"]
+      },
+      "DocumentItem": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "application_id": { "type": "string" },
+          "filename": { "type": "string" },
+          "category": { "type": "string" },
+          "document_type": { "type": "string" },
+          "page_count": { "type": "integer" },
+          "file_size": { "type": "integer" },
+          "sha256": { "type": "string" },
+          "verification_status": { "type": "string" },
+          "simulated": { "type": "boolean" },
+          "created_at": { "type": "string" }
+        },
+        "required": ["id", "application_id", "filename", "category"]
+      },
+      "PipelineStatus": {
+        "type": "object",
+        "properties": {
+          "application_id": { "type": "string" },
+          "state": { "type": "string" },
+          "progress_pct": { "type": "number" },
+          "current_stage": { "type": "string" },
+          "stages": { "type": "array", "items": { "type": "object" } },
+          "is_running": { "type": "boolean" }
+        },
+        "required": ["application_id", "progress_pct", "is_running"]
+      },
+      "ChecklistItem": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "category": { "type": "string" },
+          "status": { "type": "string" },
+          "document_id": { "type": ["string", "null"] },
+          "rule_clause": { "type": "string" },
+          "notes": { "type": "string" }
+        },
+        "required": ["name", "status"]
+      },
+      "FindingItem": {
+        "type": "object",
+        "properties": {
+          "finding_id": { "type": "string" },
+          "application_id": { "type": "string" },
+          "type": { "type": "string" },
+          "severity": { "type": "string" },
+          "title": { "type": "string" },
+          "reason": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "object" } },
+          "rule_refs": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "type": "number" },
+          "label": { "type": "string" },
+          "status": { "type": "string" },
+          "model_versions": { "type": "object" },
+          "created_at": { "type": "string" }
+        },
+        "required": ["finding_id", "application_id", "type", "severity", "title", "evidence", "confidence"]
+      },
+      "DocumentOcrResponse": {
+        "type": "object",
+        "properties": {
+          "document_id": { "type": "string" },
+          "application_id": { "type": "string" },
+          "pages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "page": { "type": "integer" },
+                "page_width": { "type": "number" },
+                "page_height": { "type": "number" },
+                "text": { "type": "string" },
+                "words": { "type": "array", "items": { "type": "object" } },
+                "engine": { "type": "string" }
+              },
+              "required": ["page", "page_width", "page_height", "text"]
+            }
+          }
+        },
+        "required": ["document_id", "pages"]
+      },
+      "VerificationQueueItem": {
+        "type": "object",
+        "properties": {
+          "record_id": { "type": "integer" },
+          "document_id": { "type": "string" },
+          "application_id": { "type": "string" },
+          "class_name": { "type": "string" },
+          "status": { "type": "string" },
+          "source_name": { "type": ["string", "null"] },
+          "simulated": { "type": "boolean" },
+          "message": { "type": ["string", "null"] },
+          "mismatch_details": { "type": ["object", "null"], "additionalProperties": true },
+          "timestamp": { "type": "string" }
+        },
+        "required": ["document_id", "status"]
+      },
+      "InspectionQueueItem": {
+        "type": "object",
+        "properties": {
+          "application_id": { "type": "string" },
+          "institution_id": { "type": "string" },
+          "state": { "type": "string" },
+          "priority_score": { "type": "number" },
+          "referred_findings": { "type": "array", "items": { "type": "object" } },
+          "created_at": { "type": "string" }
+        },
+        "required": ["application_id", "state"]
+      },
+      "RulePackItem": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": ["string", "null"] },
+          "status": { "type": "string" },
+          "versions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "version": { "type": "string" },
+                "status": { "type": "string" },
+                "checksum": { "type": "string" },
+                "is_active": { "type": "boolean" },
+                "rules_yaml": { "type": "string" },
+                "created_by": { "type": "string" },
+                "approved_by": { "type": ["string", "null"] },
+                "created_at": { "type": "string" }
+              }
+            }
+          }
+        },
+        "required": ["id", "name", "status"]
+      },
+      "AlertItem": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "title": { "type": "string" },
+          "message": { "type": "string" },
+          "severity": { "type": "string" },
+          "application_id": { "type": ["string", "null"] },
+          "acknowledged": { "type": "boolean" },
+          "created_at": { "type": "string" }
+        },
+        "required": ["id", "title", "message", "severity", "acknowledged"]
+      },
+      "AnalyticsOverview": {
+        "type": "object",
+        "properties": {
+          "timestamp": { "type": "string" },
+          "total_applications": { "type": "integer" },
+          "total_findings": { "type": "integer" },
+          "counts_by_state": { "type": "object" },
+          "deficiencies_by_type": { "type": "object" },
+          "deficiencies_by_severity": { "type": "object" },
+          "queue_ageing_buckets": { "type": "object" },
+          "processing_and_verification_time": { "type": "object" },
+          "alert_timeliness": { "type": "object" },
+          "estimated_manual_effort_reduction": { "type": "object" },
+          "metrics": { "type": "object" }
+        },
+        "required": ["total_applications"]
+      },
+      "AuditEventItem": {
+        "type": "object",
+        "properties": {
+          "seq": { "type": "integer" },
+          "actor": { "type": "string" },
+          "role": { "type": "string" },
+          "action": { "type": "string" },
+          "target_type": { "type": "string" },
+          "target_id": { "type": ["string", "null"] },
+          "payload": { "type": "object" },
+          "payload_hash": { "type": "string" },
+          "prev_hash": { "type": "string" },
+          "current_hash": { "type": "string" },
+          "rule_versions": { "type": ["string", "null"] },
+          "model_versions": { "type": ["string", "null"] },
+          "created_at": { "type": "string" }
+        },
+        "required": ["seq", "actor", "action", "current_hash", "created_at"]
+      }
+    }
+  }
+}

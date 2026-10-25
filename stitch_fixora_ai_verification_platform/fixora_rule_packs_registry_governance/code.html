@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIXORA - Rule Administration Registry</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config verbatum from specification -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-bright": "#fbf8ff",
+            "primary-fixed": "#e1dfff",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#271900",
+            "on-surface-variant": "#464556",
+            "surface-container-low": "#f3f2ff",
+            "on-error-container": "#93000a",
+            "on-tertiary-fixed-variant": "#5e4200",
+            "on-secondary": "#ffffff",
+            "primary": "#403de6",
+            "on-tertiary-container": "#fff8f3",
+            "primary-fixed-dim": "#c1c1ff",
+            "primary-container": "#5b5bff",
+            "error": "#ba1a1a",
+            "surface": "#fbf8ff",
+            "secondary-fixed-dim": "#2addcd",
+            "on-background": "#121a37",
+            "inverse-on-surface": "#efefff",
+            "inverse-surface": "#282f4d",
+            "outline-variant": "#c6c4d8",
+            "surface-variant": "#dde1ff",
+            "secondary": "#006a62",
+            "on-primary": "#ffffff",
+            "surface-container-highest": "#dde1ff",
+            "on-secondary-container": "#007168",
+            "error-container": "#ffdad6",
+            "outline": "#767587",
+            "on-surface": "#121a37",
+            "surface-dim": "#d2d8ff",
+            "on-primary-fixed": "#08006b",
+            "on-secondary-fixed": "#00201d",
+            "secondary-container": "#57fae9",
+            "on-tertiary": "#ffffff",
+            "surface-tint": "#4543ea",
+            "on-primary-fixed-variant": "#2920d3",
+            "tertiary-container": "#966b00",
+            "surface-container": "#ecedff",
+            "tertiary-fixed-dim": "#ffba20",
+            "secondary-fixed": "#57fae9",
+            "tertiary-fixed": "#ffdea8",
+            "on-error": "#ffffff",
+            "tertiary": "#775400",
+            "inverse-primary": "#c1c1ff",
+            "on-primary-container": "#fbf8ff",
+            "background": "#fbf8ff",
+            "on-secondary-fixed-variant": "#005049",
+            "surface-container-high": "#e4e7ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.5rem",
+            "space-sm": "0.5rem",
+            "gutter-sm": "1rem",
+            "margin-lg": "3rem",
+            "space-xs": "0.25rem",
+            "margin-sm": "1rem",
+            "gutter-lg": "2rem",
+            "space-xl": "2rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "label-md": ["JetBrains Mono"],
+            "body-lg": ["Inter"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-lg": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "fontWeight": "700" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-xl": ["40px", { "lineHeight": "48px", "fontWeight": "700" }],
+            "label-md": ["11px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "headline-xl-mobile": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(118, 117, 135, 0.25);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(118, 117, 135, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md text-body-md min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed transition-colors duration-200">
+<!-- ================= TOP APP BAR (Shared Component JSON) ================= -->
+<header class="bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md docked full-width top-0 sticky z-40 border-b border-outline-variant/30 dark:border-outline-variant/10 shadow-sm flex justify-between items-center w-full px-space-lg h-16 max-w-full">
+<!-- Left: Brand + Regulatory Engine Node Pill -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs text-primary dark:text-inverse-primary">
+<span class="material-symbols-outlined text-[26px]">verified_user</span>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">FIXORA</span>
+</div>
+<div class="hidden sm:flex items-center gap-space-xs px-2.5 py-1 rounded-full bg-surface-container dark:bg-surface-container-high border border-outline-variant/40 text-on-surface-variant dark:text-outline-variant text-[11px] font-label-md">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-semibold text-secondary">AI REGULATORY ENGINE</span>
+<span class="text-outline">|</span>
+<span>SWRO Node 04 (Bangalore)</span>
+</div>
+</div>
+<!-- Center: Global Quick Search ⌘K -->
+<div class="hidden md:flex items-center w-96 relative">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span>
+<input class="w-full h-9 pl-9 pr-12 rounded-lg bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/60 focus:border-primary text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search rules, clauses, handbook refs (⌘K)..." type="text"/>
+<span class="absolute right-2.5 px-1.5 py-0.5 rounded bg-surface-container border border-outline-variant/50 text-[10px] font-label-sm text-outline font-medium">⌘K</span>
+</div>
+<!-- Right: Telemetry, Theme Toggle & Ask FIXORA Trailing Action -->
+<div class="flex items-center gap-space-md">
+<!-- Live Sync Heartbeat Indicator -->
+<div class="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-md bg-surface-container-low dark:bg-surface-container-high border border-outline-variant/30 text-body-sm">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant dark:text-outline-variant font-medium">Live Sync: APH-2025</span>
+</div>
+<!-- Theme Switch Button -->
+<button aria-label="Toggle Dark Mode" class="p-2 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors duration-150" id="themeToggleBtn">
+<span class="material-symbols-outlined text-[20px] dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined text-[20px] hidden dark:inline">light_mode</span>
+</button>
+<!-- Trailing Action Button: "Ask FIXORA" -->
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-[13px] hover:brightness-105 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+<span>Ask FIXORA</span>
+</button>
+</div>
+</header>
+<!-- ================= MAIN WORKSPACE WRAPPER ================= -->
+<div class="flex-1 flex overflow-hidden">
+<!-- ================= NAVIGATION DRAWER (Shared Component JSON) ================= -->
+<aside class="w-72 h-[calc(100vh-4rem)] sticky top-16 flex flex-col justify-between p-space-md bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant/40 dark:border-outline/20 shadow-md shrink-0">
+<!-- Top Nav Group -->
+<div class="space-y-6">
+<!-- Drawer Header / Sub-domain Status -->
+<div class="px-2 pt-1 pb-3 border-b border-outline-variant/30">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline font-semibold">Sub-Domain Context</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-primary-fixed text-on-primary-fixed font-semibold">ONLINE</span>
+</div>
+<div class="mt-1 text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Statutory Compliance</div>
+<div class="text-[11px] font-body-sm text-on-surface-variant dark:text-outline-variant">AICTE Central Regulatory Registry</div>
+</div>
+<!-- Mandatory Navigation Tab Items -->
+<nav class="space-y-1">
+<!-- Item 1: Institution Portal -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm transition-colors duration-150 scale-98" href="#">
+<span class="material-symbols-outlined text-[20px]">apartment</span>
+<span class="text-label-lg font-label-lg font-medium">Institution Portal</span>
+</a>
+<!-- Item 2: Scrutiny Scopes -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm transition-colors duration-150 scale-98" href="#">
+<span class="material-symbols-outlined text-[20px]">fact_check</span>
+<span class="text-label-lg font-label-lg font-medium">Scrutiny Scopes</span>
+</a>
+<!-- Item 3: Verification Bureau -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm transition-colors duration-150 scale-98" href="#">
+<span class="material-symbols-outlined text-[20px]">policy</span>
+<span class="text-label-lg font-label-lg font-medium">Verification Bureau</span>
+</a>
+<!-- Item 4: Registry Admin (ACTIVE STATE APPLIED EXACTLY PER JSON) -->
+<a class="flex items-center gap-space-sm bg-primary-fixed dark:bg-primary-container text-on-primary-fixed dark:text-on-primary-container font-semibold rounded-lg px-space-md py-space-sm shadow-sm scale-98" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">admin_panel_settings</span>
+<span class="text-label-lg font-label-lg">Registry Admin</span>
+</a>
+</nav>
+<!-- Sub-navigation links inside Registry Admin context -->
+<div class="pt-2 pl-3 border-l-2 border-primary/40 space-y-1 ml-4">
+<a class="block text-body-sm text-primary dark:text-inverse-primary font-semibold py-1" href="#">Statutory Rule Packs</a>
+<a class="block text-body-sm text-on-surface-variant dark:text-outline-variant hover:text-on-surface py-1" href="#">Clause Threshold Matrices</a>
+<a class="block text-body-sm text-on-surface-variant dark:text-outline-variant hover:text-on-surface py-1" href="#">API Verification Endpoints</a>
+<a class="block text-body-sm text-on-surface-variant dark:text-outline-variant hover:text-on-surface py-1" href="#">Audit &amp; Maker-Checker Log</a>
+</div>
+</div>
+<!-- Drawer Footer: Profile & Scrutiny Officer Credentials -->
+<div class="pt-4 border-t border-outline-variant/30">
+<div class="p-3 rounded-xl bg-surface-container-low dark:bg-inverse-surface border border-outline-variant/40 flex items-center gap-3">
+<!-- Officer Avatar -->
+<div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary font-bold text-headline-sm shrink-0">
+            VS
+          </div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="text-headline-sm font-headline-sm font-semibold truncate text-on-surface dark:text-inverse-on-surface">Dr. V. Sharma</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+</div>
+<div class="text-[11px] font-body-sm text-on-surface-variant dark:text-outline-variant">Scrutiny Officer</div>
+<div class="text-[10px] font-label-md text-primary dark:text-inverse-primary mt-0.5">AICTE ID: SCR-84920</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- ================= CONTENT CANVAS ================= -->
+<main class="flex-1 overflow-y-auto custom-scrollbar p-space-xl">
+<div class="max-w-[1240px] mx-auto space-y-space-lg">
+<!-- 1. BREADCRUMB & HEADER -->
+<section class="space-y-space-sm">
+<!-- Breadcrumb navigation -->
+<div class="flex items-center gap-2 text-body-sm text-on-surface-variant dark:text-outline-variant">
+<span>Scrutiny Scopes</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Registry Admin</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface dark:text-inverse-on-surface font-semibold">Statutory Rule Packs (AICTE Approval Process Handbook)</span>
+</div>
+<!-- Main Page Title & Top Action Controls -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-1">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface dark:text-inverse-on-surface tracking-tight">Statutory Rule Packs &amp; Regulatory Logic Registry</h1>
+<p class="text-body-md font-body-md text-on-surface-variant dark:text-outline-variant mt-1">Version-controlled validation logic, threshold matrices, and regulatory rule definitions aligned to statutory handbooks.</p>
+</div>
+<!-- Action Controls Group -->
+<div class="flex flex-wrap items-center gap-2.5 shrink-0">
+<button class="px-3.5 py-2 rounded-xl bg-surface-container-low dark:bg-surface-container-high border border-outline-variant/60 text-body-sm font-medium hover:bg-surface-container transition-all flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export Pack Bundle</span>
+</button>
+<button class="px-3.5 py-2 rounded-xl bg-surface-container-low dark:bg-surface-container-high border border-outline-variant/60 text-primary dark:text-inverse-primary text-body-sm font-medium hover:bg-surface-container transition-all flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+<span>Import Handbook Schema (.yaml/.json)</span>
+</button>
+<button class="px-4 py-2 rounded-xl bg-gradient-to-r from-primary to-primary-container text-white text-body-sm font-medium hover:brightness-105 transition-all shadow-[0_4px_14px_rgba(91,91,255,0.35)] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Create New Rule Pack</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 2. STATUS & METRICS KPI ROW (4 BENTO CARDS) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- KPI 1: Active Rule Packs -->
+<div class="p-5 rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] flex items-start justify-between">
+<div>
+<div class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant uppercase tracking-wider">Active Rule Packs</div>
+<div class="text-headline-lg font-headline-lg font-bold text-on-surface dark:text-inverse-on-surface mt-1">12 <span class="text-headline-sm font-normal text-outline">packs</span></div>
+<div class="text-body-sm text-secondary font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>84 rules verified in runtime</span>
+</div>
+</div>
+<div class="p-2.5 rounded-xl bg-primary-fixed/50 text-primary">
+<span class="material-symbols-outlined text-[24px]">folder_special</span>
+</div>
+</div>
+<!-- KPI 2: In Review / Pending Approval -->
+<div class="p-5 rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] flex items-start justify-between">
+<div>
+<div class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant uppercase tracking-wider">Pending Checker Sign-off</div>
+<div class="text-headline-lg font-headline-lg font-bold text-tertiary-container dark:text-tertiary-fixed-dim mt-1">3 <span class="text-headline-sm font-normal text-outline">packs</span></div>
+<div class="text-body-sm text-tertiary dark:text-tertiary-fixed font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">pending_actions</span>
+<span>Maker-Checker stage 2/2</span>
+</div>
+</div>
+<div class="p-2.5 rounded-xl bg-tertiary-fixed text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[24px]">rate_review</span>
+</div>
+</div>
+<!-- KPI 3: Active Handbook Edition -->
+<div class="p-5 rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] flex items-start justify-between">
+<div>
+<div class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant uppercase tracking-wider">Active Statutory Handbook</div>
+<div class="text-headline-lg font-headline-lg font-bold text-on-surface dark:text-inverse-on-surface mt-1">APH 2025–26</div>
+<div class="text-body-sm text-on-surface-variant dark:text-outline-variant mt-1 flex items-center gap-1">
+<span class="px-1.5 py-0.2 rounded font-label-sm text-[10px] bg-secondary-fixed text-on-secondary-fixed font-semibold">EDITION v4.2</span>
+<span>Gazette notified</span>
+</div>
+</div>
+<div class="p-2.5 rounded-xl bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+</div>
+</div>
+<!-- KPI 4: Automated Regression Pass -->
+<div class="p-5 rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] flex items-start justify-between">
+<div>
+<div class="text-label-md font-label-md text-on-surface-variant dark:text-outline-variant uppercase tracking-wider">Regression Test Compliance</div>
+<div class="text-headline-lg font-headline-lg font-bold text-secondary mt-1">99.4%</div>
+<div class="text-body-sm text-secondary font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>320/322 syntax test assertions</span>
+</div>
+</div>
+<div class="p-2.5 rounded-xl bg-secondary-fixed/50 text-secondary">
+<span class="material-symbols-outlined text-[24px]">rule_folder</span>
+</div>
+</div>
+</section>
+<!-- 3. FILTER TABS & TOOLBAR -->
+<section class="p-4 rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 shadow-sm space-y-4">
+<!-- Top Row: Status Tabs + View Toggle -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-outline-variant/30">
+<!-- Filter Tabs -->
+<div class="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0">
+<button class="px-3.5 py-1.5 rounded-full text-label-md font-label-md font-semibold bg-primary text-white shadow-sm shrink-0">
+                All Packs (12)
+              </button>
+<button class="px-3.5 py-1.5 rounded-full text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:bg-surface-container shrink-0">
+                Approved / Production (7)
+              </button>
+<button class="px-3.5 py-1.5 rounded-full text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:bg-surface-container shrink-0 flex items-center gap-1.5">
+<span>In Review</span>
+<span class="w-4 h-4 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-[10px] flex items-center justify-center font-bold">3</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-full text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:bg-surface-container shrink-0">
+                Draft (2)
+              </button>
+<button class="px-3.5 py-1.5 rounded-full text-label-md font-label-md text-on-surface-variant dark:text-outline-variant hover:bg-surface-container shrink-0">
+                Retired (4)
+              </button>
+</div>
+<!-- View Switcher (Cards vs Table) -->
+<div class="flex items-center gap-1 p-1 rounded-xl bg-surface-container-low dark:bg-surface-container-high border border-outline-variant/40 shrink-0 self-start md:self-auto">
+<button class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container-lowest dark:bg-inverse-surface text-primary shadow-xs text-body-sm font-semibold" id="viewCardsBtn">
+<span class="material-symbols-outlined text-[16px]">grid_view</span>
+<span>Cards</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1 rounded-lg text-on-surface-variant dark:text-outline-variant hover:text-on-surface text-body-sm" id="viewTableBtn">
+<span class="material-symbols-outlined text-[16px]">table_rows</span>
+<span>Table</span>
+</button>
+</div>
+</div>
+<!-- Bottom Row: Multi-Filter Controls -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+<!-- Search Input -->
+<div class="md:col-span-5 relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">filter_list</span>
+<input class="w-full h-[42px] pl-9 pr-3 rounded-xl bg-surface-container-lowest dark:bg-surface-container-low border border-outline-variant/60 focus:border-primary text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Filter by pack name, code, clause, or maker..." type="text"/>
+</div>
+<!-- Category Filter Dropdown -->
+<div class="md:col-span-4">
+<select class="w-full h-[42px] px-3 rounded-xl bg-surface-container-lowest dark:bg-surface-container-low border border-outline-variant/60 text-body-sm text-on-surface focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option value="all">Category: All Regulatory Scopes</option>
+<option value="cadre">Academic Cadre &amp; Qualifications</option>
+<option value="infra">Infrastructure &amp; Built Space</option>
+<option value="land">Land Title &amp; Cadastral Contiguity</option>
+<option value="governance">Verification &amp; Governance</option>
+<option value="finance">Financial &amp; Affidavits</option>
+</select>
+</div>
+<!-- Handbook Edition Selector -->
+<div class="md:col-span-3">
+<select class="w-full h-[42px] px-3 rounded-xl bg-surface-container-lowest dark:bg-surface-container-low border border-outline-variant/60 text-body-sm text-on-surface focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option value="2025-26">Edition: APH 2025–26 (Active)</option>
+<option value="2024-25">Edition: APH 2024–25 (Archived)</option>
+<option value="2023-24">Edition: APH 2023–24 (Archived)</option>
+</select>
+</div>
+</div>
+</section>
+<!-- 4. RULE PACKS PRESENTATION: CARDS VIEW -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="cardsViewContainer">
+<!-- PACK 1: Faculty Cadre & Ratio Rules -->
+<div class="rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 p-6 flex flex-col justify-between shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] hover:border-primary/50 transition-all">
+<div class="space-y-3.5">
+<!-- Top Badge Row -->
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full text-label-md font-label-md bg-secondary-fixed/30 text-secondary border border-secondary/30 font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+<span>Approved (v4.2.0)</span>
+</span>
+<span class="text-label-md font-label-md text-outline">Active Production</span>
+</div>
+<!-- Pack Title & Scope -->
+<div>
+<div class="text-[11px] font-label-md text-primary font-semibold uppercase tracking-wider">Academic Cadre &amp; Qualifications</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface mt-0.5">Faculty Cadre &amp; Ratio Rules</h3>
+<div class="inline-block mt-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-[11px] text-on-surface-variant font-medium">
+                  PACK-CADRE-2025
+                </div>
+</div>
+<!-- Statutory Metadata Box -->
+<div class="p-3 rounded-xl bg-surface-container-low dark:bg-surface-container-high/40 text-body-sm space-y-1.5 border border-outline-variant/30">
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Statutory Reference:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">Clause 7.1–7.4</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Handbook Edition:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">AICTE APH 2025–26</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Effective Window:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">01 Jan 2025 – 31 Dec 2025</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Coverage Payload:</span>
+<span class="font-label-md text-[11px] font-semibold text-primary">14 Rules • 98 test assertions</span>
+</div>
+</div>
+<!-- Simulated Source Verification Anchor -->
+<div class="flex items-center gap-1 text-[11px] font-label-md text-on-surface-variant bg-surface-container px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[13px] text-secondary">database</span>
+<span>Source: National Faculty Portal &amp; DTE Registry</span>
+</div>
+</div>
+<!-- Footer & Actions -->
+<div class="mt-5 pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-body-sm text-outline text-[12px]">Edited 3d ago by Bureau Admin</span>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors" title="Clone Pack">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors" title="Audit Trail">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+<a class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-primary hover:text-white text-primary text-body-sm font-semibold transition-all" href="#">
+                  Open Editor →
+                </a>
+</div>
+</div>
+</div>
+<!-- PACK 2: Built-up Infrastructure & Spatial Norms -->
+<div class="rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border-2 border-tertiary-fixed-dim/60 p-6 flex flex-col justify-between shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] relative">
+<!-- Maker-Checker Ribbon -->
+<div class="absolute -top-3 right-6 px-3 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-[10px] font-label-md font-bold tracking-wide uppercase border border-tertiary-fixed-dim shadow-xs">
+              Checker Action Required
+            </div>
+<div class="space-y-3.5">
+<!-- Top Badge Row -->
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full text-label-md font-label-md bg-tertiary-fixed/30 text-tertiary-container dark:text-tertiary-fixed-dim border border-tertiary-container/30 font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">hourglass_top</span>
+<span>In Review (v3.1.0-RC2)</span>
+</span>
+<span class="text-label-md font-label-md text-outline">Pending Sign-off</span>
+</div>
+<!-- Pack Title & Scope -->
+<div>
+<div class="text-[11px] font-label-md text-tertiary font-semibold uppercase tracking-wider">Infrastructure &amp; Built Space</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface mt-0.5">Built-up Infrastructure &amp; Spatial Norms</h3>
+<div class="inline-block mt-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-[11px] text-on-surface-variant font-medium">
+                  PACK-INFRA-SPATIAL
+                </div>
+</div>
+<!-- Statutory Metadata Box -->
+<div class="p-3 rounded-xl bg-surface-container-low dark:bg-surface-container-high/40 text-body-sm space-y-1.5 border border-outline-variant/30">
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Statutory Reference:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">Appendix 4 &amp; 5</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Handbook Edition:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">AICTE APH 2025–26</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Effective Window:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">Effective upon sign-off</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Coverage Payload:</span>
+<span class="font-label-md text-[11px] font-semibold text-tertiary">22 Rules • 140 test assertions</span>
+</div>
+</div>
+<!-- Maker & Assigned Checker Workflow pill -->
+<div class="p-2.5 rounded-lg bg-surface-container border border-outline-variant/40 text-[11px] font-body-sm space-y-1">
+<div class="flex items-center justify-between">
+<span class="text-outline">Maker:</span>
+<span class="font-semibold text-on-surface dark:text-inverse-on-surface">Dr. P. Nair (Senior Analyst)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-outline">Assigned Checker:</span>
+<span class="font-semibold text-primary dark:text-inverse-primary">Dr. V. Sharma (You)</span>
+</div>
+</div>
+</div>
+<!-- Footer & Actions -->
+<div class="mt-5 pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<a class="text-body-sm text-outline hover:text-on-surface flex items-center gap-1 font-medium" href="#">
+<span class="material-symbols-outlined text-[16px]">difference</span>
+<span>View Diff</span>
+</a>
+<button class="px-3.5 py-1.5 rounded-lg bg-primary text-white text-body-sm font-semibold hover:brightness-105 transition-all shadow-sm flex items-center gap-1">
+<span>Review &amp; Approve →</span>
+</button>
+</div>
+</div>
+<!-- PACK 3: Statutory Document Validity & Registry Integrations -->
+<div class="rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 p-6 flex flex-col justify-between shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] hover:border-primary/50 transition-all">
+<div class="space-y-3.5">
+<!-- Top Badge Row -->
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full text-label-md font-label-md bg-secondary-fixed/30 text-secondary border border-secondary/30 font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+<span>Approved (v2.4.1)</span>
+</span>
+<span class="text-label-md font-label-md text-outline">Production Live</span>
+</div>
+<!-- Pack Title & Scope -->
+<div>
+<div class="text-[11px] font-label-md text-primary font-semibold uppercase tracking-wider">Verification &amp; Governance</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface mt-0.5">Statutory Document Validity &amp; Registry Integrations</h3>
+<div class="inline-block mt-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-[11px] text-on-surface-variant font-medium">
+                  PACK-DOC-VERIFY
+                </div>
+</div>
+<!-- Statutory Metadata Box -->
+<div class="p-3 rounded-xl bg-surface-container-low dark:bg-surface-container-high/40 text-body-sm space-y-1.5 border border-outline-variant/30">
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Statutory Reference:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">Chapter II Reg 6</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Handbook Edition:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">AICTE APH 2025–26</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Effective Date:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">15 Nov 2024 to Active</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Coverage Payload:</span>
+<span class="font-label-md text-[11px] font-semibold text-primary">18 Rules • 3 External APIs</span>
+</div>
+</div>
+<!-- Integrations Tags -->
+<div class="flex flex-wrap gap-1.5 pt-1">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[10px] font-label-sm">Fire NOC API</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[10px] font-label-sm">Kaveri Land Registry</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-[10px] font-label-sm">AISHE Code Sync</span>
+</div>
+</div>
+<!-- Footer & Actions -->
+<div class="mt-5 pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-body-sm text-outline text-[12px]">Updated 2w ago</span>
+<a class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-primary hover:text-white text-primary text-body-sm font-semibold transition-all" href="#">
+                Open Editor / Detail →
+              </a>
+</div>
+</div>
+<!-- PACK 4: Land Title & Cadastral Contiguity Verification -->
+<div class="rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 p-6 flex flex-col justify-between shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] hover:border-primary/50 transition-all">
+<div class="space-y-3.5">
+<!-- Top Badge Row -->
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full text-label-md font-label-md bg-surface-container text-on-surface-variant border border-outline-variant/50 font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">edit_note</span>
+<span>Draft (v1.9.0-draft)</span>
+</span>
+<span class="text-label-md font-label-md text-outline">Unpublished</span>
+</div>
+<!-- Pack Title & Scope -->
+<div>
+<div class="text-[11px] font-label-md text-outline font-semibold uppercase tracking-wider">Land &amp; Title Deeds</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface mt-0.5">Land Title &amp; Cadastral Contiguity Verification</h3>
+<div class="inline-block mt-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-[11px] text-on-surface-variant font-medium">
+                  PACK-LAND-GEO
+                </div>
+</div>
+<!-- Statutory Metadata Box -->
+<div class="p-3 rounded-xl bg-surface-container-low dark:bg-surface-container-high/40 text-body-sm space-y-1.5 border border-outline-variant/30">
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Statutory Reference:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">Clause 4.1 (Acreage Norms)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Handbook Edition:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">AICTE APH 2025–26</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Target Window:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">Target AY 2026–27</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Coverage Payload:</span>
+<span class="font-label-md text-[11px] font-semibold text-outline">8 Rules configured</span>
+</div>
+</div>
+<!-- Simulated Geospatial Verification Badge -->
+<div class="flex items-center gap-1 text-[11px] font-label-md text-on-surface-variant bg-surface-container px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[13px] text-secondary">explore</span>
+<span>Source: Survey of India Geospatial Portal ↗</span>
+</div>
+</div>
+<!-- Footer & Actions -->
+<div class="mt-5 pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-body-sm text-outline text-[12px]">Last autosaved 1h ago</span>
+<a class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-primary hover:text-white text-primary text-body-sm font-semibold transition-all" href="#">
+                Continue Editing →
+              </a>
+</div>
+</div>
+<!-- PACK 5: Endowment Fund & Financial FDR Scrutiny -->
+<div class="rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 p-6 flex flex-col justify-between opacity-85 hover:opacity-100 transition-all">
+<div class="space-y-3.5">
+<!-- Top Badge Row -->
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full text-label-md font-label-md bg-outline-variant/30 text-outline border border-outline-variant/50 font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">archive</span>
+<span>Retired (v1.2.0)</span>
+</span>
+<span class="text-label-md font-label-md text-outline">Superseded</span>
+</div>
+<!-- Pack Title & Scope -->
+<div>
+<div class="text-[11px] font-label-md text-outline font-semibold uppercase tracking-wider">Financial &amp; Affidavits</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface mt-0.5">Endowment Fund &amp; Financial FDR Scrutiny</h3>
+<div class="inline-block mt-1 px-2 py-0.5 rounded bg-surface-container font-label-sm text-[11px] text-on-surface-variant font-medium">
+                  PACK-FIN-FDR
+                </div>
+</div>
+<!-- Statutory Metadata Box -->
+<div class="p-3 rounded-xl bg-surface-container-low dark:bg-surface-container-high/40 text-body-sm space-y-1.5 border border-outline-variant/30">
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Statutory Reference:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">Clause 9.3 (Bank Guarantees)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Handbook Edition:</span>
+<span class="font-medium text-on-surface dark:text-inverse-on-surface">AICTE APH 2024–25</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Effective Window:</span>
+<span class="font-medium text-outline">Expired 31 Dec 2024</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<span>Coverage Payload:</span>
+<span class="font-label-md text-[11px] font-semibold text-outline">11 Historical Rules</span>
+</div>
+</div>
+<!-- Retired Status Note -->
+<div class="text-[11px] font-body-sm text-outline italic">
+                Replaced by e-Guarantee Automated Ledger API pack.
+              </div>
+</div>
+<!-- Footer & Actions -->
+<div class="mt-5 pt-4 border-t border-outline-variant/30 flex items-center justify-between">
+<span class="text-body-sm text-outline text-[12px]">Archived on Jan 2025</span>
+<a class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-highest text-on-surface-variant text-body-sm font-medium transition-all" href="#">
+                View Archive
+              </a>
+</div>
+</div>
+<!-- Empty Slot / New Pack Creation Prompt Card -->
+<div class="rounded-2xl border-2 border-dashed border-outline-variant/80 dark:border-outline/40 p-6 flex flex-col items-center justify-center text-center hover:border-primary transition-all group bg-surface-container-low/30">
+<div class="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">add_circle</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface mt-3">Draft New Rule Scope</h3>
+<p class="text-body-sm text-on-surface-variant dark:text-outline-variant max-w-xs mt-1">
+              Initialize a validation pack for new regional council mandates or state quotas.
+            </p>
+<button class="mt-4 px-4 py-2 rounded-xl bg-surface-container hover:bg-primary hover:text-white text-primary text-body-sm font-semibold transition-all">
+              Initialize Pack Schema
+            </button>
+</div>
+</section>
+<!-- 5. TABLE VIEW CONTAINER (Interactive Toggle Support) -->
+<section class="hidden rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/50 shadow-sm overflow-hidden" id="tableViewContainer">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-body-sm">
+<thead>
+<tr class="bg-surface-container-low dark:bg-surface-container-high border-b border-outline-variant/40 text-label-md font-label-md text-on-surface-variant">
+<th class="py-3 px-4">PACK CODE &amp; NAME</th>
+<th class="py-3 px-4">CATEGORY</th>
+<th class="py-3 px-4">HANDBOOK REF</th>
+<th class="py-3 px-4">VERSION</th>
+<th class="py-3 px-4">STATUS</th>
+<th class="py-3 px-4">RULES / TESTS</th>
+<th class="py-3 px-4 text-right">ACTION</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 font-body-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container/40">
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface dark:text-inverse-on-surface">Faculty Cadre &amp; Ratio Rules</div>
+<div class="font-label-sm text-[10px] text-outline">PACK-CADRE-2025</div>
+</td>
+<td class="py-3 px-4">Academic Cadre</td>
+<td class="py-3 px-4">Clause 7.1–7.4 (APH 2025–26)</td>
+<td class="py-3 px-4 font-label-md text-primary">v4.2.0</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-full text-[11px] font-label-md bg-secondary-fixed/40 text-secondary font-semibold">Approved</span>
+</td>
+<td class="py-3 px-4 font-label-md">14 Rules / 98 Tests</td>
+<td class="py-3 px-4 text-right">
+<a class="text-primary hover:underline font-semibold" href="#">Open Editor</a>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container/40">
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface dark:text-inverse-on-surface">Built-up Infrastructure &amp; Spatial Norms</div>
+<div class="font-label-sm text-[10px] text-outline">PACK-INFRA-SPATIAL</div>
+</td>
+<td class="py-3 px-4">Infrastructure &amp; Built Space</td>
+<td class="py-3 px-4">Appendix 4 &amp; 5 (APH 2025–26)</td>
+<td class="py-3 px-4 font-label-md text-tertiary">v3.1.0-RC2</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-full text-[11px] font-label-md bg-tertiary-fixed text-on-tertiary-fixed font-semibold">In Review</span>
+</td>
+<td class="py-3 px-4 font-label-md">22 Rules / 140 Tests</td>
+<td class="py-3 px-4 text-right">
+<a class="text-tertiary font-semibold hover:underline" href="#">Review &amp; Approve</a>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container/40">
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface dark:text-inverse-on-surface">Statutory Document Validity &amp; Registry</div>
+<div class="font-label-sm text-[10px] text-outline">PACK-DOC-VERIFY</div>
+</td>
+<td class="py-3 px-4">Verification &amp; Governance</td>
+<td class="py-3 px-4">Chapter II Reg 6 (APH 2025–26)</td>
+<td class="py-3 px-4 font-label-md text-primary">v2.4.1</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-full text-[11px] font-label-md bg-secondary-fixed/40 text-secondary font-semibold">Approved</span>
+</td>
+<td class="py-3 px-4 font-label-md">18 Rules / 3 APIs</td>
+<td class="py-3 px-4 text-right">
+<a class="text-primary hover:underline font-semibold" href="#">Open Detail</a>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container/40">
+<td class="py-3 px-4">
+<div class="font-semibold text-on-surface dark:text-inverse-on-surface">Land Title &amp; Cadastral Contiguity</div>
+<div class="font-label-sm text-[10px] text-outline">PACK-LAND-GEO</div>
+</td>
+<td class="py-3 px-4">Land &amp; Title Deeds</td>
+<td class="py-3 px-4">Clause 4.1 (APH 2025–26)</td>
+<td class="py-3 px-4 font-label-md text-outline">v1.9.0-draft</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-full text-[11px] font-label-md bg-surface-container text-on-surface-variant font-semibold">Draft</span>
+</td>
+<td class="py-3 px-4 font-label-md">8 Rules</td>
+<td class="py-3 px-4 text-right">
+<a class="text-primary hover:underline font-semibold" href="#">Edit</a>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container/40">
+<td class="py-3 px-4">
+<div class="font-semibold text-outline">Endowment Fund &amp; Financial FDR Scrutiny</div>
+<div class="font-label-sm text-[10px] text-outline">PACK-FIN-FDR</div>
+</td>
+<td class="py-3 px-4 text-outline">Financial &amp; Affidavits</td>
+<td class="py-3 px-4 text-outline">Clause 9.3 (APH 2024–25)</td>
+<td class="py-3 px-4 font-label-md text-outline">v1.2.0</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-full text-[11px] font-label-md bg-outline-variant/30 text-outline">Retired</span>
+</td>
+<td class="py-3 px-4 font-label-md text-outline">11 Rules</td>
+<td class="py-3 px-4 text-right">
+<a class="text-outline hover:underline" href="#">View Archive</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 6. PERSISTENT STATUTORY DISCLAIMER BANNER -->
+<section class="p-4 rounded-xl bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-primary border-y border-r border-outline-variant/40 shadow-xs flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[22px] shrink-0 mt-0.5">policy</span>
+<div class="space-y-0.5 text-body-sm">
+<span class="font-label-md text-[11px] font-semibold text-primary uppercase tracking-wider block">Statutory Scrutiny Mandate &amp; Operational Protocol</span>
+<p class="text-on-surface-variant dark:text-outline-variant leading-relaxed">
+              Advisory only: Regulatory rule pack configurations dictate analytical automated checks. Human scrutiny officers retain final statutory endorsement authority under AICTE Regulations 2024. In the event of a discrepancy, manual verification protocols and official state gazette amendments supersede automated logic trees.
+            </p>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- Inline Micro-interactions Script -->
+<script>
+    // Theme Switch Logic
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    // View Switcher (Cards vs Table)
+    const viewCardsBtn = document.getElementById('viewCardsBtn');
+    const viewTableBtn = document.getElementById('viewTableBtn');
+    const cardsViewContainer = document.getElementById('cardsViewContainer');
+    const tableViewContainer = document.getElementById('tableViewContainer');
+
+    viewCardsBtn.addEventListener('click', () => {
+      cardsViewContainer.classList.remove('hidden');
+      tableViewContainer.classList.add('hidden');
+      viewCardsBtn.classList.add('bg-surface-container-lowest', 'dark:bg-inverse-surface', 'text-primary', 'font-semibold', 'shadow-xs');
+      viewCardsBtn.classList.remove('text-on-surface-variant');
+      viewTableBtn.classList.remove('bg-surface-container-lowest', 'dark:bg-inverse-surface', 'text-primary', 'font-semibold', 'shadow-xs');
+      viewTableBtn.classList.add('text-on-surface-variant');
+    });
+
+    viewTableBtn.addEventListener('click', () => {
+      tableViewContainer.classList.remove('hidden');
+      cardsViewContainer.classList.add('hidden');
+      viewTableBtn.classList.add('bg-surface-container-lowest', 'dark:bg-inverse-surface', 'text-primary', 'font-semibold', 'shadow-xs');
+      viewTableBtn.classList.remove('text-on-surface-variant');
+      viewCardsBtn.classList.remove('bg-surface-container-lowest', 'dark:bg-inverse-surface', 'text-primary', 'font-semibold', 'shadow-xs');
+      viewCardsBtn.classList.add('text-on-surface-variant');
+    });
+  </script>
+</body></html>

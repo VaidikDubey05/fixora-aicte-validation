@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIXORA — Institutional Scrutiny & Approval Portal</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Containers and Forms -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed-variant": "#5e4200",
+            "surface-dim": "#d2d8ff",
+            "on-tertiary": "#ffffff",
+            "secondary": "#006a62",
+            "on-tertiary-container": "#fff8f3",
+            "surface-container-highest": "#dde1ff",
+            "on-primary": "#ffffff",
+            "secondary-container": "#57fae9",
+            "on-error-container": "#93000a",
+            "on-surface-variant": "#464556",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "primary": "#403de6",
+            "on-primary-fixed-variant": "#2920d3",
+            "on-secondary": "#ffffff",
+            "secondary-fixed": "#57fae9",
+            "outline": "#767587",
+            "on-primary-fixed": "#08006b",
+            "surface": "#fbf8ff",
+            "error": "#ba1a1a",
+            "on-secondary-container": "#007168",
+            "tertiary-container": "#966b00",
+            "on-background": "#121a37",
+            "tertiary-fixed": "#ffdea8",
+            "primary-container": "#5b5bff",
+            "surface-variant": "#dde1ff",
+            "on-error": "#ffffff",
+            "inverse-on-surface": "#efefff",
+            "primary-fixed": "#e1dfff",
+            "on-tertiary-fixed": "#271900",
+            "tertiary": "#775400",
+            "inverse-primary": "#c1c1ff",
+            "surface-container-low": "#f3f2ff",
+            "on-secondary-fixed-variant": "#005049",
+            "surface-container-high": "#e4e7ff",
+            "outline-variant": "#c6c4d8",
+            "inverse-surface": "#282f4d",
+            "on-secondary-fixed": "#00201d",
+            "secondary-fixed-dim": "#2addcd",
+            "tertiary-fixed-dim": "#ffba20",
+            "surface-bright": "#fbf8ff",
+            "background": "#fbf8ff",
+            "on-surface": "#121a37",
+            "on-primary-container": "#fbf8ff",
+            "surface-tint": "#4543ea",
+            "surface-container": "#ecedff",
+            "primary-fixed-dim": "#c1c1ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "space-xl": "2rem",
+            "margin-lg": "3rem",
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "gutter-lg": "2rem",
+            "margin-sm": "1rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "gutter-sm": "1rem",
+            "gutter": "1.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["JetBrains Mono"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "label-lg": ["JetBrains Mono"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-md": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "fontWeight": "700" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+            "headline-xl": ["40px", { "lineHeight": "48px", "fontWeight": "700" }],
+            "headline-xl-mobile": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+            "label-md": ["11px", { "lineHeight": "16px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(220, 225, 255, 0.2);
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(118, 117, 135, 0.3);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md antialiased transition-colors duration-200">
+<!-- ==================== TOP APP BAR ==================== -->
+<header class="docked full-width top-0 sticky z-40 bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md border-b border-outline-variant/30 dark:border-outline-variant/10 shadow-sm transition-colors duration-200">
+<div class="flex justify-between items-center w-full px-space-lg h-16 max-w-full">
+<!-- Brand & Breadcrumbs -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2 pr-4 border-r border-outline-variant/30 dark:border-outline-variant/20">
+<div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="verified_user">verified_user</span>
+</div>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">FIXORA</span>
+</div>
+<!-- Breadcrumbs Navigation -->
+<nav class="hidden md:flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+<span class="hover:text-primary transition-colors cursor-pointer">Institution Portal</span>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+<span class="hover:text-primary transition-colors cursor-pointer">My Applications</span>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+<span class="font-label-sm text-label-sm font-medium px-2 py-0.5 rounded bg-surface-container-high dark:bg-inverse-surface text-primary dark:text-inverse-primary border border-outline-variant/40">APP-2025-9842</span>
+</nav>
+</div>
+<!-- Action Tools & Profile Badge -->
+<div class="flex items-center gap-space-sm md:gap-space-md">
+<!-- AI Assistant Action Pill -->
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-fixed dark:bg-primary/20 text-on-primary-fixed dark:text-inverse-primary border border-primary-container/40 hover:bg-primary-container hover:text-on-primary transition-all duration-150 shadow-sm group">
+<span class="material-symbols-outlined text-[18px] text-primary dark:text-inverse-primary group-hover:text-on-primary transition-colors" data-icon="smart_toy">smart_toy</span>
+<span class="text-label-md font-label-md font-semibold">Ask FIXORA</span>
+</button>
+<!-- Theme Toggle Switch -->
+<button class="p-2 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors" id="theme-toggle" title="Toggle Light/Dark Theme">
+<span class="material-symbols-outlined text-[20px] dark:hidden" data-icon="dark_mode">dark_mode</span>
+<span class="material-symbols-outlined text-[20px] hidden dark:inline-block" data-icon="light_mode">light_mode</span>
+</button>
+<!-- Notification Bell with Notification Beacon -->
+<button class="relative p-2 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface dark:ring-inverse-surface"></span>
+</button>
+<!-- Institution User Badge -->
+<div class="flex items-center gap-2 pl-2 border-l border-outline-variant/30 dark:border-outline-variant/20">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest dark:bg-primary-container/30 flex items-center justify-center text-primary dark:text-inverse-primary font-bold text-xs ring-1 ring-outline-variant/40">
+            AS
+          </div>
+<div class="hidden lg:flex flex-col text-left">
+<span class="text-body-sm font-body-sm font-semibold text-on-surface dark:text-inverse-on-surface leading-tight">Dr. A. Sen</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant dark:text-outline-variant leading-tight">Dean Academic · PID-1-9284102</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- ==================== STATUTORY ADVISORY STRIP ==================== -->
+<div class="bg-surface-container-low dark:bg-inverse-surface/40 border-b border-outline-variant/30 px-space-lg py-2.5 flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant transition-colors">
+<div class="max-w-7xl mx-auto w-full flex items-center gap-3">
+<div class="flex-shrink-0 w-6 h-6 rounded-md bg-primary-fixed dark:bg-primary/30 text-primary dark:text-inverse-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-base" data-icon="info">info</span>
+</div>
+<p class="leading-normal">
+<strong class="font-semibold text-on-surface dark:text-inverse-on-surface">Preliminary guidance only:</strong> 
+        All pre-check observations are advisory to assist your institution prior to official scrutiny committee review. Official determinations are made solely by AICTE Scrutiny Officers.
+      </p>
+</div>
+</div>
+<!-- ==================== MAIN CONTENT CANVAS ==================== -->
+<main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+<!-- 1. APPLICATION SUMMARY BANNER -->
+<section class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/40 dark:border-outline-variant/20 p-space-md sm:p-space-lg shadow-sm transition-all">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+<!-- Details Column -->
+<div class="space-y-3">
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-1.5 bg-surface-container dark:bg-surface-container-high px-3 py-1 rounded-lg border border-outline-variant/30">
+<span class="font-label-lg text-label-lg text-primary dark:text-inverse-primary tracking-wide">APP-2025-9842</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-0.5" onclick="navigator.clipboard?.writeText('APP-2025-9842')" title="Copy Application ID">
+<span class="material-symbols-outlined text-[16px]" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<span class="px-3 py-1 rounded-full text-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed-variant border border-tertiary/20 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+              Action Required / Rectification
+            </span>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container dark:bg-surface-container-high text-on-surface-variant dark:text-outline-variant">
+              AY 2025–26
+            </span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md text-on-surface dark:text-inverse-on-surface tracking-tight">
+              Apex Institute of Technology, Bangalore
+            </h1>
+<div class="flex flex-wrap items-center gap-y-1 gap-x-4 mt-1 text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="location_on">location_on</span>
+                Region: South-Western
+              </span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="badge">badge</span>
+                PID: <code class="font-label-sm">PID-1-9284102</code>
+</span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="category">category</span>
+                Extension of Approval (EoA) & Intake Variation
+              </span>
+</div>
+</div>
+</div>
+<!-- Quick Institutional Action Deck -->
+<div class="flex flex-wrap items-center gap-2.5 lg:self-center">
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-container dark:bg-surface-container-high hover:bg-surface-container-highest text-on-surface dark:text-inverse-on-surface border border-outline-variant/30 text-body-sm font-body-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+            Download Dossier PDF
+          </button>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-container dark:bg-surface-container-high hover:bg-surface-container-highest text-on-surface dark:text-inverse-on-surface border border-outline-variant/30 text-body-sm font-body-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="share">share</span>
+            Share with Registrar
+          </button>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-primary/10 text-primary dark:text-inverse-primary hover:bg-primary/20 border border-primary/20 text-body-sm font-body-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="help_outline">help_outline</span>
+            Request Assistance
+          </button>
+</div>
+</div>
+</section>
+<!-- 2. MULTI-STAGE HORIZONTAL TIMELINE -->
+<section class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/40 dark:border-outline-variant/20 p-space-md sm:p-space-lg shadow-sm overflow-x-auto custom-scroll">
+<div class="min-w-[860px]">
+<div class="flex items-center justify-between mb-4">
+<span class="text-body-sm font-body-sm font-semibold uppercase tracking-wider text-on-surface-variant dark:text-outline-variant">
+            Approval Lifecycle Progression
+          </span>
+<span class="text-label-md font-label-md px-2.5 py-0.5 rounded-full bg-error-container text-on-error-container font-semibold">
+            Institutional Response Window: 6 Days Remaining
+          </span>
+</div>
+<div class="relative flex items-center justify-between">
+<!-- Background Connecting Line -->
+<div class="absolute left-6 right-6 top-5 h-0.5 bg-outline-variant/30 dark:bg-outline-variant/20 -z-0"></div>
+<!-- Stage 1: Draft (Completed) -->
+<div class="relative z-10 flex flex-col items-center text-center w-28">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-container flex items-center justify-center font-bold shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+</div>
+<span class="mt-2 text-body-sm font-body-sm font-semibold text-on-surface dark:text-inverse-on-surface">Draft</span>
+<span class="text-label-sm font-label-sm text-outline">Completed</span>
+</div>
+<!-- Stage 2: Submitted (Completed) -->
+<div class="relative z-10 flex flex-col items-center text-center w-28">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-container flex items-center justify-center font-bold shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+</div>
+<span class="mt-2 text-body-sm font-body-sm font-semibold text-on-surface dark:text-inverse-on-surface">Submitted</span>
+<span class="text-label-sm font-label-sm text-outline">12 Jan 2025</span>
+</div>
+<!-- Stage 3: Validation (Completed) -->
+<div class="relative z-10 flex flex-col items-center text-center w-28">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-container flex items-center justify-center font-bold shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+</div>
+<span class="mt-2 text-body-sm font-body-sm font-semibold text-on-surface dark:text-inverse-on-surface">Validation</span>
+<span class="text-label-sm font-label-sm text-secondary">Pre-check done</span>
+</div>
+<!-- Stage 4: Rectification (CURRENT ACTIVE) -->
+<div class="relative z-10 flex flex-col items-center text-center w-36">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold ring-4 ring-primary-container/20 shadow-md">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit_document">edit_document</span>
+</div>
+<span class="absolute -top-1 -right-1 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+</div>
+<span class="mt-2 text-body-sm font-body-sm font-bold text-primary dark:text-inverse-primary">Rectification</span>
+<span class="text-label-sm font-label-sm text-primary font-medium">Action Pending</span>
+</div>
+<!-- Stage 5: Ready for Scrutiny (Upcoming) -->
+<div class="relative z-10 flex flex-col items-center text-center w-28">
+<div class="w-10 h-10 rounded-full bg-surface-container dark:bg-surface-container-high text-outline-variant flex items-center justify-center font-bold border border-outline-variant/40">
+<span class="material-symbols-outlined text-[18px]" data-icon="hourglass_empty">hourglass_empty</span>
+</div>
+<span class="mt-2 text-body-sm font-body-sm font-medium text-on-surface-variant/70 dark:text-outline-variant/70">Ready for Scrutiny</span>
+<span class="text-label-sm font-label-sm text-outline-variant">Queue: #14</span>
+</div>
+<!-- Stage 6: Official Review (Upcoming) -->
+<div class="relative z-10 flex flex-col items-center text-center w-28">
+<div class="w-10 h-10 rounded-full bg-surface-container dark:bg-surface-container-high text-outline-variant flex items-center justify-center font-bold border border-outline-variant/40">
+<span class="material-symbols-outlined text-[18px]" data-icon="policy">policy</span>
+</div>
+<span class="mt-2 text-body-sm font-body-sm font-medium text-on-surface-variant/70 dark:text-outline-variant/70">Official Review</span>
+<span class="text-label-sm font-label-sm text-outline-variant">AICTE Bureau</span>
+</div>
+<!-- Stage 7: Closed (Upcoming) -->
+<div class="relative z-10 flex flex-col items-center text-center w-24">
+<div class="w-10 h-10 rounded-full bg-surface-container dark:bg-surface-container-high text-outline-variant flex items-center justify-center font-bold border border-outline-variant/40">
+<span class="material-symbols-outlined text-[18px]" data-icon="task_alt">task_alt</span>
+</div>
+<span class="mt-2 text-body-sm font-body-sm font-medium text-on-surface-variant/70 dark:text-outline-variant/70">Closed</span>
+<span class="text-label-sm font-label-sm text-outline-variant">EoA Order</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. MAIN TABBED CONTAINER -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/40 dark:border-outline-variant/20 shadow-sm transition-all overflow-hidden">
+<!-- Interactive Navigation Tabs -->
+<div class="border-b border-outline-variant/30 bg-surface-container-low dark:bg-inverse-surface/60 px-6 pt-3 flex items-center gap-2 overflow-x-auto">
+<button class="tab-button active-tab flex items-center gap-2 pb-3 px-3 text-body-sm font-body-sm font-semibold border-b-2 border-primary text-primary dark:text-inverse-primary transition-all" id="tab-btn-checklist" onclick="switchTab('checklist')">
+<span class="material-symbols-outlined text-[18px]" data-icon="checklist">checklist</span>
+<span>Checklist</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded-full bg-primary-fixed dark:bg-primary-container text-on-primary-fixed dark:text-on-primary-container">8</span>
+</button>
+<button class="tab-button flex items-center gap-2 pb-3 px-3 text-body-sm font-body-sm font-medium border-b-2 border-transparent text-on-surface-variant dark:text-outline-variant hover:text-on-surface transition-all" id="tab-btn-documents" onclick="switchTab('documents')">
+<span class="material-symbols-outlined text-[18px]" data-icon="description">description</span>
+<span>Documents</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded-full bg-surface-container dark:bg-surface-container-high text-on-surface-variant dark:text-outline-variant">6</span>
+</button>
+<button class="tab-button flex items-center gap-2 pb-3 px-3 text-body-sm font-body-sm font-medium border-b-2 border-transparent text-on-surface-variant dark:text-outline-variant hover:text-on-surface transition-all" id="tab-btn-deficiencies" onclick="switchTab('deficiencies')">
+<span class="material-symbols-outlined text-[18px]" data-icon="warning">warning</span>
+<span>Deficiencies / Clarifications Needed</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-bold">2</span>
+</button>
+<button class="tab-button flex items-center gap-2 pb-3 px-3 text-body-sm font-body-sm font-medium border-b-2 border-transparent text-on-surface-variant dark:text-outline-variant hover:text-on-surface transition-all" id="tab-btn-history" onclick="switchTab('history')">
+<span class="material-symbols-outlined text-[18px]" data-icon="history">history</span>
+<span>Audit History & Activity Log</span>
+</button>
+</div>
+<!-- TAB CONTENT CANVAS -->
+<div class="p-4 sm:p-6">
+<!-- ==================== TAB 1: CHECKLIST ==================== -->
+<div class="tab-pane block space-y-4" id="tab-pane-checklist">
+<div class="flex items-center justify-between pb-2">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Statutory Compliance Checklist</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">Automated empirical observations against AICTE Approval Process Handbook (APH 2025-26) norms.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Filter by:</span>
+<select class="text-body-sm font-body-sm bg-surface-container dark:bg-surface-container-high border-outline-variant/40 rounded-lg px-2.5 py-1">
+<option>All Categories (8)</option>
+<option>Requires Attention (2)</option>
+<option>Verified (6)</option>
+</select>
+</div>
+</div>
+<!-- Checklist Rows -->
+<div class="space-y-3">
+<!-- Item 1: Fire Safety NOC (Expired) -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-xl border border-tertiary/30 bg-tertiary-fixed/10 dark:bg-tertiary-fixed/5 gap-4">
+<div class="space-y-1.5 flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-semibold text-body-md font-body-md text-on-surface dark:text-inverse-on-surface">Fire Safety NOC Endorsement</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container dark:bg-surface-container-high text-on-surface-variant">Infrastructure Clearance</span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-error-container text-on-error-container font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="event_busy">event_busy</span>
+                    Expired
+                  </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+<strong class="font-medium text-error">Observation:</strong> Fire NOC validity expired on Jan 15, 2025. Please upload renewed renewal endorsement from Karnataka State Fire Services.
+                </p>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<button class="px-3.5 py-1.5 rounded-xl bg-primary text-on-primary text-body-sm font-body-sm font-medium shadow-sm hover:opacity-90 transition-opacity flex items-center gap-1" onclick="switchTab('deficiencies')">
+<span>Review & Resolve</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Item 2: Faculty Cadre Ratio (Inconsistent) -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-xl border border-tertiary/30 bg-tertiary-fixed/10 dark:bg-tertiary-fixed/5 gap-4">
+<div class="space-y-1.5 flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-semibold text-body-md font-body-md text-on-surface dark:text-inverse-on-surface">Faculty Cadre Ratio & Regular Headcount</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container dark:bg-surface-container-high text-on-surface-variant">Academic Cadence</span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="sync_problem">sync_problem</span>
+                    Inconsistent
+                  </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+<strong class="font-medium text-tertiary">Observation:</strong> Cadre headcount of 28 faculty differs between Section 8 spreadsheet and AICTE Portal roster (32 listed). Student-faculty ratio impact noted.
+                </p>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<button class="px-3.5 py-1.5 rounded-xl bg-primary text-on-primary text-body-sm font-body-sm font-medium shadow-sm hover:opacity-90 transition-opacity flex items-center gap-1" onclick="switchTab('deficiencies')">
+<span>Review & Resolve</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Item 3: Land Title & Cadastral Registration (Verified) -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface gap-4">
+<div class="space-y-1.5 flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-semibold text-body-md font-body-md text-on-surface dark:text-inverse-on-surface">Land Title & Continuous Ownership Deed</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container dark:bg-surface-container-high text-on-surface-variant">Legal & Land</span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                    Verified
+                  </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+<strong class="font-medium text-secondary">Verified:</strong> Digital signature cross-referenced with Kaveri Sub-Registrar Office Karnataka. 7.5 Acres confirmed unencumbered.
+                </p>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/40 text-body-sm font-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+<span>View Details</span>
+</button>
+</div>
+</div>
+<!-- Item 4: Building Occupancy & Safety Clearance (Verified) -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface gap-4">
+<div class="space-y-1.5 flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-semibold text-body-md font-body-md text-on-surface dark:text-inverse-on-surface">Building Occupancy Certificate (Annexure 5)</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container dark:bg-surface-container-high text-on-surface-variant">Civil Infrastructure</span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                    Verified
+                  </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+<strong class="font-medium text-secondary">Verified:</strong> Digital endorsement matches BBMP Urban Development Authority registry for Block A, B, and Central Library.
+                </p>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/40 text-body-sm font-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+<span>View Details</span>
+</button>
+</div>
+</div>
+<!-- Item 5: Barrier-Free Built Environment (Verified) -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface gap-4">
+<div class="space-y-1.5 flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-semibold text-body-md font-body-md text-on-surface dark:text-inverse-on-surface">Barrier-Free Access & PwD Facilities Declaration</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container dark:bg-surface-container-high text-on-surface-variant">Statutory Compliance</span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                    Verified
+                  </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+<strong class="font-medium text-secondary">Verified:</strong> Ramps, Braille signage in elevators, and dedicated restroom facilities documented as per NBC 2016 guidelines.
+                </p>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/40 text-body-sm font-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+<span>View Details</span>
+</button>
+</div>
+</div>
+<!-- Item 6: Anti-Ragging Affidavit (Verified) -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-xl border border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface gap-4">
+<div class="space-y-1.5 flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-semibold text-body-md font-body-md text-on-surface dark:text-inverse-on-surface">Institutional Anti-Ragging Committee Roster</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container dark:bg-surface-container-high text-on-surface-variant">Student Welfare</span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                    Verified
+                  </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+<strong class="font-medium text-secondary">Verified:</strong> National Anti-Ragging Monitoring portal submission ID verified with UGC cell.
+                </p>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/40 text-body-sm font-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+<span>View Details</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== TAB 2: DOCUMENTS ==================== -->
+<div class="tab-pane hidden space-y-6" id="tab-pane-documents">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Uploaded Scrutiny Dossier Documents</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">Dual-channel validated documents with cryptographic SHA-256 signatures.</p>
+</div>
+<button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-primary text-on-primary text-body-sm font-body-sm font-medium shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]" data-icon="upload_file">upload_file</span>
+<span>Upload New Annexure</span>
+</button>
+</div>
+<!-- Responsive Document Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+<!-- Document Card 1: Land Title -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-outline-variant/40 dark:border-outline-variant/20 p-4 shadow-sm flex flex-col justify-between hover:border-primary/50 transition-all">
+<div class="space-y-3">
+<div class="flex items-start justify-between">
+<div class="w-12 h-14 rounded-lg bg-surface-container-high dark:bg-surface-container flex flex-col items-center justify-center text-primary border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span class="text-[9px] font-bold">PDF</span>
+</div>
+<!-- Radial Meter simulation -->
+<div class="flex items-center gap-1.5 bg-secondary-fixed/20 text-on-secondary-container px-2 py-1 rounded-md text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="bolt">bolt</span>
+<span>96% AI Read</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-md font-semibold text-on-surface dark:text-inverse-on-surface line-clamp-1">
+                    Cadastral Land Title Deed Annexure 3-A
+                  </h3>
+<div class="mt-1 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span>12.4 MB</span>
+<span>•</span>
+<span>12 Jan 2025</span>
+</div>
+<div class="mt-2 font-label-sm text-label-sm bg-surface-container dark:bg-surface-container-high px-2 py-1 rounded text-on-surface-variant dark:text-outline-variant truncate">
+                    SHA-256: 8a4f9...e27b1c
+                  </div>
+</div>
+<div class="pt-2">
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-semibold flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                    Verified
+                  </span>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-outline-variant/30 flex items-center justify-between gap-2">
+<button class="flex-1 py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-primary hover:bg-primary-fixed/20 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+                  Preview
+                </button>
+<button class="py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-outline hover:text-on-surface transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="sync">sync</span>
+                  Replace
+                </button>
+</div>
+</div>
+<!-- Document Card 2: Building Occupancy -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-outline-variant/40 dark:border-outline-variant/20 p-4 shadow-sm flex flex-col justify-between hover:border-primary/50 transition-all">
+<div class="space-y-3">
+<div class="flex items-start justify-between">
+<div class="w-12 h-14 rounded-lg bg-surface-container-high dark:bg-surface-container flex flex-col items-center justify-center text-primary border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span class="text-[9px] font-bold">PDF</span>
+</div>
+<div class="flex items-center gap-1.5 bg-secondary-fixed/20 text-on-secondary-container px-2 py-1 rounded-md text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="bolt">bolt</span>
+<span>92% AI Read</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-md font-semibold text-on-surface dark:text-inverse-on-surface line-clamp-1">
+                    Building Occupancy Certificate Annexure 5
+                  </h3>
+<div class="mt-1 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span>8.1 MB</span>
+<span>•</span>
+<span>12 Jan 2025</span>
+</div>
+<div class="mt-2 font-label-sm text-label-sm bg-surface-container dark:bg-surface-container-high px-2 py-1 rounded text-on-surface-variant dark:text-outline-variant truncate">
+                    SHA-256: 3c1d9...f89a42
+                  </div>
+</div>
+<div class="pt-2">
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-semibold flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                    Verified
+                  </span>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-outline-variant/30 flex items-center justify-between gap-2">
+<button class="flex-1 py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-primary hover:bg-primary-fixed/20 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+                  Preview
+                </button>
+<button class="py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-outline hover:text-on-surface transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="sync">sync</span>
+                  Replace
+                </button>
+</div>
+</div>
+<!-- Document Card 3: Fire Safety NOC (Expired Card) -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-error/40 p-4 shadow-sm flex flex-col justify-between hover:border-error transition-all">
+<div class="space-y-3">
+<div class="flex items-start justify-between">
+<div class="w-12 h-14 rounded-lg bg-error-container/40 flex flex-col items-center justify-center text-error border border-error/30">
+<span class="material-symbols-outlined text-2xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span class="text-[9px] font-bold">PDF</span>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container text-outline px-2 py-1 rounded-md text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="bolt">bolt</span>
+<span>88% AI Read</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-md font-semibold text-on-surface dark:text-inverse-on-surface line-clamp-1">
+                    Fire Safety NOC Annexure 14-B
+                  </h3>
+<div class="mt-1 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span>4.6 MB</span>
+<span>•</span>
+<span>12 Jan 2025</span>
+</div>
+<div class="mt-2 font-label-sm text-label-sm bg-surface-container dark:bg-surface-container-high px-2 py-1 rounded text-on-surface-variant dark:text-outline-variant truncate">
+                    SHA-256: 7d21c...5b119e
+                  </div>
+</div>
+<div class="pt-2">
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-error-container text-on-error-container font-semibold flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px]" data-icon="event_busy">event_busy</span>
+                    Expired (15 Jan 2025)
+                  </span>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-outline-variant/30 flex items-center justify-between gap-2">
+<button class="flex-1 py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium bg-error/10 text-error hover:bg-error/20 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="upload">upload</span>
+                  Replace / Re-upload
+                </button>
+<button class="py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Document Card 4: Faculty Cadre Scroll -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-tertiary/40 p-4 shadow-sm flex flex-col justify-between hover:border-tertiary transition-all">
+<div class="space-y-3">
+<div class="flex items-start justify-between">
+<div class="w-12 h-14 rounded-lg bg-surface-container-high dark:bg-surface-container flex flex-col items-center justify-center text-primary border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl" data-icon="table_chart">table_chart</span>
+<span class="text-[9px] font-bold">XLSX</span>
+</div>
+<div class="flex items-center gap-1.5 bg-tertiary-fixed/30 text-on-tertiary-fixed-variant px-2 py-1 rounded-md text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="bolt">bolt</span>
+<span>84% AI Read</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-md font-semibold text-on-surface dark:text-inverse-on-surface line-clamp-1">
+                    Faculty Cadre & Salary Scroll Section 8
+                  </h3>
+<div class="mt-1 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span>3.2 MB</span>
+<span>•</span>
+<span>11 Jan 2025</span>
+</div>
+<div class="mt-2 font-label-sm text-label-sm bg-surface-container dark:bg-surface-container-high px-2 py-1 rounded text-on-surface-variant dark:text-outline-variant truncate">
+                    SHA-256: 1f09e...99b4a1
+                  </div>
+</div>
+<div class="pt-2">
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-semibold flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px]" data-icon="sync_problem">sync_problem</span>
+                    Mismatch Detected
+                  </span>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-outline-variant/30 flex items-center justify-between gap-2">
+<button class="flex-1 py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium bg-tertiary-fixed/30 text-on-tertiary-fixed-variant hover:bg-tertiary-fixed/50 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="upload">upload</span>
+                  Replace / Re-upload
+                </button>
+<button class="py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Document Card 5: Barrier Free Certificate -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-outline-variant/40 dark:border-outline-variant/20 p-4 shadow-sm flex flex-col justify-between hover:border-primary/50 transition-all">
+<div class="space-y-3">
+<div class="flex items-start justify-between">
+<div class="w-12 h-14 rounded-lg bg-surface-container-high dark:bg-surface-container flex flex-col items-center justify-center text-primary border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span class="text-[9px] font-bold">PDF</span>
+</div>
+<div class="flex items-center gap-1.5 bg-secondary-fixed/20 text-on-secondary-container px-2 py-1 rounded-md text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="bolt">bolt</span>
+<span>94% AI Read</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-md font-semibold text-on-surface dark:text-inverse-on-surface line-clamp-1">
+                    Architect Barrier-Free Accessibility Report
+                  </h3>
+<div class="mt-1 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span>5.9 MB</span>
+<span>•</span>
+<span>10 Jan 2025</span>
+</div>
+<div class="mt-2 font-label-sm text-label-sm bg-surface-container dark:bg-surface-container-high px-2 py-1 rounded text-on-surface-variant dark:text-outline-variant truncate">
+                    SHA-256: 4b29a...01f37e
+                  </div>
+</div>
+<div class="pt-2">
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-semibold flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                    Verified
+                  </span>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-outline-variant/30 flex items-center justify-between gap-2">
+<button class="flex-1 py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-primary hover:bg-primary-fixed/20 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+                  Preview
+                </button>
+<button class="py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-outline hover:text-on-surface transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="sync">sync</span>
+                  Replace
+                </button>
+</div>
+</div>
+<!-- Document Card 6: AICTE Fee Receipt -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-outline-variant/40 dark:border-outline-variant/20 p-4 shadow-sm flex flex-col justify-between hover:border-primary/50 transition-all">
+<div class="space-y-3">
+<div class="flex items-start justify-between">
+<div class="w-12 h-14 rounded-lg bg-surface-container-high dark:bg-surface-container flex flex-col items-center justify-center text-primary border border-outline-variant/30">
+<span class="material-symbols-outlined text-2xl" data-icon="receipt_long">receipt_long</span>
+<span class="text-[9px] font-bold">PDF</span>
+</div>
+<div class="flex items-center gap-1.5 bg-secondary-fixed/20 text-on-secondary-container px-2 py-1 rounded-md text-label-sm font-label-sm font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="bolt">bolt</span>
+<span>99% AI Read</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-sm text-body-md font-semibold text-on-surface dark:text-inverse-on-surface line-clamp-1">
+                    Statutory Regulatory Processing Fee Receipt
+                  </h3>
+<div class="mt-1 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span>1.1 MB</span>
+<span>•</span>
+<span>09 Jan 2025</span>
+</div>
+<div class="mt-2 font-label-sm text-label-sm bg-surface-container dark:bg-surface-container-high px-2 py-1 rounded text-on-surface-variant dark:text-outline-variant truncate">
+                    SHA-256: 9e33b...11c62d
+                  </div>
+</div>
+<div class="pt-2">
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-semibold flex items-center gap-1 w-max">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                    Verified
+                  </span>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-outline-variant/30 flex items-center justify-between gap-2">
+<button class="flex-1 py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-primary hover:bg-primary-fixed/20 transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
+                  Preview
+                </button>
+<button class="py-1.5 px-2 rounded-lg text-body-sm font-body-sm font-medium text-outline hover:text-on-surface transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="sync">sync</span>
+                  Replace
+                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== TAB 3: DEFICIENCIES / CLARIFICATIONS ==================== -->
+<div class="tab-pane hidden space-y-6" id="tab-pane-deficiencies">
+<div class="flex items-center justify-between pb-2">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Clarifications & Rectification Guidance</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">Collaborative advisory items to ensure smooth passage during official Scrutiny Committee review.</p>
+</div>
+<span class="text-label-md font-label-md px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-semibold">
+              2 Action Items Requiring Attention
+            </span>
+</div>
+<!-- Strict collaborative structured cards (No anomaly scores or punitive threat levels) -->
+<div class="space-y-6">
+<!-- Clarification Card A: Fire Safety NOC -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/40 dark:border-outline-variant/20 p-6 shadow-sm hover:shadow-md transition-shadow">
+<!-- Card Top Header -->
+<div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-outline-variant/20">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-error-container/40 text-error flex items-center justify-center">
+<span class="material-symbols-outlined text-xl" data-icon="local_fire_department">local_fire_department</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">
+                      Clarification 1: Fire Safety Certificate & NOC Renewal
+                    </h3>
+<span class="text-label-sm font-label-sm text-outline">Reference: Annexure 14-B · Building Block A, B & C</span>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full text-label-sm font-label-sm font-semibold bg-error-container text-on-error-container flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span>
+                  Validity Expired
+                </span>
+</div>
+<!-- Structured 3-Part Guidance Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-5">
+<!-- Part 1: The Issue -->
+<div class="space-y-1.5">
+<div class="flex items-center gap-1.5 text-on-surface-variant dark:text-outline-variant font-semibold text-body-sm">
+<span class="material-symbols-outlined text-base text-primary" data-icon="search_check">search_check</span>
+<span>The Issue</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">
+                    Fire Safety Certificate & NOC (Annexure 14-B) validity lapsed on <strong>15-Jan-2025</strong> as indicated on the state department seal.
+                  </p>
+</div>
+<!-- Part 2: Why it matters -->
+<div class="space-y-1.5">
+<div class="flex items-center gap-1.5 text-on-surface-variant dark:text-outline-variant font-semibold text-body-sm">
+<span class="material-symbols-outlined text-base text-primary" data-icon="gavel">gavel</span>
+<span>Why it matters</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">
+                    AICTE Approval Process Handbook (APH 2025-26) Chapter II requires active clearance from State Fire Services for all instructional occupancy areas prior to EoA grant.
+                  </p>
+</div>
+<!-- Part 3: What to do -->
+<div class="space-y-1.5">
+<div class="flex items-center gap-1.5 text-on-surface-variant dark:text-outline-variant font-semibold text-body-sm">
+<span class="material-symbols-outlined text-base text-secondary" data-icon="task_alt">task_alt</span>
+<span>What to do</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">
+                    Upload the provisional renewal receipt or current valid fire certificate stamped by the Chief Fire Officer or authorized state bureau.
+                  </p>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="pt-4 border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span class="material-symbols-outlined text-base" data-icon="cloud_done">cloud_done</span>
+<span>Supported formats: PDF up to 25MB</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 rounded-xl border border-outline-variant/40 text-on-surface dark:text-inverse-on-surface text-body-sm font-body-sm font-medium hover:bg-surface-container transition-colors">
+                    View Guidelines
+                  </button>
+<button class="px-4 py-2 rounded-xl bg-primary text-on-primary text-body-sm font-body-sm font-medium shadow-sm hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="upload_file">upload_file</span>
+                    Upload Replacement Document
+                  </button>
+</div>
+</div>
+</div>
+<!-- Clarification Card B: Faculty Cadre Ratio -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/40 dark:border-outline-variant/20 p-6 shadow-sm hover:shadow-md transition-shadow">
+<!-- Card Top Header -->
+<div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-outline-variant/20">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-tertiary-fixed/40 text-on-tertiary-fixed-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-xl" data-icon="groups">groups</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">
+                      Clarification 2: Faculty Cadre Ratio Alignment
+                    </h3>
+<span class="text-label-sm font-label-sm text-outline">Reference: Computer Science & Engineering Department · UG Program</span>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full text-label-sm font-label-sm font-semibold bg-tertiary-fixed text-on-tertiary-fixed-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="difference">difference</span>
+                  Roster Discrepancy
+                </span>
+</div>
+<!-- Structured 3-Part Guidance Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-5">
+<!-- Part 1: The Issue -->
+<div class="space-y-1.5">
+<div class="flex items-center gap-1.5 text-on-surface-variant dark:text-outline-variant font-semibold text-body-sm">
+<span class="material-symbols-outlined text-base text-primary" data-icon="search_check">search_check</span>
+<span>The Issue</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">
+                    Discrepancy in Computer Science & Engineering faculty count across submitted forms: Section 8 roster reflects <strong>28 faculty</strong> while Annexure 4 portal declaration lists <strong>32 faculty</strong>.
+                  </p>
+</div>
+<!-- Part 2: Why it matters -->
+<div class="space-y-1.5">
+<div class="flex items-center gap-1.5 text-on-surface-variant dark:text-outline-variant font-semibold text-body-sm">
+<span class="material-symbols-outlined text-base text-primary" data-icon="calculate">calculate</span>
+<span>Why it matters</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">
+                    Cadre of 28 shifts calculated student-to-faculty ratio from <strong>1:15</strong> to <strong>1:19.4</strong> for sanctioned intake, which requires statutory committee review under Cadre Balance norms.
+                  </p>
+</div>
+<!-- Part 3: What to do -->
+<div class="space-y-1.5">
+<div class="flex items-center gap-1.5 text-on-surface-variant dark:text-outline-variant font-semibold text-body-sm">
+<span class="material-symbols-outlined text-base text-secondary" data-icon="task_alt">task_alt</span>
+<span>What to do</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">
+                    Provide updated Form 16 / Bank Salary scroll confirming regular full-time appointments for the 4 newly joined Assistant Professors to harmonize both rosters.
+                  </p>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="pt-4 border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span class="material-symbols-outlined text-base" data-icon="table_view">table_view</span>
+<span>Form 16 or Schedule VIII Cadre Template</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 rounded-xl border border-outline-variant/40 text-on-surface dark:text-inverse-on-surface text-body-sm font-body-sm font-medium hover:bg-surface-container transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
+                    Download Cadre Calculator
+                  </button>
+<button class="px-4 py-2 rounded-xl bg-primary text-on-primary text-body-sm font-body-sm font-medium shadow-sm hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="upload_file">upload_file</span>
+                    Upload Corrected Schedule
+                  </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== TAB 4: AUDIT HISTORY ==================== -->
+<div class="tab-pane hidden space-y-6" id="tab-pane-history">
+<div class="flex items-center justify-between pb-2">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Immutable Scrutiny Activity Log</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">Chronological trace of submissions, system validations, and communications.</p>
+</div>
+<button class="flex items-center gap-1 text-label-sm font-label-sm text-primary hover:underline">
+<span class="material-symbols-outlined text-base" data-icon="receipt">receipt</span>
+<span>Export Signed Audit Trail</span>
+</button>
+</div>
+<!-- Audit Timeline List -->
+<div class="relative pl-6 space-y-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-outline-variant/30">
+<!-- Log Entry 1 -->
+<div class="relative">
+<div class="absolute -left-6 top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-primary-fixed"></div>
+<div class="bg-surface-container-low dark:bg-inverse-surface/40 p-4 rounded-xl border border-outline-variant/30 space-y-1">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<span class="font-semibold text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">Institutional Notification Dispatched</span>
+<span class="text-label-sm font-label-sm text-outline">16 Jan 2025 · 14:22:10 IST</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+                  Rectification notice transmitted to Head of Institution email (dean@apex.edu.in) with 2 advisory observations.
+                </p>
+<div class="pt-2 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span class="material-symbols-outlined text-sm" data-icon="fingerprint">fingerprint</span>
+<span>Auth Token: FIXORA-SYS-NOTIF-9821</span>
+</div>
+</div>
+</div>
+<!-- Log Entry 2 -->
+<div class="relative">
+<div class="absolute -left-6 top-1 w-4 h-4 rounded-full bg-secondary ring-4 ring-secondary-fixed"></div>
+<div class="bg-surface-container-low dark:bg-inverse-surface/40 p-4 rounded-xl border border-outline-variant/30 space-y-1">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<span class="font-semibold text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">Automated Pre-Check & Ingestion Completed</span>
+<span class="text-label-sm font-label-sm text-outline">13 Jan 2025 · 09:15:44 IST</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+                  OCR extraction executed across 6 annexures. 8 statutory checkpoints evaluated. Cross-checks completed with State Directorate registry.
+                </p>
+<div class="pt-2 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span class="material-symbols-outlined text-sm" data-icon="fingerprint">fingerprint</span>
+<span>Validation Engine: v4.2.0-Production · Confidence: 94.2%</span>
+</div>
+</div>
+</div>
+<!-- Log Entry 3 -->
+<div class="relative">
+<div class="absolute -left-6 top-1 w-4 h-4 rounded-full bg-surface-container-highest dark:bg-outline ring-4 ring-surface-container"></div>
+<div class="bg-surface-container-low dark:bg-inverse-surface/40 p-4 rounded-xl border border-outline-variant/30 space-y-1">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<span class="font-semibold text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">Application Form Submitted by Institution</span>
+<span class="text-label-sm font-label-sm text-outline">12 Jan 2025 · 18:30:02 IST</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+                  Formal submission confirmed by Dr. A. Sen (Dean Academic). Application dossier sealed and locked for automated scrutiny analysis.
+                </p>
+<div class="pt-2 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span class="material-symbols-outlined text-sm" data-icon="fingerprint">fingerprint</span>
+<span>Digital Signature Digest: 4a9f...33e8</span>
+</div>
+</div>
+</div>
+<!-- Log Entry 4 -->
+<div class="relative">
+<div class="absolute -left-6 top-1 w-4 h-4 rounded-full bg-surface-container-highest dark:bg-outline ring-4 ring-surface-container"></div>
+<div class="bg-surface-container-low dark:bg-inverse-surface/40 p-4 rounded-xl border border-outline-variant/30 space-y-1">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<span class="font-semibold text-body-sm font-body-sm text-on-surface dark:text-inverse-on-surface">Application Dossier Created (Draft)</span>
+<span class="text-label-sm font-label-sm text-outline">05 Jan 2025 · 11:00:20 IST</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant">
+                  New Extension of Approval application initialized under Permanent ID PID-1-9284102.
+                </p>
+<div class="pt-2 flex items-center gap-2 text-label-sm font-label-sm text-outline">
+<span class="material-symbols-outlined text-sm" data-icon="fingerprint">fingerprint</span>
+<span>Session IP: 14.139.155.2 (Institutional Subnet)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- ==================== FOOTER ==================== -->
+<footer class="mt-auto border-t border-outline-variant/30 bg-surface-container-lowest dark:bg-inverse-surface py-6 px-space-lg text-center text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant transition-colors">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="verified_user">verified_user</span>
+<span class="font-bold text-on-surface dark:text-inverse-on-surface">FIXORA Regulatory Portal</span>
+<span>— All India Council for Technical Education</span>
+</div>
+<div class="flex items-center gap-4 text-label-sm font-label-sm">
+<span class="hover:text-primary cursor-pointer">Scrutiny Guidelines 2025-26</span>
+<span>•</span>
+<span class="hover:text-primary cursor-pointer">APH Standards Matrix</span>
+<span>•</span>
+<span class="hover:text-primary cursor-pointer">Support Desk: 1800-11-2345</span>
+</div>
+</div>
+</footer>
+<!-- ==================== INTERACTION SCRIPT ==================== -->
+<script>
+    // Tab Switching Logic
+    function switchTab(tabId) {
+      // Hide all panes
+      document.querySelectorAll('.tab-pane').forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('block');
+      });
+
+      // Show selected pane
+      const targetPane = document.getElementById('tab-pane-' + tabId);
+      if (targetPane) {
+        targetPane.classList.remove('hidden');
+        targetPane.classList.add('block');
+      }
+
+      // Reset button styles
+      document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('border-primary', 'text-primary', 'dark:text-inverse-primary', 'font-semibold');
+        btn.classList.add('border-transparent', 'text-on-surface-variant', 'dark:text-outline-variant', 'font-medium');
+      });
+
+      // Activate clicked button
+      const activeBtn = document.getElementById('tab-btn-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.remove('border-transparent', 'text-on-surface-variant', 'dark:text-outline-variant', 'font-medium');
+        activeBtn.classList.add('border-primary', 'text-primary', 'dark:text-inverse-primary', 'font-semibold');
+      }
+    }
+
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', () => {
+      const htmlEl = document.documentElement;
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+      } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+      }
+    });
+  </script>
+</body></html>

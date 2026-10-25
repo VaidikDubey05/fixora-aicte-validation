@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIXORA — Scrutiny Officer Command Center</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-dim": "#d2d8ff",
+            "on-tertiary-container": "#fff8f3",
+            "inverse-surface": "#282f4d",
+            "surface-tint": "#4543ea",
+            "primary-fixed-dim": "#c1c1ff",
+            "outline": "#767587",
+            "error-container": "#ffdad6",
+            "on-primary": "#ffffff",
+            "on-surface-variant": "#464556",
+            "surface-container": "#ecedff",
+            "tertiary": "#775400",
+            "on-error-container": "#93000a",
+            "surface": "#fbf8ff",
+            "surface-container-highest": "#dde1ff",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#ffdea8",
+            "inverse-on-surface": "#efefff",
+            "on-tertiary": "#ffffff",
+            "secondary-fixed-dim": "#2addcd",
+            "on-secondary-fixed-variant": "#005049",
+            "primary": "#403de6",
+            "on-secondary-container": "#007168",
+            "surface-container-low": "#f3f2ff",
+            "primary-container": "#5b5bff",
+            "on-secondary-fixed": "#00201d",
+            "tertiary-fixed-dim": "#ffba20",
+            "inverse-primary": "#c1c1ff",
+            "on-primary-fixed-variant": "#2920d3",
+            "surface-bright": "#fbf8ff",
+            "outline-variant": "#c6c4d8",
+            "secondary-fixed": "#57fae9",
+            "on-tertiary-fixed": "#271900",
+            "secondary": "#006a62",
+            "surface-variant": "#dde1ff",
+            "error": "#ba1a1a",
+            "surface-container-high": "#e4e7ff",
+            "on-primary-container": "#fbf8ff",
+            "secondary-container": "#57fae9",
+            "surface-container-lowest": "#ffffff",
+            "on-error": "#ffffff",
+            "primary-fixed": "#e1dfff",
+            "on-background": "#121a37",
+            "tertiary-container": "#966b00",
+            "on-tertiary-fixed-variant": "#5e4200",
+            "on-primary-fixed": "#08006b",
+            "background": "#fbf8ff",
+            "on-surface": "#121a37"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-lg": "2rem",
+            "space-xs": "0.25rem",
+            "margin-sm": "1rem",
+            "gutter-sm": "1rem",
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "space-xl": "2rem",
+            "margin-lg": "3rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "label-md": ["JetBrains Mono"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "label-lg": ["JetBrains Mono"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "label-sm": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-md": ["11px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-xl-mobile": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+            "headline-xl": ["40px", { "lineHeight": "48px", "fontWeight": "700" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "500" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(118, 117, 135, 0.25);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(118, 117, 135, 0.45);
+    }
+    .stat-card-shadow {
+      box-shadow: 0 1px 3px rgba(20, 23, 47, 0.03), 0 8px 24px -4px rgba(91, 93, 255, 0.06);
+    }
+    .pill-active-gradient {
+      background: linear-gradient(135deg, #5B5BFF 0%, #A855F7 100%);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased font-body-md text-body-md transition-colors duration-200">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- 1. Collapsible NavigationDrawer (from Shared Components JSON) -->
+<aside class="w-72 h-screen flex flex-col justify-between p-space-md bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant/40 dark:border-outline/20 shadow-md flex-shrink-0 transition-all duration-300 z-30 select-none" id="main-drawer">
+<!-- Top Branding in Drawer -->
+<div class="flex flex-col gap-space-lg">
+<div class="flex items-center justify-between px-space-sm pt-space-xs">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl flex items-center justify-center pill-active-gradient text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight leading-none">FIXORA</span>
+<span class="text-[10px] font-label-sm font-semibold tracking-wider text-primary dark:text-inverse-primary uppercase mt-1">AI Regulatory Engine</span>
+</div>
+</div>
+<button class="p-1 rounded-lg text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors" id="toggle-drawer-btn" title="Toggle Navigation">
+<span class="material-symbols-outlined text-[20px]">first_page</span>
+</button>
+</div>
+<!-- Official Compliance Node Badge -->
+<div class="mx-space-xs p-2.5 rounded-xl bg-surface-container-low dark:bg-surface-variant/20 border border-outline-variant/30 flex items-center gap-2.5">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<div class="flex flex-col min-w-0">
+<span class="text-[10px] font-label-md text-on-surface-variant dark:text-outline-variant truncate">Connected: SWRO Regional Bureau</span>
+<span class="text-[11px] font-label-sm font-semibold text-primary dark:text-inverse-primary truncate">Node: BLR-REG-98</span>
+</div>
+</div>
+<!-- Navigation Tabs from Shared JSON -->
+<nav aria-label="Portal Navigation" class="flex flex-col gap-1.5">
+<!-- Item 1: Institution Portal -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm transition-colors duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">apartment</span>
+<span class="text-label-lg font-label-lg">Institution Portal</span>
+</a>
+<!-- Item 2: Scrutiny Scopes (Active per Context) -->
+<a class="flex items-center gap-space-sm bg-primary-fixed dark:bg-primary-container text-on-primary-fixed dark:text-on-primary-container font-semibold rounded-lg px-space-md py-space-sm shadow-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+<span class="text-label-lg font-label-lg">Scrutiny Scopes</span>
+<span class="ml-auto bg-primary dark:bg-inverse-primary text-on-primary dark:text-on-primary-fixed text-[10px] font-label-sm px-1.5 py-0.5 rounded-full font-bold">142</span>
+</a>
+<!-- Item 3: Verification Bureau -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm transition-colors duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">policy</span>
+<span class="text-label-lg font-label-lg">Verification Bureau</span>
+</a>
+<!-- Item 4: Registry Admin -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm transition-colors duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">admin_panel_settings</span>
+<span class="text-label-lg font-label-lg">Registry Admin</span>
+</a>
+</nav>
+</div>
+<!-- Footer Officer Profile Badge from JSON -->
+<div class="border-t border-outline-variant/30 dark:border-outline/20 pt-space-md mt-auto">
+<div class="flex items-center gap-space-sm p-2 rounded-xl hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors">
+<div class="relative w-10 h-10 rounded-full overflow-hidden bg-primary-fixed flex items-center justify-center flex-shrink-0 border-2 border-primary-container/40">
+<span class="material-symbols-outlined text-primary text-[24px]">account_circle</span>
+</div>
+<div class="flex flex-col min-w-0 text-left">
+<span class="text-label-lg font-label-lg text-on-surface dark:text-inverse-on-surface font-semibold truncate leading-tight">Dr. V. Sharma</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant truncate">Scrutiny Officer</span>
+<span class="text-[10px] font-label-sm text-primary dark:text-inverse-primary truncate">AICTE ID: SCR-84920</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Dynamic Content Canvas -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar (from Shared Components JSON) -->
+<header class="flex justify-between items-center w-full px-space-lg h-16 max-w-full bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md docked full-width top-0 sticky z-40 shadow-sm border-b border-outline-variant/30 dark:border-outline-variant/10">
+<!-- Leading cluster: Title & Search -->
+<div class="flex items-center gap-space-lg flex-1 max-w-2xl">
+<div class="flex items-center gap-2">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">FIXORA</span>
+<span class="hidden md:inline-block text-[11px] font-label-md px-2 py-0.5 rounded-full bg-surface-container border border-outline-variant/40 text-on-surface-variant font-medium">SWRO Bureau</span>
+</div>
+<!-- Global Scrutiny Search -->
+<div class="relative w-full max-w-md hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full h-[38px] pl-9 pr-4 rounded-xl bg-surface-container-lowest dark:bg-surface/10 border border-outline-variant/40 dark:border-outline/30 text-body-md placeholder:text-on-surface-variant/70 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all text-on-surface dark:text-inverse-on-surface" placeholder="Search institution, PID, case ID, cadastral plot..." type="text"/>
+<div class="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1">
+<kbd class="text-[10px] font-label-sm bg-surface-container px-1.5 py-0.5 rounded text-on-surface-variant border border-outline-variant/30">⌘K</kbd>
+</div>
+</div>
+</div>
+<!-- Trailing cluster: Utilities, Alerts, Dark Mode, Assistant -->
+<div class="flex items-center gap-space-md">
+<!-- Live Sync indicator -->
+<div class="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-body-sm text-on-surface-variant">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-[11px] font-label-md">Live Sync: 42s ago</span>
+</div>
+<!-- Notification Bell with Red Badge -->
+<button class="relative p-2 rounded-xl text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors" title="Statutory Notifications">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-error text-on-error text-[10px] font-label-sm font-bold">3</span>
+</button>
+<!-- Interactive Dark / Light Mode Toggle -->
+<button class="p-2 rounded-xl text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors" id="theme-toggle-btn" title="Toggle Light/Dark Theme">
+<span class="material-symbols-outlined text-[20px] dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined text-[20px] hidden dark:inline-block">light_mode</span>
+</button>
+<!-- Ask FIXORA AI Assistant CTA (From JSON) -->
+<button class="flex items-center gap-2 px-3.5 py-2 rounded-xl pill-active-gradient text-on-primary shadow-sm hover:brightness-105 active:scale-95 transition-all duration-150">
+<span class="material-symbols-outlined text-[18px]">smart_toy</span>
+<span class="text-label-md font-label-md font-semibold tracking-wide">Ask FIXORA</span>
+</button>
+<!-- Quick Profile Pill -->
+<div class="flex items-center gap-2 pl-2 border-l border-outline-variant/30 dark:border-outline/20">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-xs">
+              VS
+            </div>
+</div>
+</div>
+</header>
+<!-- Mandatory AI Advisory Sticky Banner -->
+<aside aria-label="Regulatory Notice" class="bg-surface-container-lowest dark:bg-inverse-surface/90 border-l-[4px] border-primary px-space-lg py-2 flex items-center justify-between text-body-sm text-on-surface shadow-xs">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-[19px]">gavel</span>
+<span class="font-body-sm">
+<strong class="font-semibold text-primary dark:text-inverse-primary">[Statutory Advisory]:</strong>
+            AI findings are analytical recommendations requiring human endorsement. Scrutiny Officers hold final clearance authority under AICTE Regulations 2024.
+          </span>
+</div>
+<span class="hidden md:inline-flex items-center gap-1 text-[11px] font-label-md text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[13px] text-secondary">verified</span>
+          Rule Book v24.2
+        </span>
+</aside>
+<!-- Scrollable Main Viewport -->
+<main class="flex-1 overflow-y-auto px-space-lg py-space-lg custom-scrollbar space-y-space-lg">
+<!-- Header & Quick Controls -->
+<section class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface dark:text-inverse-on-surface tracking-tight">Scrutiny Officer Command Center</h1>
+<p class="text-body-md font-body-md text-on-surface-variant dark:text-outline-variant mt-0.5">South-Western Regional Office • AY 2025–26 Cycle • 142 Active Dockets</p>
+</div>
+<div class="flex items-center flex-wrap gap-2.5">
+<!-- Filter Pills -->
+<button class="filter-chip active text-label-md font-label-md px-3 py-1.5 rounded-full bg-primary text-on-primary font-semibold transition-all shadow-xs" data-filter="all">All Categories</button>
+<button class="filter-chip text-label-md font-label-md px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface border border-outline-variant/30 transition-all" data-filter="high-priority">High Priority (&gt;75)</button>
+<button class="filter-chip text-label-md font-label-md px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface border border-outline-variant/30 transition-all" data-filter="cadre">Cadre Checks</button>
+<!-- Export Digest CTA -->
+<button class="flex items-center gap-1.5 text-label-md font-label-md px-3.5 py-1.5 rounded-xl bg-surface-container-lowest dark:bg-surface-container-high border border-outline-variant/40 hover:bg-surface-container text-on-surface transition-all shadow-xs ml-1">
+<span class="material-symbols-outlined text-[16px]">download</span>
+              Export Digest PDF
+            </button>
+</div>
+</section>
+<!-- KPI 5-Card Grid with Inline SVG Sparklines -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+<!-- Card 1: Cases in Queue -->
+<div class="bg-surface-container-lowest dark:bg-surface-container-low p-space-md rounded-2xl border border-outline-variant/30 stat-card-shadow flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="text-body-sm font-medium">Cases in Queue</span>
+<span class="material-symbols-outlined text-primary text-[20px]">inventory_2</span>
+</div>
+<div class="my-2 flex items-baseline justify-between">
+<span class="text-headline-lg font-headline-lg font-bold text-on-surface dark:text-inverse-on-surface">142</span>
+<span class="text-[11px] font-label-md font-semibold text-secondary flex items-center">
+                ↑ 12%
+              </span>
+</div>
+<!-- Sparkline SVG -->
+<div class="h-9 w-full flex items-end">
+<svg class="w-full h-8 overflow-visible" fill="none" viewbox="0 0 100 30">
+<path d="M0,24 Q20,18 40,22 T80,10 T100,5" fill="none" stroke="#403de6" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0,24 Q20,18 40,22 T80,10 T100,5 L100,30 L0,30 Z" fill="url(#grad-blue)" opacity="0.15"></path>
+<defs>
+<lineargradient id="grad-blue" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#403de6"></stop>
+<stop offset="100%" stop-color="#403de6" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<span class="text-[11px] font-body-sm text-on-surface-variant mt-1.5">28 received today</span>
+</div>
+<!-- Card 2: Review Required -->
+<div class="bg-surface-container-lowest dark:bg-surface-container-low p-space-md rounded-2xl border border-outline-variant/30 stat-card-shadow flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="text-body-sm font-medium">Review Required</span>
+<span class="material-symbols-outlined text-[#FF4D6D] text-[20px]">notification_important</span>
+</div>
+<div class="my-2 flex items-baseline justify-between">
+<span class="text-headline-lg font-headline-lg font-bold text-[#FF4D6D]">34</span>
+<span class="text-[11px] font-label-md font-semibold text-[#FF4D6D] bg-[#FF4D6D]/10 px-1.5 py-0.5 rounded-full">
+                +4 urgent
+              </span>
+</div>
+<div class="h-9 w-full flex items-end">
+<svg class="w-full h-8 overflow-visible" fill="none" viewbox="0 0 100 30">
+<path d="M0,26 L25,22 L50,15 L75,19 L100,4" fill="none" stroke="#FF4D6D" stroke-linecap="round" stroke-width="2.5"></path>
+<circle cx="100" cy="4" fill="#FF4D6D" r="3"></circle>
+</svg>
+</div>
+<span class="text-[11px] font-body-sm text-on-surface-variant mt-1.5">Requires manual verification</span>
+</div>
+<!-- Card 3: Pending Verification -->
+<div class="bg-surface-container-lowest dark:bg-surface-container-low p-space-md rounded-2xl border border-outline-variant/30 stat-card-shadow flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="text-body-sm font-medium">Pending Verification</span>
+<span class="material-symbols-outlined text-[#2DA8FF] text-[20px]">sync_saved_locally</span>
+</div>
+<div class="my-2 flex items-baseline justify-between">
+<span class="text-headline-lg font-headline-lg font-bold text-on-surface dark:text-inverse-on-surface">56</span>
+<span class="text-[11px] font-label-md font-medium text-on-surface-variant">40% pipe</span>
+</div>
+<div class="h-9 w-full flex items-end">
+<svg class="w-full h-8 overflow-visible" fill="none" viewbox="0 0 100 30">
+<path d="M0,18 C30,12 60,25 100,14" fill="none" stroke="#2DA8FF" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<span class="text-[11px] font-body-sm text-on-surface-variant mt-1.5">18 in OCR / Cadastral pipe</span>
+</div>
+<!-- Card 4: Inspection Recommended -->
+<div class="bg-surface-container-lowest dark:bg-surface-container-low p-space-md rounded-2xl border border-outline-variant/30 stat-card-shadow flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="text-body-sm font-medium">Inspection Recommended</span>
+<span class="material-symbols-outlined text-[#FF8A1F] text-[20px]">distance</span>
+</div>
+<div class="my-2 flex items-baseline justify-between">
+<span class="text-headline-lg font-headline-lg font-bold text-on-surface dark:text-inverse-on-surface">11</span>
+<span class="text-[11px] font-label-md font-semibold text-[#FF8A1F] bg-[#FF8A1F]/10 px-1.5 py-0.5 rounded-full">
+                7.7%
+              </span>
+</div>
+<div class="h-9 w-full flex items-end">
+<svg class="w-full h-8 overflow-visible" fill="none" viewbox="0 0 100 30">
+<path d="M0,28 L35,26 L70,16 L100,10" fill="none" stroke="#FF8A1F" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<span class="text-[11px] font-body-sm text-on-surface-variant mt-1.5">Physical verification advised</span>
+</div>
+<!-- Card 5: Avg Review Time -->
+<div class="bg-surface-container-lowest dark:bg-surface-container-low p-space-md rounded-2xl border border-outline-variant/30 stat-card-shadow flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="text-body-sm font-medium">Avg Review Time</span>
+<span class="material-symbols-outlined text-[#22C55E] text-[20px]">schedule</span>
+</div>
+<div class="my-2 flex items-baseline justify-between">
+<span class="text-headline-lg font-headline-lg font-bold text-on-surface dark:text-inverse-on-surface">18.4<span class="text-headline-sm font-normal">m</span></span>
+<span class="text-[11px] font-label-md font-semibold text-[#22C55E]">
+                ↓ -4.2m
+              </span>
+</div>
+<div class="h-9 w-full flex items-end">
+<svg class="w-full h-8 overflow-visible" fill="none" viewbox="0 0 100 30">
+<path d="M0,6 Q30,14 60,20 T100,26" fill="none" stroke="#22C55E" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<span class="text-[11px] font-body-sm text-on-surface-variant mt-1.5">vs last cycle target (25m)</span>
+</div>
+</section>
+<!-- Middle Section: Analytics & Charts Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+<!-- Card A: Applications by Status (SVG Donut Chart) -->
+<div class="bg-surface-container-lowest dark:bg-surface-container-low p-space-lg rounded-2xl border border-outline-variant/30 stat-card-shadow flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">pie_chart</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Applications by Status</h3>
+</div>
+<span class="text-[11px] font-label-sm text-on-surface-variant">Cycle 2025-26</span>
+</div>
+<div class="flex items-center justify-center my-auto py-2">
+<div class="relative w-44 h-44 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<!-- Donut Base Background Track -->
+<circle class="text-surface-container" cx="18" cy="18" fill="none" r="14.3" stroke="currentColor" stroke-width="3.4"></circle>
+<!-- Segment 1: Verified (41%) -> 41 * 0.9 = 36.9 -->
+<circle cx="18" cy="18" fill="none" r="14.3" stroke="#22C55E" stroke-dasharray="36.9 90" stroke-dashoffset="0" stroke-width="3.6"></circle>
+<!-- Segment 2: Review Required (24%) -> 21.6 -->
+<circle cx="18" cy="18" fill="none" r="14.3" stroke="#FF4D6D" stroke-dasharray="21.6 90" stroke-dashoffset="-36.9" stroke-width="3.6"></circle>
+<!-- Segment 3: Verification Pending (26%) -> 23.4 -->
+<circle cx="18" cy="18" fill="none" r="14.3" stroke="#2DA8FF" stroke-dasharray="23.4 90" stroke-dashoffset="-58.5" stroke-width="3.6"></circle>
+<!-- Segment 4: Rectification (9%) -> 8.1 -->
+<circle cx="18" cy="18" fill="none" r="14.3" stroke="#FF8A1F" stroke-dasharray="8.1 90" stroke-dashoffset="-81.9" stroke-width="3.6"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="text-headline-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface">142</span>
+<span class="text-[11px] font-label-sm text-on-surface-variant">Total Dockets</span>
+</div>
+</div>
+</div>
+<!-- Legend Grid -->
+<div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-outline-variant/30 text-body-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#22C55E]"></span>
+<span class="text-on-surface-variant text-[12px]">Verified</span>
+<span class="font-label-sm font-semibold ml-auto text-[12px]">41%</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#FF4D6D]"></span>
+<span class="text-on-surface-variant text-[12px]">Review Req.</span>
+<span class="font-label-sm font-semibold ml-auto text-[12px]">24%</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#2DA8FF]"></span>
+<span class="text-on-surface-variant text-[12px]">Verif. Pending</span>
+<span class="font-label-sm font-semibold ml-auto text-[12px]">26%</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#FF8A1F]"></span>
+<span class="text-on-surface-variant text-[12px]">Rectification</span>
+<span class="font-label-sm font-semibold ml-auto text-[12px]">9%</span>
+</div>
+</div>
+</div>
+<!-- Card B: Deficiencies by Category (Horizontal Bar Chart) -->
+<div class="bg-surface-container-lowest dark:bg-surface-container-low p-space-lg rounded-2xl border border-outline-variant/30 stat-card-shadow flex flex-col">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">bar_chart</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Deficiencies by Category</h3>
+</div>
+<span class="text-[11px] font-label-md text-primary font-medium">Top 5 Patterns</span>
+</div>
+<div class="space-y-3 my-auto pt-1">
+<!-- Item 1 -->
+<div>
+<div class="flex justify-between text-body-sm mb-1">
+<span class="text-on-surface dark:text-inverse-on-surface font-medium truncate">Cadre &amp; Headcount Disparity</span>
+<span class="font-label-md font-semibold text-[#FF4D6D]">28 cases</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-[#FF4D6D] h-2 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<!-- Item 2 -->
+<div>
+<div class="flex justify-between text-body-sm mb-1">
+<span class="text-on-surface dark:text-inverse-on-surface font-medium truncate">Fire Safety Endorsement</span>
+<span class="font-label-md font-semibold text-[#FF8A1F]">19 cases</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-[#FF8A1F] h-2 rounded-full" style="width: 58%"></div>
+</div>
+</div>
+<!-- Item 3 -->
+<div>
+<div class="flex justify-between text-body-sm mb-1">
+<span class="text-on-surface dark:text-inverse-on-surface font-medium truncate">Land Deed &amp; Cadastral</span>
+<span class="font-label-md font-semibold text-primary">14 cases</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<!-- Item 4 -->
+<div>
+<div class="flex justify-between text-body-sm mb-1">
+<span class="text-on-surface dark:text-inverse-on-surface font-medium truncate">Building Occupancy Cert</span>
+<span class="font-label-md font-semibold text-[#2DA8FF]">11 cases</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-[#2DA8FF] h-2 rounded-full" style="width: 33%"></div>
+</div>
+</div>
+<!-- Item 5 -->
+<div>
+<div class="flex justify-between text-body-sm mb-1">
+<span class="text-on-surface dark:text-inverse-on-surface font-medium truncate">Anti-Ragging Undertakings</span>
+<span class="font-label-md font-semibold text-on-surface-variant">6 cases</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-on-surface-variant/40 h-2 rounded-full" style="width: 18%"></div>
+</div>
+</div>
+</div>
+<div class="mt-3 pt-2 text-[11px] font-body-sm text-on-surface-variant flex items-center justify-between border-t border-outline-variant/30">
+<span>Standard: AICTE Approval Process Handbook</span>
+<span class="text-primary hover:underline cursor-pointer">Analyze clusters →</span>
+</div>
+</div>
+<!-- Card C: Queue Ageing Breakdown (Vertical Bar Chart) -->
+<div class="bg-surface-container-lowest dark:bg-surface-container-low p-space-lg rounded-2xl border border-outline-variant/30 stat-card-shadow flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">hourglass_top</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Queue Ageing Breakdown</h3>
+</div>
+<span class="text-[11px] font-label-md px-2 py-0.5 rounded bg-error-container text-on-error-container font-semibold">21 Overdue</span>
+</div>
+<!-- Target SLA Indicator line note -->
+<div class="flex items-center gap-2 text-[11px] text-on-surface-variant mb-4">
+<span class="w-3 h-0.5 border-t-2 border-dashed border-[#FF4D6D]"></span>
+<span>Statutory SLA Boundary: 72 Hours</span>
+</div>
+<!-- Vertical Columns container -->
+<div class="h-44 w-full flex items-end justify-between gap-3 px-2 pt-4 relative">
+<!-- Simulated SLA reference dashed bar -->
+<div class="absolute left-0 right-0 top-[38%] border-b border-dashed border-[#FF4D6D]/60 pointer-events-none"></div>
+<!-- Bar 1: <24h (48 cases) -->
+<div class="flex-1 flex flex-col items-center h-full justify-end group">
+<span class="text-[11px] font-label-md font-semibold text-on-surface mb-1 group-hover:text-primary transition-colors">48</span>
+<div class="w-full bg-secondary-fixed-dim/40 rounded-t-lg group-hover:brightness-110 transition-all" style="height: 75%"></div>
+<span class="text-[10px] font-label-sm text-on-surface-variant mt-2">&lt; 24h</span>
+</div>
+<!-- Bar 2: 24-48h (39 cases) -->
+<div class="flex-1 flex flex-col items-center h-full justify-end group">
+<span class="text-[11px] font-label-md font-semibold text-on-surface mb-1 group-hover:text-primary transition-colors">39</span>
+<div class="w-full bg-primary/70 rounded-t-lg group-hover:brightness-110 transition-all" style="height: 61%"></div>
+<span class="text-[10px] font-label-sm text-on-surface-variant mt-2">24–48h</span>
+</div>
+<!-- Bar 3: 3-5 days (34 cases) -->
+<div class="flex-1 flex flex-col items-center h-full justify-end group">
+<span class="text-[11px] font-label-md font-semibold text-on-surface mb-1 group-hover:text-primary transition-colors">34</span>
+<div class="w-full bg-[#FF8A1F]/80 rounded-t-lg group-hover:brightness-110 transition-all" style="height: 53%"></div>
+<span class="text-[10px] font-label-sm text-on-surface-variant mt-2">3–5d</span>
+</div>
+<!-- Bar 4: >5 days overdue (21 cases) -->
+<div class="flex-1 flex flex-col items-center h-full justify-end group">
+<span class="text-[11px] font-label-md font-semibold text-[#FF4D6D] mb-1 group-hover:scale-105 transition-all">21</span>
+<div class="w-full bg-[#FF4D6D] rounded-t-lg group-hover:brightness-110 transition-all" style="height: 33%"></div>
+<span class="text-[10px] font-label-sm font-semibold text-[#FF4D6D] mt-2">&gt; 5d</span>
+</div>
+</div>
+<div class="mt-3 pt-2 text-[11px] font-body-sm text-on-surface-variant flex items-center justify-between border-t border-outline-variant/30">
+<span>Avg Clearance: 1.8 Days</span>
+<span class="text-primary hover:underline cursor-pointer">Reassign overdues →</span>
+</div>
+</div>
+</section>
+<!-- Main Content Bottom Split with Right Live Alerts Drawer -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left/Main Column: Priority Scrutiny Queue Table (~72% or 8.5/12 cols) -->
+<div class="lg:col-span-8 xl:col-span-8 bg-surface-container-lowest dark:bg-surface-container-low rounded-2xl border border-outline-variant/30 stat-card-shadow overflow-hidden flex flex-col">
+<!-- Table Header Bar & Filter Controls -->
+<div class="p-space-lg border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Priority Scrutiny Queue</h2>
+<span class="text-[11px] font-label-md font-bold px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed">142 Cases</span>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Ranked by statutory risk index and deadline escalation</p>
+</div>
+<!-- Quick Table Actions -->
+<div class="flex items-center gap-2 flex-wrap">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px]">filter_list</span>
+<select class="h-9 pl-8 pr-7 rounded-xl bg-surface-container text-body-sm border-none text-on-surface font-medium focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>All Types (EoA / Intake)</option>
+<option>Extension of Approval (EoA)</option>
+<option>Intake Variation</option>
+<option>New Programme</option>
+</select>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px]">search</span>
+<input class="h-9 pl-8 pr-3 rounded-xl bg-surface-container text-body-sm border-none placeholder:text-on-surface-variant/60 focus:ring-1 focus:ring-primary w-36 focus:w-48 transition-all" placeholder="Filter rows..." type="text"/>
+</div>
+</div>
+</div>
+<!-- High-Density Regulatory Data Table -->
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container/60 border-b border-outline-variant/30 text-[11px] font-label-md text-on-surface-variant uppercase tracking-wider">
+<th class="py-3 px-4 font-semibold">Priority</th>
+<th class="py-3 px-4 font-semibold">Institution &amp; PID</th>
+<th class="py-3 px-4 font-semibold">Application Type</th>
+<th class="py-3 px-4 font-semibold">Top Diagnostic Finding</th>
+<th class="py-3 px-4 font-semibold text-center">Signals</th>
+<th class="py-3 px-4 font-semibold">Statutory SLA</th>
+<th class="py-3 px-4 font-semibold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 text-body-sm">
+<!-- Row 1: Apex Institute -->
+<tr class="hover:bg-surface-container/40 transition-colors group">
+<td class="py-3.5 px-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="font-label-md font-bold text-[#FF4D6D] w-6">92</span>
+<div class="w-12 bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-[#FF4D6D] h-2 rounded-full" style="width: 92%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="font-medium text-on-surface dark:text-inverse-on-surface leading-snug">Apex Institute of Technology</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-label-sm text-[11px] text-primary dark:text-inverse-primary bg-primary-fixed/50 dark:bg-primary-container/40 px-1.5 rounded">PID-1-9284102</span>
+<span class="text-[11px] text-on-surface-variant">Bangalore Urban</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<span class="text-[12px] font-medium text-on-surface">Intake Variation</span>
+<div class="text-[10px] font-label-sm text-on-surface-variant">+60 CS Seats</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-label-md bg-[#FF4D6D]/10 text-[#FF4D6D] border border-[#FF4D6D]/20">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span>Mismatch Detected: Cadre 1:19 vs 1:15</span>
+</div>
+<div class="text-[10px] font-label-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-secondary">database</span>
+<span>EPFO Data Cross-ref</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle text-center">
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-[11px] font-label-md font-bold bg-[#FF4D6D]/15 text-[#FF4D6D]">
+                        4 signals
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle whitespace-nowrap">
+<span class="font-label-md font-bold text-[#FF4D6D] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">alarm</span>
+                        18h remaining
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle text-right">
+<button class="px-3 py-1.5 rounded-xl bg-primary hover:bg-primary/90 text-on-primary font-label-md font-semibold text-[11px] transition-all shadow-xs">
+                        Open Case
+                      </button>
+</td>
+</tr>
+<!-- Row 2: BMS College -->
+<tr class="hover:bg-surface-container/40 transition-colors group">
+<td class="py-3.5 px-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="font-label-md font-bold text-[#FF8A1F] w-6">78</span>
+<div class="w-12 bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-[#FF8A1F] h-2 rounded-full" style="width: 78%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="font-medium text-on-surface dark:text-inverse-on-surface leading-snug">BMS College of Engineering</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-label-sm text-[11px] text-primary dark:text-inverse-primary bg-primary-fixed/50 dark:bg-primary-container/40 px-1.5 rounded">PID-1-4928101</span>
+<span class="text-[11px] text-on-surface-variant">Basavanagudi</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<span class="text-[12px] font-medium text-on-surface">EoA Extension</span>
+<div class="text-[10px] font-label-sm text-on-surface-variant">UG &amp; PG Routine</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-label-md bg-[#FF8A1F]/10 text-[#FF8A1F] border border-[#FF8A1F]/20">
+<span class="material-symbols-outlined text-[14px]">history_toggle_off</span>
+<span>Requires Verification: Fire NOC Expired</span>
+</div>
+<div class="text-[10px] font-label-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-secondary">account_balance</span>
+<span>Karnataka Fire Services</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle text-center">
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-[11px] font-label-md font-bold bg-[#FF8A1F]/15 text-[#FF8A1F]">
+                        2 signals
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle whitespace-nowrap">
+<span class="font-label-md font-medium text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        2d left
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle text-right">
+<button class="px-3 py-1.5 rounded-xl bg-primary hover:bg-primary/90 text-on-primary font-label-md font-semibold text-[11px] transition-all shadow-xs">
+                        Open Case
+                      </button>
+</td>
+</tr>
+<!-- Row 3: Dayananda Sagar Academy -->
+<tr class="hover:bg-surface-container/40 transition-colors group">
+<td class="py-3.5 px-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="font-label-md font-bold text-[#FF8A1F] w-6">71</span>
+<div class="w-12 bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-[#FF8A1F] h-2 rounded-full" style="width: 71%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="font-medium text-on-surface dark:text-inverse-on-surface leading-snug">Dayananda Sagar Academy</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-label-sm text-[11px] text-primary dark:text-inverse-primary bg-primary-fixed/50 dark:bg-primary-container/40 px-1.5 rounded">PID-1-7821034</span>
+<span class="text-[11px] text-on-surface-variant">Kanakapura Road</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<span class="text-[12px] font-medium text-on-surface">New Programme</span>
+<div class="text-[10px] font-label-sm text-on-surface-variant">B.Tech AI &amp; Data Science</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-label-md bg-primary/10 text-primary border border-primary/20">
+<span class="material-symbols-outlined text-[14px]">rule</span>
+<span>Possible Anomaly: Lab Built-up Area</span>
+</div>
+<div class="text-[10px] font-label-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-secondary">architecture</span>
+<span>Floor Plan OCR Crosscheck</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle text-center">
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-[11px] font-label-md font-bold bg-primary/15 text-primary">
+                        3 signals
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle whitespace-nowrap">
+<span class="font-label-md font-medium text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        3d left
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle text-right">
+<button class="px-3 py-1.5 rounded-xl bg-primary hover:bg-primary/90 text-on-primary font-label-md font-semibold text-[11px] transition-all shadow-xs">
+                        Open Case
+                      </button>
+</td>
+</tr>
+<!-- Row 4: RV Technical Campus -->
+<tr class="hover:bg-surface-container/40 transition-colors group">
+<td class="py-3.5 px-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="font-label-md font-bold text-[#2DA8FF] w-6">54</span>
+<div class="w-12 bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-[#2DA8FF] h-2 rounded-full" style="width: 54%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="font-medium text-on-surface dark:text-inverse-on-surface leading-snug">RV Technical Campus</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-label-sm text-[11px] text-primary dark:text-inverse-primary bg-primary-fixed/50 dark:bg-primary-container/40 px-1.5 rounded">PID-1-6721098</span>
+<span class="text-[11px] text-on-surface-variant">Mysuru Road</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<span class="text-[12px] font-medium text-on-surface">EoA Extension</span>
+<div class="text-[10px] font-label-sm text-on-surface-variant">Annual Review</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-label-md bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>Match Confirmed: Land Parcel Verified</span>
+</div>
+<div class="text-[10px] font-label-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-secondary">map</span>
+<span>Kaveri Land Registry</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle text-center">
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-[11px] font-label-md font-bold bg-[#22C55E]/15 text-[#22C55E]">
+                        1 signal
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle whitespace-nowrap">
+<span class="font-label-md font-medium text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        5d left
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle text-right">
+<button class="px-3 py-1.5 rounded-xl bg-primary hover:bg-primary/90 text-on-primary font-label-md font-semibold text-[11px] transition-all shadow-xs">
+                        Open Case
+                      </button>
+</td>
+</tr>
+<!-- Row 5: Oxford College of Engineering -->
+<tr class="hover:bg-surface-container/40 transition-colors group">
+<td class="py-3.5 px-4 align-middle">
+<div class="flex items-center gap-2">
+<span class="font-label-md font-bold text-[#22C55E] w-6">38</span>
+<div class="w-12 bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-[#22C55E] h-2 rounded-full" style="width: 38%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="font-medium text-on-surface dark:text-inverse-on-surface leading-snug">Oxford College of Engineering</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-label-sm text-[11px] text-primary dark:text-inverse-primary bg-primary-fixed/50 dark:bg-primary-container/40 px-1.5 rounded">PID-1-3920182</span>
+<span class="text-[11px] text-on-surface-variant">Bommanahalli</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<span class="text-[12px] font-medium text-on-surface">EoA Extension</span>
+<div class="text-[10px] font-label-sm text-on-surface-variant">Civil / Mech Division</div>
+</td>
+<td class="py-3.5 px-4 align-middle">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-label-md bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>Match Confirmed: Building Clearance</span>
+</div>
+<div class="text-[10px] font-label-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-secondary">domain</span>
+<span>BBMP Municipal Records</span>
+</div>
+</td>
+<td class="py-3.5 px-4 align-middle text-center">
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-[11px] font-label-md font-bold bg-[#22C55E]/15 text-[#22C55E]">
+                        0 flags
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle whitespace-nowrap">
+<span class="font-label-md font-medium text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        6d left
+                      </span>
+</td>
+<td class="py-3.5 px-4 align-middle text-right">
+<button class="px-3 py-1.5 rounded-xl bg-primary hover:bg-primary/90 text-on-primary font-label-md font-semibold text-[11px] transition-all shadow-xs">
+                        Open Case
+                      </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination & Counter -->
+<div class="p-space-md border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-body-sm text-on-surface-variant">
+<span>Showing <strong class="text-on-surface font-semibold">1 to 5</strong> of 142 dockets</span>
+<div class="flex items-center gap-1.5">
+<button class="p-1.5 rounded-lg border border-outline-variant/30 hover:bg-surface-container disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-label-md text-xs font-semibold">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container font-label-md text-xs font-medium">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container font-label-md text-xs font-medium">3</button>
+<span class="px-1 text-xs">…</span>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container font-label-md text-xs font-medium">29</button>
+<button class="p-1.5 rounded-lg border border-outline-variant/30 hover:bg-surface-container">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Live Alerts Feed Sidebar (~28% or 3.5/12 cols) -->
+<div class="lg:col-span-4 xl:col-span-4 bg-surface-container-lowest dark:bg-surface-container-low rounded-2xl border border-outline-variant/30 stat-card-shadow flex flex-col sticky top-20">
+<!-- Drawer Header -->
+<div class="p-space-md border-b border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-secondary"></span>
+</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface dark:text-inverse-on-surface">Live Alerts Feed</h3>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="text-[11px] font-label-md bg-surface-container px-2 py-0.5 rounded-full">Streaming 8 sources</span>
+<button class="p-1 rounded hover:bg-surface-container transition-colors" title="Mute Audio Cues">
+<span class="material-symbols-outlined text-[18px]">volume_up</span>
+</button>
+</div>
+</div>
+<!-- Feed Content List -->
+<div class="p-space-md space-y-3.5 max-h-[660px] overflow-y-auto custom-scrollbar">
+<!-- Alert Item 1: Possible Anomaly (Coral) -->
+<div class="p-3 rounded-xl bg-surface border border-outline-variant/30 dark:border-outline/20 hover:border-primary/40 transition-all flex flex-col gap-1.5 relative group">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-[#FF4D6D] font-label-md text-[11px] font-semibold">
+<span class="material-symbols-outlined text-[16px]">error</span>
+<span>Possible Anomaly Flagged</span>
+</div>
+<span class="text-[10px] font-label-sm text-on-surface-variant">4m ago</span>
+</div>
+<p class="text-body-sm text-on-surface dark:text-inverse-on-surface leading-snug">
+<strong>Apex Inst. of Tech</strong> (PID-1-9284102): Faculty cadre headcount discrepancy between PDF roster and EPFO data.
+                </p>
+<div class="flex items-center justify-between pt-1">
+<span class="text-[10px] font-label-sm text-on-surface-variant">Confidence: 94.2%</span>
+<a class="text-[11px] font-label-md font-semibold text-primary hover:underline flex items-center gap-0.5" href="#">
+                    Inspect finding →
+                  </a>
+</div>
+</div>
+<!-- Alert Item 2: Document Validity Expired (Orange) -->
+<div class="p-3 rounded-xl bg-surface border border-outline-variant/30 dark:border-outline/20 hover:border-[#FF8A1F]/40 transition-all flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-[#FF8A1F] font-label-md text-[11px] font-semibold">
+<span class="material-symbols-outlined text-[16px]">pending_actions</span>
+<span>Document Validity Expired</span>
+</div>
+<span class="text-[10px] font-label-sm text-on-surface-variant">18m ago</span>
+</div>
+<p class="text-body-sm text-on-surface dark:text-inverse-on-surface leading-snug">
+<strong>BMS College:</strong> Fire Safety NOC endorsement expired on Jan 15, 2025. Renewal annexure pending.
+                </p>
+<div class="flex items-center justify-between pt-1">
+<span class="text-[10px] font-label-sm text-on-surface-variant">Issuer: Karnataka FS</span>
+<a class="text-[11px] font-label-md font-semibold text-[#FF8A1F] hover:underline flex items-center gap-0.5" href="#">
+                    Send rectification notice →
+                  </a>
+</div>
+</div>
+<!-- Alert Item 3: Cadastral Geo-Crosscheck (Sky) -->
+<div class="p-3 rounded-xl bg-surface border border-outline-variant/30 dark:border-outline/20 hover:border-[#2DA8FF]/40 transition-all flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-[#2DA8FF] font-label-md text-[11px] font-semibold">
+<span class="material-symbols-outlined text-[16px]">explore</span>
+<span>Cadastral Geo-Crosscheck Complete</span>
+</div>
+<span class="text-[10px] font-label-sm text-on-surface-variant">32m ago</span>
+</div>
+<p class="text-body-sm text-on-surface dark:text-inverse-on-surface leading-snug">
+<strong>RV Technical Campus:</strong> Kaveri Registry parcel match 100% verified (7.5 acres unencumbered).
+                </p>
+<div class="flex items-center justify-between pt-1">
+<span class="text-[10px] font-label-sm text-secondary font-medium">Source: Survey of India ↗</span>
+<a class="text-[11px] font-label-md font-semibold text-primary hover:underline flex items-center gap-0.5" href="#">
+                    Endorse check →
+                  </a>
+</div>
+</div>
+<!-- Alert Item 4: AI Pre-Check Passed (Lime) -->
+<div class="p-3 rounded-xl bg-surface border border-outline-variant/30 dark:border-outline/20 hover:border-[#22C55E]/40 transition-all flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-[#22C55E] font-label-md text-[11px] font-semibold">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>AI Pre-Check Passed</span>
+</div>
+<span class="text-[10px] font-label-sm text-on-surface-variant">1h ago</span>
+</div>
+<p class="text-body-sm text-on-surface dark:text-inverse-on-surface leading-snug">
+<strong>Oxford College:</strong> Building completion Annexure 5 digitally signed &amp; verified with BBMP database.
+                </p>
+<div class="flex items-center justify-between pt-1">
+<span class="text-[10px] font-label-sm text-on-surface-variant">Signed by Chief Engineer</span>
+<span class="text-[11px] font-label-sm text-[#22C55E] font-semibold">Ready for Clearance</span>
+</div>
+</div>
+<!-- Alert Item 5: SLA Escalation Warning (Orange) -->
+<div class="p-3 rounded-xl bg-surface border border-outline-variant/30 dark:border-outline/20 hover:border-[#FF8A1F]/40 transition-all flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-[#FF8A1F] font-label-md text-[11px] font-semibold">
+<span class="material-symbols-outlined text-[16px]">alarm</span>
+<span>SLA Warning • 2h remaining</span>
+</div>
+<span class="text-[10px] font-label-sm text-on-surface-variant">1h 15m ago</span>
+</div>
+<p class="text-body-sm text-on-surface dark:text-inverse-on-surface leading-snug">
+<strong>Dayananda Sagar:</strong> Scrutiny window approaching statutory AICTE handbook threshold.
+                </p>
+<div class="flex items-center justify-between pt-1">
+<span class="text-[10px] font-label-sm text-[#FF4D6D] font-medium">Auto-escalation tier 2</span>
+<a class="text-[11px] font-label-md font-semibold text-primary hover:underline flex items-center gap-0.5" href="#">
+                    Expedite docket →
+                  </a>
+</div>
+</div>
+</div>
+<!-- Sidebar Quick Footer -->
+<div class="p-space-sm border-t border-outline-variant/30 bg-surface-container-low/40 flex items-center justify-between text-[11px] font-label-sm text-on-surface-variant">
+<span>Feed buffer: 50 max</span>
+<button class="text-primary hover:underline">Clear resolved (12)</button>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+<!-- Interactive Logic for Drawer Toggle, Theme Toggle & Filter Chips -->
+<script>
+    // 1. Theme Interactive Toggle (Functional Dark/Light Switcher)
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const htmlElement = document.documentElement;
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (htmlElement.classList.contains('dark')) {
+        htmlElement.classList.remove('dark');
+        htmlElement.classList.add('light');
+        localStorage.setItem('fixora-theme', 'light');
+      } else {
+        htmlElement.classList.remove('light');
+        htmlElement.classList.add('dark');
+        localStorage.setItem('fixora-theme', 'dark');
+      }
+    });
+
+    // Check system preference or stored theme
+    if (localStorage.getItem('fixora-theme') === 'dark' || 
+        (!('fixora-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      htmlElement.classList.remove('light');
+      htmlElement.classList.add('dark');
+    }
+
+    // 2. Navigation Drawer Toggle for Responsive Scrutiny
+    const toggleDrawerBtn = document.getElementById('toggle-drawer-btn');
+    const mainDrawer = document.getElementById('main-drawer');
+
+    toggleDrawerBtn.addEventListener('click', () => {
+      mainDrawer.classList.toggle('w-72');
+      mainDrawer.classList.toggle('w-20');
+      
+      const labels = mainDrawer.querySelectorAll('nav span.text-label-lg, nav span.font-bold, .truncate');
+      labels.forEach(el => el.classList.toggle('hidden'));
+    });
+
+    // 3. Filter Pills Micro-Interactions
+    const filterChips = document.querySelectorAll('.filter-chip');
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => {
+          c.classList.remove('bg-primary', 'text-on-primary', 'font-semibold', 'shadow-xs');
+          c.classList.add('bg-surface-container', 'text-on-surface-variant');
+        });
+        chip.classList.remove('bg-surface-container', 'text-on-surface-variant');
+        chip.classList.add('bg-primary', 'text-on-primary', 'font-semibold', 'shadow-xs');
+      });
+    });
+  </script>
+</body></html>

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIXORA - Infrastructure Inspection Queue</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Containers & Forms -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#c1c1ff",
+            "secondary-fixed": "#57fae9",
+            "secondary-container": "#57fae9",
+            "on-background": "#121a37",
+            "secondary-fixed-dim": "#2addcd",
+            "surface-container": "#ecedff",
+            "on-secondary-fixed": "#00201d",
+            "on-surface-variant": "#464556",
+            "surface-container-high": "#e4e7ff",
+            "error": "#ba1a1a",
+            "secondary": "#006a62",
+            "on-tertiary-fixed": "#271900",
+            "tertiary-fixed-dim": "#ffba20",
+            "surface-container-lowest": "#ffffff",
+            "outline-variant": "#c6c4d8",
+            "background": "#fbf8ff",
+            "on-secondary-container": "#007168",
+            "inverse-surface": "#282f4d",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#5e4200",
+            "inverse-primary": "#c1c1ff",
+            "primary-fixed": "#e1dfff",
+            "primary": "#403de6",
+            "tertiary-container": "#966b00",
+            "on-surface": "#121a37",
+            "tertiary-fixed": "#ffdea8",
+            "surface-container-highest": "#dde1ff",
+            "surface-bright": "#fbf8ff",
+            "on-primary-container": "#fbf8ff",
+            "tertiary": "#775400",
+            "outline": "#767587",
+            "surface": "#fbf8ff",
+            "inverse-on-surface": "#efefff",
+            "on-error": "#ffffff",
+            "surface-tint": "#4543ea",
+            "primary-container": "#5b5bff",
+            "surface-variant": "#dde1ff",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#08006b",
+            "on-primary-fixed-variant": "#2920d3",
+            "on-tertiary-container": "#fff8f3",
+            "surface-container-low": "#f3f2ff",
+            "surface-dim": "#d2d8ff",
+            "on-secondary-fixed-variant": "#005049",
+            "on-secondary": "#ffffff",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "margin-lg": "3rem",
+            "margin-sm": "1rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "gutter-lg": "2rem",
+            "margin": "2rem",
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem",
+            "gutter-sm": "1rem"
+          },
+          "fontFamily": {
+            "label-sm": ["JetBrains Mono"],
+            "body-lg": ["Inter"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "label-lg": ["JetBrains Mono"],
+            "label-md": ["JetBrains Mono"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"]
+          },
+          "fontSize": {
+            "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-xl": ["40px", { "lineHeight": "48px", "fontWeight": "700" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "headline-xl-mobile": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+            "label-md": ["11px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(118, 117, 135, 0.25);
+      border-radius: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(118, 117, 135, 0.45);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md text-body-md transition-colors duration-200">
+<!-- Persistent Advisory Banner -->
+<div class="bg-primary text-on-primary px-space-lg py-1.5 flex items-center justify-between z-50 relative shadow-sm border-b border-primary/20">
+<div class="flex items-center gap-space-sm mx-auto text-center max-w-5xl">
+<span class="material-symbols-outlined text-base text-secondary-fixed">shield_with_heart</span>
+<span class="font-body-sm text-body-sm tracking-wide">
+<strong>Advisory only:</strong> Spatial and infrastructure discrepancy findings are analytical pre-checks requiring physical verification by AICTE Expert Visiting Committee (EVC).
+      </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm bg-white/10 px-2 py-0.5 rounded text-white/90">EVC-STATUTE v4.2</span>
+</div>
+</div>
+<!-- Shared TopAppBar Component -->
+<header class="bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md text-primary dark:text-inverse-primary docked full-width top-0 sticky z-40 shadow-sm border-b border-outline-variant/30 dark:border-outline-variant/10">
+<div class="flex justify-between items-center w-full px-space-lg h-16 max-w-full">
+<!-- Leading Brand & Region -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs text-primary dark:text-inverse-primary cursor-pointer">
+<span class="material-symbols-outlined text-2xl text-primary-container" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">FIXORA</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-high dark:bg-surface-variant text-on-surface-variant dark:text-inverse-surface px-2 py-0.5 rounded-full border border-outline-variant/40">AI Regulatory Engine</span>
+<div class="h-4 w-px bg-outline-variant/40 mx-1 hidden md:block"></div>
+<div class="hidden md:flex items-center gap-1.5 text-on-surface-variant dark:text-outline-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-sm text-secondary">location_on</span>
+<span>SWRO Node: Bangalore</span>
+</div>
+</div>
+<!-- Center Search Bar (Command Palette) -->
+<div class="flex-1 max-w-lg mx-space-lg hidden lg:block">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-lg pointer-events-none">search</span>
+<input class="w-full bg-surface-container-low dark:bg-inverse-surface/60 border border-outline-variant/40 text-on-surface dark:text-inverse-on-surface rounded-xl pl-10 pr-12 py-2 text-body-md font-body-md placeholder:text-outline focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="Search Institution, Cadastral PID, Infrastructure item... ⌘K" type="text"/>
+<kbd class="absolute right-3 font-label-sm text-label-sm text-outline border border-outline-variant/50 rounded px-1.5 py-0.5 bg-surface-container dark:bg-inverse-surface">⌘K</kbd>
+</div>
+</div>
+<!-- Trailing Controls & Tools -->
+<div class="flex items-center gap-space-sm">
+<!-- Live Sync Status -->
+<div class="flex items-center gap-1.5 bg-surface-container dark:bg-inverse-surface/80 px-2.5 py-1.5 rounded-lg border border-outline-variant/30 text-on-surface-variant font-label-md text-label-md">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<span class="text-on-surface font-medium dark:text-inverse-on-surface">Live Cadastral Sync</span>
+</div>
+<!-- Notification Bell -->
+<button class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-xl">notifications</span>
+<span class="absolute top-1.5 right-1.5 flex h-2 w-2">
+<span class="relative inline-flex rounded-full h-2 w-2 bg-error"></span>
+</span>
+</button>
+<!-- Theme Toggle -->
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">
+<span class="material-symbols-outlined text-xl" id="themeIcon">dark_mode</span>
+</button>
+<!-- Trailing Action: Ask FIXORA -->
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3.5 py-1.5 rounded-xl font-headline-sm text-headline-sm flex items-center gap-1.5 shadow-sm transition-all duration-150 scale-95 hover:scale-100 active:scale-95">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span>Ask FIXORA</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Scaffold: NavigationDrawer + Content Viewport -->
+<div class="flex min-h-[calc(100vh-6.5rem)] w-full">
+<!-- Shared NavigationDrawer Component -->
+<aside class="w-72 h-auto flex flex-col justify-between p-space-md bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant/40 dark:border-outline/20 shrink-0 select-none shadow-md">
+<div>
+<!-- Profile / Officer Information Header -->
+<div class="flex items-center gap-space-sm p-space-sm mb-space-md border-b border-outline-variant/30 pb-4">
+<div class="w-10 h-10 rounded-xl bg-primary-fixed dark:bg-primary flex items-center justify-center text-primary dark:text-on-primary font-headline-md font-bold text-headline-md">
+            VS
+          </div>
+<div class="flex flex-col overflow-hidden">
+<h4 class="text-headline-sm font-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface truncate">Dr. V. Sharma</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-outline-variant truncate">Scrutiny Officer</p>
+<span class="text-label-sm font-label-sm text-primary dark:text-inverse-primary truncate">AICTE ID: SCR-84920</span>
+</div>
+</div>
+<!-- Navigation Tabs (Scrutiny Scopes is Active for Infrastructure Verification) -->
+<nav class="space-y-1">
+<!-- Item 1: Institution Portal -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm transition-colors duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined text-xl">apartment</span>
+<span class="text-label-lg font-label-lg">Institution Portal</span>
+</a>
+<!-- Item 2: Scrutiny Scopes (Active match for current verification context) -->
+<a class="flex items-center gap-space-sm bg-primary-fixed dark:bg-primary-container text-on-primary-fixed dark:text-on-primary-container font-semibold rounded-lg px-space-md py-space-sm shadow-sm transition-all duration-200" href="javascript:void(0)">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+<span class="text-label-lg font-label-lg">Scrutiny Scopes</span>
+<span class="ml-auto text-label-sm font-label-sm bg-primary text-on-primary px-1.5 py-0.5 rounded-full">42</span>
+</a>
+<!-- Item 3: Verification Bureau -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm transition-colors duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined text-xl">policy</span>
+<span class="text-label-lg font-label-lg">Verification Bureau</span>
+</a>
+<!-- Item 4: Registry Admin -->
+<a class="flex items-center gap-space-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg px-space-md py-space-sm transition-colors duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined text-xl">admin_panel_settings</span>
+<span class="text-label-lg font-label-lg">Registry Admin</span>
+</a>
+</nav>
+<!-- Sub-Scope Quick Jump -->
+<div class="mt-space-lg pt-space-md border-t border-outline-variant/30">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider px-space-sm mb-2 font-semibold">Active Sub-Domain</p>
+<div class="bg-surface-container-low dark:bg-surface-variant/30 rounded-xl p-3 border border-outline-variant/30">
+<div class="flex items-center gap-2 text-primary dark:text-inverse-primary font-headline-sm text-body-sm font-semibold">
+<span class="material-symbols-outlined text-lg">domain_verification</span>
+<span>Physical Space &amp; EVC</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mt-1">
+              AICTE Norms 2024-25 • Approval Handbook Appendix 4
+            </p>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Telemetry -->
+<div class="border-t border-outline-variant/30 pt-3">
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm">
+<span>AICTE Regional Server</span>
+<span class="text-secondary font-semibold">ONLINE (0.4ms)</span>
+</div>
+<p class="text-outline font-label-sm text-label-sm mt-1">Last Hash: #8F20-CAD-2025</p>
+</div>
+</aside>
+<!-- Main Verification Canvas (1440px wide layout) -->
+<main class="flex-1 px-space-xl py-space-lg overflow-y-auto max-w-[1152px]">
+<!-- Breadcrumb Bar -->
+<div class="flex items-center gap-2 text-on-surface-variant dark:text-outline-variant font-label-md text-label-md mb-2">
+<span>Scrutiny Scopes</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary dark:text-inverse-primary font-semibold">Infrastructure Scrutiny &amp; Expert Visiting Committee (EVC) Queue</span>
+</div>
+<!-- Title & Queue Summary Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-space-lg">
+<div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">
+            Infrastructure Inspection Queue
+          </h1>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">
+            Cross-verifying architectural CAD annexures, municipal occupancy sanctions, and geotagged evidentiary payloads.
+          </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="bg-primary hover:bg-primary-container text-on-primary px-4 py-2 rounded-xl font-headline-sm text-headline-sm flex items-center gap-2 shadow-sm transition-all duration-150" onclick="openModal()">
+<span class="material-symbols-outlined text-lg">calendar_month</span>
+<span>Schedule EVC Panel</span>
+</button>
+<button class="bg-surface-container-low dark:bg-inverse-surface border border-outline-variant/60 text-primary dark:text-inverse-primary hover:bg-surface-container px-3.5 py-2 rounded-xl font-headline-sm text-headline-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+<span>Export EVC Schedule</span>
+</button>
+</div>
+</div>
+<!-- Queue Metrics Bar (Bento Tonal Cards) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-space-lg">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-4 rounded-xl border border-outline-variant/40 shadow-sm flex items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant uppercase">Total Physical Discrepancy Dockets</p>
+<h3 class="font-headline-lg text-headline-lg font-bold text-on-surface dark:text-inverse-on-surface mt-1">42</h3>
+<span class="font-label-sm text-label-sm text-primary dark:text-inverse-primary">Across 14 Districts</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-primary-fixed/50 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-inverse-primary">
+<span class="material-symbols-outlined text-2xl">folder_managed</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-4 rounded-xl border border-outline-variant/40 shadow-sm flex items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant uppercase">Require Additional Evidence</p>
+<h3 class="font-headline-lg text-headline-lg font-bold text-tertiary dark:text-tertiary-fixed mt-1">19</h3>
+<span class="font-label-sm text-label-sm text-tertiary-container dark:text-tertiary-fixed">Pending institution response</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-tertiary-fixed/40 dark:bg-tertiary-container/40 flex items-center justify-center text-tertiary dark:text-tertiary-fixed">
+<span class="material-symbols-outlined text-2xl">pending_actions</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-4 rounded-xl border border-outline-variant/40 shadow-sm flex items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant uppercase">Recommend Physical Inspection</p>
+<h3 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-inverse-primary mt-1">15</h3>
+<span class="font-label-sm text-label-sm text-primary dark:text-primary-fixed-dim">Scheduled for EVC dispatch</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 dark:bg-primary-container/30 flex items-center justify-center text-primary dark:text-inverse-primary">
+<span class="material-symbols-outlined text-2xl">near_me</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-4 rounded-xl border border-outline-variant/40 shadow-sm flex items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant uppercase">Consistent / Cleared</p>
+<h3 class="font-headline-lg text-headline-lg font-bold text-secondary dark:text-secondary-fixed mt-1">8</h3>
+<span class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed">Geospatially matched</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed/30 dark:bg-secondary-container/20 flex items-center justify-center text-secondary dark:text-secondary-fixed">
+<span class="material-symbols-outlined text-2xl">verified</span>
+</div>
+</div>
+</div>
+<!-- Filter & Query Control Toolbar -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-4 rounded-xl border border-outline-variant/40 shadow-sm mb-space-lg space-y-3">
+<div class="flex flex-wrap items-center justify-between gap-3">
+<!-- Status Pill Filters -->
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-md text-label-md text-outline mr-1">Status:</span>
+<button class="bg-primary text-on-primary text-label-md font-label-md px-3 py-1 rounded-full shadow-sm">
+              All Output Types (42)
+            </button>
+<button class="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300/40 text-label-md font-label-md px-3 py-1 rounded-full hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors">
+              Consistent (8)
+            </button>
+<button class="bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300/40 text-label-md font-label-md px-3 py-1 rounded-full hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors">
+              Needs additional evidence (19)
+            </button>
+<button class="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-800 dark:text-indigo-300 border border-indigo-300/40 text-label-md font-label-md px-3 py-1 rounded-full hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors">
+              Recommend physical inspection (15)
+            </button>
+</div>
+<!-- Region / District Dropdown -->
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-outline">SWRO Region:</span>
+<select class="bg-surface-container-low dark:bg-surface-variant/40 border border-outline-variant/50 text-on-surface dark:text-inverse-on-surface text-body-sm font-body-sm rounded-lg px-2.5 py-1.5 focus:border-primary focus:ring-0 outline-none">
+<option selected="">All Districts (Karnataka &amp; Kerala)</option>
+<option>Bangalore Urban</option>
+<option>Mysuru</option>
+<option>Ernakulam</option>
+<option>Thrissur</option>
+</select>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-outline-variant/20">
+<!-- Facility Category Chips -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-outline mr-1">Facility Domain:</span>
+<span class="cursor-pointer bg-surface-container dark:bg-surface-variant/50 text-on-surface text-label-sm font-label-sm px-2.5 py-1 rounded-lg border border-outline-variant/30 hover:border-primary">Computer Labs &amp; Workstations</span>
+<span class="cursor-pointer bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-lg border border-transparent hover:border-outline-variant">Instructional Area / Lecture Theatres</span>
+<span class="cursor-pointer bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-lg border border-transparent hover:border-outline-variant">Workshop &amp; Mechanical bays</span>
+<span class="cursor-pointer bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-lg border border-transparent hover:border-outline-variant">Central Library &amp; Digital Reading</span>
+<span class="cursor-pointer bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant text-label-sm font-label-sm px-2.5 py-1 rounded-lg border border-transparent hover:border-outline-variant">Barrier-Free &amp; Ramp Accessibility</span>
+</div>
+<!-- Micro Quick Filter -->
+<div class="text-label-sm font-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-base text-secondary">tune</span>
+<span>Sorted by: Scrutiny Severity Weight</span>
+</div>
+</div>
+</div>
+<!-- MAIN CONTENT: Rich Infrastructure Gap Assessment Cards -->
+<div class="space-y-6">
+<!-- CARD 1: Apex Institute of Technology -->
+<article class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/40 shadow-sm p-6 hover:border-primary/40 transition-all duration-200">
+<!-- Card Header / Title Cluster -->
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4 pb-4 border-b border-outline-variant/20">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-md text-label-md font-semibold bg-surface-container text-primary dark:text-inverse-primary px-2 py-0.5 rounded border border-outline-variant/30">
+                  PID-1-9284102
+                </span>
+<span class="font-body-sm text-body-sm text-outline">• Bangalore Urban, Karnataka</span>
+<span class="font-label-sm text-label-sm bg-surface-container-high px-2 py-0.5 rounded text-on-surface-variant">Computer Science &amp; AI Specialized Labs</span>
+</div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">
+                Apex Institute of Technology
+              </h2>
+</div>
+<!-- MANDATORY OUTPUT CHIP: Recommend physical inspection -->
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-md font-label-md font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-300/50">
+<span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+                Recommend physical inspection
+              </span>
+</div>
+</div>
+<!-- AI Diagnostic Banner -->
+<div class="bg-primary/5 dark:bg-primary-container/10 border-l-4 border-primary p-3 rounded-r-xl mb-4 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-lg mt-0.5">analytics</span>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-semibold text-primary dark:text-inverse-primary">[AI Assistive Finding: Confidence Score 94.2%]</span>
+<span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-1.5 py-0.2 rounded border border-outline-variant/30">
+                  Source: Bruhat Bengaluru Mahanagara Palike (BBMP) Cadastral Registry ↗
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mt-0.5">
+                Calculated physical lab footprints in Wing B corroborate 4 active lab shells. Discrepancy detected against 6 declared facilities. Requires manual verification.
+              </p>
+</div>
+</div>
+<!-- Comparative Matrix: Declared vs Evidence Found -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<!-- Declared Item -->
+<div class="bg-surface-container-low dark:bg-surface-variant/20 p-3.5 rounded-xl border border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Declared Statutory Filing</span>
+<p class="font-body-md text-body-md font-medium text-on-surface dark:text-inverse-on-surface mt-1">
+                6 Specialized Computer Laboratories (420 workstations declared under AICTE Annexure 4)
+              </p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary">description</span>
+<span>Self-Disclosure Form S-2 • Section 5.1(A)</span>
+</div>
+</div>
+<!-- Evidence Found -->
+<div class="bg-surface-container-low dark:bg-surface-variant/20 p-3.5 rounded-xl border border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Corroborated Architectural Evidence</span>
+<p class="font-body-md text-body-md font-medium text-on-surface dark:text-inverse-on-surface mt-1">
+                4 Laboratories identified on Ground &amp; 2nd Floor Cadastral Architectural CAD Blueprints (Calculated: 280 workstations)
+              </p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-secondary">
+<span class="material-symbols-outlined text-sm">view_in_ar</span>
+<span>CAD Vector Overlay Sheet A-04 &amp; Fire Sanction Plan</span>
+</div>
+</div>
+</div>
+<!-- Floor Plan Thumbnail & Geotagged Photo Preview -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<!-- Left Thumbnail: Blueprint -->
+<div class="relative bg-surface-container dark:bg-inverse-surface rounded-xl overflow-hidden border border-outline-variant/40 group">
+<img class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Technical architectural vector CAD blueprint of university computer science laboratory wing showing layout drawings with cyan dimension bounding boxes and workstation grid layouts. The scene is brightly lit with high contrast blueprint line work in indigo and charcoal tones on an architectural off-white canvas representing statutory regulatory scrutiny." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYGb31sUVfTsB3wtEImCV7L0BRZJTPhBg_KZHOWGXGiyM6l1-VpgoDnS7czLdIj1fn9Q8shJqw89PSJx42rcLPZGOwKws9F1tABE-jSplU_JnlXyapDYSyGLH3hlPYg7HOY2pRMP7jPF8y2rNVVkLfKOLHKGYQViy9CldQzipIOYSvgvlQLvh61FzllCHrLmkWoSUsNE59QJEsrbed7whKKJ9KezdsCCFpoJv-PxQsEvoVfgkN82Szzg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-white">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm bg-primary/90 px-2 py-0.5 rounded text-white font-semibold">
+                    Blueprint Sheet A-04 (DWG/PDF)
+                  </span>
+<span class="font-label-sm text-label-sm bg-black/60 px-1.5 py-0.5 rounded text-secondary-fixed">
+                    Cyan Box: Wing A &amp; B
+                  </span>
+</div>
+<p class="text-xs font-mono mt-1 text-slate-200 truncate">BBMP Sanction Ref: BBMP/ADDL/DIR/2023-24/C-892</p>
+</div>
+</div>
+<!-- Right Thumbnail: Geotagged Photo -->
+<div class="relative bg-surface-container dark:bg-inverse-surface rounded-xl overflow-hidden border border-outline-variant/40 group">
+<img class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300" data-alt="An expansive modern engineering college computer science laboratory room with organized rows of dual-monitor workstations, server rack cabinets in the corner, and modern LED troffer ceiling fixtures. Clean architectural photography bathed in neutral daylight with high clarity and balanced soft shadows matching professional institutional inspection aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWy5CB9yHVvqxadf9rloqeG2W1qSXgZnh0fQW-fbF3y_1KzgnpC3AI_nPh1gm13s81BxRu-oWsRMVzyyJ6KPqifs9P3roZsYToMUTRJj45e9kNNDptTZfWJSeQigkm0tbTQ1mm4z3_Jb6g2AM0OI-vOywjbDDVVmYQdDR4-bTK-azNfTlAgon8llhfzbwx0SpLhB3QCfu3vFzkvZhyG8_XrgyMxT9iG-5x8mOPnCYYT3Ze1L49m1-7Rw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-white">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm bg-black/70 px-2 py-0.5 rounded text-white flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-secondary-fixed">my_location</span>
+                    Lab 3 Wing B - 12.9716° N, 77.5946° E
+                  </span>
+<span class="font-label-sm text-label-sm text-white/80">EXIF Verified</span>
+</div>
+<p class="text-xs font-mono mt-1 text-slate-300">Timestamp: 2025-01-14 11:28:42 IST • Accuracy: ±2.4m</p>
+</div>
+</div>
+</div>
+<!-- Metric Variance & Action Deck -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">straighten</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface dark:text-inverse-on-surface">
+                Gap Analysis Metric:
+              </span>
+<span class="font-label-sm text-label-sm bg-indigo-100 dark:bg-indigo-950/70 text-indigo-900 dark:text-indigo-200 px-2 py-0.5 rounded font-mono font-bold">
+                Variance of -2 Labs (-140 workstations deficit from Approval Handbook norms)
+              </span>
+</div>
+<div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+<button class="bg-surface-container dark:bg-surface-variant/40 hover:bg-surface-container-high text-on-surface-variant dark:text-inverse-on-surface px-3 py-1.5 rounded-xl font-headline-sm text-body-sm flex items-center gap-1 border border-outline-variant/40 transition-colors">
+<span class="material-symbols-outlined text-base">videocam</span>
+<span>Request Geo-Tagged Video Walkthrough</span>
+</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3.5 py-1.5 rounded-xl font-headline-sm text-body-sm font-medium flex items-center gap-1.5 shadow-sm transition-all duration-150" onclick="openModal()">
+<span class="material-symbols-outlined text-base">assignment_turned_in</span>
+<span>Schedule Physical Inspection (EVC)</span>
+</button>
+</div>
+</div>
+</article>
+<!-- CARD 2: K.S. Institute of Technology & Science -->
+<article class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/40 shadow-sm p-6 hover:border-primary/40 transition-all duration-200">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4 pb-4 border-b border-outline-variant/20">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-md text-label-md font-semibold bg-surface-container text-primary dark:text-inverse-primary px-2 py-0.5 rounded border border-outline-variant/30">
+                  PID-1-7391048
+                </span>
+<span class="font-body-sm text-body-sm text-outline">• Mysuru, Karnataka</span>
+<span class="font-label-sm text-label-sm bg-surface-container-high px-2 py-0.5 rounded text-on-surface-variant">Instructional Area (Classrooms &amp; Smart Theatres)</span>
+</div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">
+                K.S. Institute of Technology &amp; Science
+              </h2>
+</div>
+<!-- MANDATORY OUTPUT CHIP: Needs additional evidence -->
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-md font-label-md font-semibold bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300/50">
+<span class="w-2 h-2 rounded-full bg-amber-600"></span>
+                Needs additional evidence
+              </span>
+</div>
+</div>
+<!-- AI Diagnostic Banner -->
+<div class="bg-tertiary-fixed/20 dark:bg-tertiary-container/10 border-l-4 border-tertiary-container p-3 rounded-r-xl mb-4 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-tertiary text-lg mt-0.5">query_stats</span>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-semibold text-tertiary-container dark:text-tertiary-fixed">[AI Assistive Finding: Confidence Score 88.6%]</span>
+<span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-1.5 py-0.2 rounded border border-outline-variant/30">
+                  Source: Mysuru Urban Development Authority (MUDA) Building Sanction ↗
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mt-0.5">
+                Dimensional threshold mismatch: 4 tutorial rooms labeled as 66 sq.m standard smart classrooms calculate at 48 sq.m in sectional elevations. Acoustic partition documentation not provided.
+              </p>
+</div>
+</div>
+<!-- Comparative Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<div class="bg-surface-container-low dark:bg-surface-variant/20 p-3.5 rounded-xl border border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Declared Statutory Filing</span>
+<p class="font-body-md text-body-md font-medium text-on-surface dark:text-inverse-on-surface mt-1">
+                18 Smart Classrooms (&gt;66 sq.m each) with interactive AV podiums
+              </p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary">description</span>
+<span>Affidavit Clause 3.2 • Academic Year 2025 Expansion</span>
+</div>
+</div>
+<div class="bg-surface-container-low dark:bg-surface-variant/20 p-3.5 rounded-xl border border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Corroborated Architectural Evidence</span>
+<p class="font-body-md text-body-md font-medium text-on-surface dark:text-inverse-on-surface mt-1">
+                14 Classrooms confirmed in Municipal Occupancy Sanction Plan; 4 additional rooms labeled as Seminar/Tutorial rooms without acoustic partitions
+              </p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-tertiary">
+<span class="material-symbols-outlined text-sm">crop_free</span>
+<span>MUDA Sanction #LP/2021/491 - Section B3 Floor 2</span>
+</div>
+</div>
+</div>
+<!-- Thumbnails -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<div class="relative bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40 group">
+<img class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A high precision architectural floor blueprint plan displaying highlighted tutorial zones, acoustic measurement markers, and door width clearances in amber and slate vector lines. Professional light aesthetic with clear regulatory notations." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtO3pWXoDGANnLjPWlXvrH7Y9_1DCc47xEFF0SgscQHRhO4-RaAYPjAxaXwTMkZjoFB9r_i538YSXFjhEdBK5CWG4jwf7CXlxF5Gyl4fMu_Rjn-tzO0RWx90eTjP9makp20qZDeNrzQc_dZdxTvn0zwB-71kNu5iu7clvbTyHS1TZi-0DWb8WynC-uy7JXTcZu_551fpjOKV9C7hgCXxDzMoHeKyh4aw7eIFo945dwxOxIMa89XnvRHA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-white">
+<span class="font-label-sm text-label-sm bg-tertiary/90 px-2 py-0.5 rounded text-white self-start font-semibold">
+                  Architectural Plan vs Tutorial Zone Highlight
+                </span>
+<p class="text-xs font-mono mt-1 text-slate-200">Zone demarcations: Room 201-204 Section B</p>
+</div>
+</div>
+<div class="relative bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40 group">
+<img class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Interior perspective of university smart classroom numbered 204 showing stepped tiered seating, tiered wooden desks, interactive smart presentation board, and ceiling projectors under bright even daylight illumination in a modern college setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUCCP79o4Cvf4sXpeUWib_JHU3DdaoBtTJpBQC7zEgsd8NnlIuSe35Dt4lK4plfwql9wIRc6LAo3NzvJw1d1SA04yqOJ4tg6PfDtjnf_wrQDUTNsYW0lCFQy1FvvD-f9U4aslxZlN7s4xE-wcA8HNdVkmoVz52qLxcmAtKhFcoRetcXQMGMUH3_gUXraYZLf19vGdxW9ZA-gPuAuDnD8MYCyIQh9OhV2KWQZ2QjVNitiDAmPEWHheSWw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-white">
+<span class="font-label-sm text-label-sm bg-black/70 px-2 py-0.5 rounded text-white self-start flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-secondary-fixed">photo_camera</span>
+                  Room 204 Interior Inspection Snapshot
+                </span>
+<p class="text-xs font-mono mt-1 text-slate-300">Measured Carpet Area: 48.2 sq.m (Deficit against 66 sq.m standard)</p>
+</div>
+</div>
+</div>
+<!-- Gap Analysis Metric & Actions -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-xl">aspect_ratio</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface dark:text-inverse-on-surface">
+                Gap Analysis Metric:
+              </span>
+<span class="font-label-sm text-label-sm bg-amber-100 dark:bg-amber-950/70 text-amber-900 dark:text-amber-200 px-2 py-0.5 rounded font-mono font-bold">
+                Dimension variance: 4 rooms measure 48 sq.m (below standard 66 sq.m).
+              </span>
+</div>
+<div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+<button class="bg-surface-container dark:bg-surface-variant/40 hover:bg-surface-container-high text-on-surface-variant dark:text-inverse-on-surface px-3 py-1.5 rounded-xl font-headline-sm text-body-sm flex items-center gap-1 border border-outline-variant/40 transition-colors">
+<span class="material-symbols-outlined text-base">rate_review</span>
+<span>Request Clarification &amp; Dimensional Affidavit</span>
+</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3.5 py-1.5 rounded-xl font-headline-sm text-body-sm font-medium flex items-center gap-1.5 shadow-sm transition-all duration-150" onclick="openModal()">
+<span class="material-symbols-outlined text-base">event_upcoming</span>
+<span>Schedule Physical Inspection (EVC)</span>
+</button>
+</div>
+</div>
+</article>
+<!-- CARD 3: Malabar College of Engineering & Research -->
+<article class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/40 shadow-sm p-6 hover:border-secondary/50 transition-all duration-200">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4 pb-4 border-b border-outline-variant/20">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-md text-label-md font-semibold bg-surface-container text-primary dark:text-inverse-primary px-2 py-0.5 rounded border border-outline-variant/30">
+                  PID-1-4820199
+                </span>
+<span class="font-body-sm text-body-sm text-outline">• Thrissur, Kerala</span>
+<span class="font-label-sm text-label-sm bg-surface-container-high px-2 py-0.5 rounded text-on-surface-variant">Central Library &amp; Digital Repositories</span>
+</div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">
+                Malabar College of Engineering &amp; Research
+              </h2>
+</div>
+<!-- MANDATORY OUTPUT CHIP: Consistent -->
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-md font-label-md font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300/50">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                Consistent
+              </span>
+</div>
+</div>
+<!-- AI Diagnostic Banner -->
+<div class="bg-secondary/5 dark:bg-secondary-container/10 border-l-4 border-secondary p-3 rounded-r-xl mb-4 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-lg mt-0.5">verified_user</span>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-semibold text-secondary dark:text-secondary-fixed">[AI Assistive Finding: Confidence Score 98.4%]</span>
+<span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-1.5 py-0.2 rounded border border-outline-variant/30">
+                  Source: Kerala State Disaster Management Authority &amp; Fire NOC Portal ↗
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mt-0.5">
+                Floor plan geometry aligns completely with declared parameters. Digital reading section verified with surplus area allowance (+15 sq.m above statutory norm).
+              </p>
+</div>
+</div>
+<!-- Comparative Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<div class="bg-surface-container-low dark:bg-surface-variant/20 p-3.5 rounded-xl border border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Declared Statutory Filing</span>
+<p class="font-body-md text-body-md font-medium text-on-surface dark:text-inverse-on-surface mt-1">
+                Central Library Area: 450 sq.m with 150 reading seats &amp; 20 digital terminals
+              </p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary">description</span>
+<span>Annexure 7 • Central Facility Declaration</span>
+</div>
+</div>
+<div class="bg-surface-container-low dark:bg-surface-variant/20 p-3.5 rounded-xl border border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Corroborated Architectural Evidence</span>
+<p class="font-body-md text-body-md font-medium text-on-surface dark:text-inverse-on-surface mt-1">
+                Architectural plan &amp; Fire NOC corroborates 465 sq.m dedicated library complex on 1st Floor with 24 digital terminals
+              </p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-secondary">
+<span class="material-symbols-outlined text-sm">local_fire_department</span>
+<span>Thrissur Corporation Fire NOC No. FC/192/2024</span>
+</div>
+</div>
+</div>
+<!-- Floor Plan Blueprint Overlay Thumbnail -->
+<div class="relative bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40 mb-4 group">
+<img class="w-full h-44 object-cover group-hover:scale-102 transition-transform duration-300" data-alt="Architectural CAD blueprint floor plan schematic of a spacious university central library displaying demarcated green fire exit safety corridors, open reading rooms with desks, book stack aisles, and private digital terminal booths in crisp technical line work." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5n6E3AMIKIJa0Y7cfZrYjo-L7DpZlbAyR6wmnar2e2W70_S6SEL30Q461ATkrlKP9KMcbH-6eYsBxzEga5f7_q1UFYl4Voh7qvNXYNeIiCDDiHuD-lKbF7FMLjamDD2sR2WaDLxk9uQj-_AvmYIi2Pf4m3LB-O47JQ0mM40moGnmVlYa03_8HyJoAd54av-h10vX24O8DrVCRTrdMf4siAuaw0ID39u7qpBSN_FDxPTU6XwKTAWJi_Q"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-4 text-white">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm bg-secondary px-2.5 py-0.5 rounded text-white font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+                  CAD Overlay: Fire Corridors &amp; Reading Spatial Envelope Validated
+                </span>
+<span class="font-label-sm text-label-sm text-emerald-300">Corridor Clearance: 2.40m (&gt;2.0m statutory minimum)</span>
+</div>
+<p class="text-xs font-mono mt-1 text-slate-300">Sanctioned Floor Area: 465 sq.m • Fire Extinguisher Points: 8 Demarcated</p>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-xl">fact_check</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface dark:text-inverse-on-surface">
+                Gap Analysis Metric:
+              </span>
+<span class="font-label-sm text-label-sm bg-emerald-100 dark:bg-emerald-950/70 text-emerald-900 dark:text-emerald-200 px-2 py-0.5 rounded font-mono font-bold">
+                Zero Discrepancy (+15 sq.m surplus compliant with Appendix 4)
+              </span>
+</div>
+<div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+<button class="bg-surface-container dark:bg-surface-variant/40 hover:bg-surface-container-high text-on-surface-variant dark:text-inverse-on-surface px-3 py-1.5 rounded-xl font-headline-sm text-body-sm flex items-center gap-1 border border-outline-variant/40 transition-colors">
+<span class="material-symbols-outlined text-base">visibility</span>
+<span>View Full CAD Docket</span>
+</button>
+<button class="bg-secondary hover:bg-secondary/90 text-on-secondary px-3.5 py-1.5 rounded-xl font-headline-sm text-body-sm font-medium flex items-center gap-1.5 shadow-sm transition-all duration-150">
+<span class="material-symbols-outlined text-base">verified</span>
+<span>Endorse Spatial Clearance</span>
+</button>
+</div>
+</div>
+</article>
+<!-- CARD 4: Kochi Maritime Polytechnic Institute -->
+<article class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl border border-outline-variant/40 shadow-sm p-6 hover:border-primary/40 transition-all duration-200">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4 pb-4 border-b border-outline-variant/20">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-md text-label-md font-semibold bg-surface-container text-primary dark:text-inverse-primary px-2 py-0.5 rounded border border-outline-variant/30">
+                  PID-1-5002811
+                </span>
+<span class="font-body-sm text-body-sm text-outline">• Ernakulam, Kerala</span>
+<span class="font-label-sm text-label-sm bg-surface-container-high px-2 py-0.5 rounded text-on-surface-variant">Mechanical Marine Propulsion Workshop</span>
+</div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">
+                Kochi Maritime Polytechnic Institute
+              </h2>
+</div>
+<!-- MANDATORY OUTPUT CHIP: Recommend physical inspection -->
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-md font-label-md font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-300/50">
+<span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+                Recommend physical inspection
+              </span>
+</div>
+</div>
+<!-- AI Diagnostic Banner -->
+<div class="bg-primary/5 dark:bg-primary-container/10 border-l-4 border-primary p-3 rounded-r-xl mb-4 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-lg mt-0.5">engineering</span>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-semibold text-primary dark:text-inverse-primary">[AI Assistive Finding: Confidence Score 91.8%]</span>
+<span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-1.5 py-0.2 rounded border border-outline-variant/30">
+                  Source: Department of Factories &amp; Boilers Kerala Registry ↗
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mt-0.5">
+                Structural discrepancy identified: Gantry crane load test certificate not attached to dossier. Enclosed workshop shed spans 520 sq.m against statutory declaration of 800 sq.m. Requires manual verification.
+              </p>
+</div>
+</div>
+<!-- Comparative Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<div class="bg-surface-container-low dark:bg-surface-variant/20 p-3.5 rounded-xl border border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Declared Statutory Filing</span>
+<p class="font-body-md text-body-md font-medium text-on-surface dark:text-inverse-on-surface mt-1">
+                Heavy Marine Machinery Workshop (800 sq.m with 5-ton overhead gantry crane)
+              </p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary">description</span>
+<span>Marine Workshop Affidavit MW-09 • Heavy Equipment Section</span>
+</div>
+</div>
+<div class="bg-surface-container-low dark:bg-surface-variant/20 p-3.5 rounded-xl border border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Corroborated Architectural Evidence</span>
+<p class="font-body-md text-body-md font-medium text-on-surface dark:text-inverse-on-surface mt-1">
+                Occupancy sanction indicates 520 sq.m covered shed; overhead crane load rating endorsement missing in structural engineer report
+              </p>
+<div class="flex items-center gap-2 mt-2 text-label-sm font-label-sm text-primary">
+<span class="material-symbols-outlined text-sm">construction</span>
+<span>Kochi Municipal Plan #KM-IND-2022-710</span>
+</div>
+</div>
+</div>
+<!-- Thumbnails -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<div class="relative bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40 group">
+<img class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Cross sectional structural engineering diagram showing industrial steel trusses, column footings, overhead crane gantry rail tracks, and structural clearance heights rendered in technical slate blue and graphite blueprint aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_HL1G06DCbdZlhJZcd1k_MPD_rp5AA1JbTN1BxkWOfhjZy_sjDIDIx8Cylz3HAl6o09mRVmYvZVD0BKfRRmTUFJVokeTbioG_jfnmT5TRjla1nLjzZxpph9V_84VNtivl5ndRYdrc7HUuYZk4XZs4k9IihNoQ47rALcVeUggYowAQbD3BMQIePF_WHnWISqyjcsaUdj_X9iQ4WTof1tTVrlQTEzjsl30bvlDrYg9e7KiE8KdaCSVWUQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-white">
+<span class="font-label-sm text-label-sm bg-primary/90 px-2 py-0.5 rounded text-white self-start font-semibold">
+                  Structural Cross-Section Drawing
+                </span>
+<p class="text-xs font-mono mt-1 text-slate-200">Rail Run Height: 6.2m • Unverified Load Stamp</p>
+</div>
+</div>
+<div class="relative bg-surface-container rounded-xl overflow-hidden border border-outline-variant/40 group">
+<img class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Wide shot of an industrial campus mechanical workshop and covered machinery fabrication yard showing marine diesel engine test beds, steel girders, and outdoor crane bay under clear skies with crisp shadows and modern industrial campus atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFt7Pnc7jVHhgF_wZZANrypdCqmyuGO6TpGphN6e3BrhVt9brpXEjUX-WMDsWYiAUYi9IG2CexIFx8WMNMk9IUEv7oOKfvtuhVcOtX9QMuIo-yPTa4AAJ5An2QORziDdFGwD5p5KSoat7wvBdeTdrMSy6V1FqYs6S2ipRrXCXW1i49BES3Pxm3gYs7bFuKNmMUNnwz6NHibDGqDu0AKcleiaskxp37GFXzvnKO5ChIFyLNv5cUkOWkFQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 text-white">
+<span class="font-label-sm text-label-sm bg-black/70 px-2 py-0.5 rounded text-white self-start flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-secondary-fixed">photo_camera</span>
+                  Outdoor Fabrication Yard &amp; Covered Shed
+                </span>
+<p class="text-xs font-mono mt-1 text-slate-300">Physical Footprint: 520 sq.m (Covered Area Deficit: 280 sq.m)</p>
+</div>
+</div>
+</div>
+<!-- Gap Analysis Metric & Action Deck -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-3 border-t border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">warning</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface dark:text-inverse-on-surface">
+                Gap Analysis Metric:
+              </span>
+<span class="font-label-sm text-label-sm bg-indigo-100 dark:bg-indigo-950/70 text-indigo-900 dark:text-indigo-200 px-2 py-0.5 rounded font-mono font-bold">
+                Unverified gantry structural compliance &amp; 280 sq.m area discrepancy.
+              </span>
+</div>
+<div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+<button class="bg-surface-container dark:bg-surface-variant/40 hover:bg-surface-container-high text-on-surface-variant dark:text-inverse-on-surface px-3 py-1.5 rounded-xl font-headline-sm text-body-sm flex items-center gap-1 border border-outline-variant/40 transition-colors">
+<span class="material-symbols-outlined text-base">flag</span>
+<span>Flag for Expert Panel</span>
+</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3.5 py-1.5 rounded-xl font-headline-sm text-body-sm font-medium flex items-center gap-1.5 shadow-sm transition-all duration-150" onclick="openModal()">
+<span class="material-symbols-outlined text-base">event</span>
+<span>Schedule Physical Inspection (EVC)</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+</main>
+</div>
+<!-- MODAL / DRAWER: EVC Inspection Scheduler Trigger -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200" id="evcModal">
+<div class="bg-surface-container-lowest dark:bg-inverse-surface w-full max-w-xl rounded-2xl border border-outline-variant/50 shadow-2xl overflow-hidden transition-all transform scale-95" id="modalCard">
+<!-- Modal Header -->
+<div class="px-6 py-4 border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-low dark:bg-surface-variant/30">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface dark:text-inverse-on-surface">
+              Schedule EVC Inspection Panel
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Statutory Visiting Committee Constitution &amp; Timing</p>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg" onclick="closeModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="p-6 space-y-4 max-h-[768px] overflow-y-auto custom-scroll">
+<!-- Target Docket -->
+<div class="bg-surface-container dark:bg-surface-variant/40 p-3 rounded-xl border border-outline-variant/30">
+<span class="font-label-sm text-label-sm text-outline uppercase">Active Docket</span>
+<p class="font-headline-sm text-body-md font-semibold text-on-surface dark:text-inverse-on-surface mt-0.5">
+            Apex Institute of Technology (PID-1-9284102)
+          </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Scope: Computer Science &amp; AI Specialized Labs (Deficit: 2 Labs)</p>
+</div>
+<!-- Proposed Committee Panel Composition (3-member EVC) -->
+<div>
+<label class="font-headline-sm text-body-sm font-semibold text-on-surface dark:text-inverse-on-surface block mb-2">
+            Mandated 3-Member EVC Panel Composition:
+          </label>
+<div class="space-y-2">
+<!-- Member 1 -->
+<div class="flex items-center justify-between p-2.5 rounded-xl border border-outline-variant/40 bg-surface-container-low dark:bg-surface-variant/20">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed dark:bg-primary/30 text-primary flex items-center justify-center font-bold text-xs">
+                  UN
+                </div>
+<div>
+<p class="font-body-md text-body-sm font-semibold text-on-surface dark:text-inverse-on-surface">1. University Nominee</p>
+<p class="font-body-sm text-xs text-on-surface-variant">Prof. K. R. Narayanan (VTU Belagavi)</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed/40 px-2 py-0.5 rounded font-medium">Confirmed</span>
+</div>
+<!-- Member 2 -->
+<div class="flex items-center justify-between p-2.5 rounded-xl border border-outline-variant/40 bg-surface-container-low dark:bg-surface-variant/20">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed dark:bg-primary/30 text-primary flex items-center justify-center font-bold text-xs">
+                  IE
+                </div>
+<div>
+<p class="font-body-md text-body-sm font-semibold text-on-surface dark:text-inverse-on-surface">2. Industry Expert</p>
+<p class="font-body-sm text-xs text-on-surface-variant">Dr. Meera Swaminathan (CII Technical Fellow)</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed/40 px-2 py-0.5 rounded font-medium">Confirmed</span>
+</div>
+<!-- Member 3 -->
+<div class="flex items-center justify-between p-2.5 rounded-xl border border-outline-variant/40 bg-surface-container-low dark:bg-surface-variant/20">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed dark:bg-primary/30 text-primary flex items-center justify-center font-bold text-xs">
+                  AR
+                </div>
+<div>
+<p class="font-body-md text-body-sm font-semibold text-on-surface dark:text-inverse-on-surface">3. AICTE Regional Representative</p>
+<p class="font-body-sm text-xs text-on-surface-variant">Dr. V. Sharma (SCR-84920 - Lead Officer)</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary bg-primary-fixed/60 px-2 py-0.5 rounded font-medium">Assigned</span>
+</div>
+</div>
+</div>
+<!-- Available Inspection Dates -->
+<div>
+<label class="font-headline-sm text-body-sm font-semibold text-on-surface dark:text-inverse-on-surface block mb-2">
+            Target Inspection Date (Simulated):
+          </label>
+<div class="grid grid-cols-2 gap-3">
+<label class="flex items-center gap-2 p-3 rounded-xl border border-primary bg-primary/5 cursor-pointer">
+<input checked="" class="text-primary focus:ring-primary" name="evc_date" type="radio"/>
+<div>
+<p class="font-headline-sm text-body-sm font-semibold text-primary">28 Feb 2025</p>
+<p class="font-body-sm text-xs text-on-surface-variant">Morning Slot • 09:30 IST</p>
+</div>
+</label>
+<label class="flex items-center gap-2 p-3 rounded-xl border border-outline-variant/40 hover:border-primary/40 cursor-pointer">
+<input class="text-primary focus:ring-primary" name="evc_date" type="radio"/>
+<div>
+<p class="font-headline-sm text-body-sm font-semibold text-on-surface dark:text-inverse-on-surface">03 Mar 2025</p>
+<p class="font-body-sm text-xs text-on-surface-variant">Morning Slot • 10:00 IST</p>
+</div>
+</label>
+</div>
+</div>
+<!-- Notification Toggle for Institution Dean -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-surface-container dark:bg-surface-variant/40 border border-outline-variant/30">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-xl">forward_to_inbox</span>
+<div>
+<p class="font-body-md text-body-sm font-semibold text-on-surface dark:text-inverse-on-surface">Notify Institution Dean &amp; Registrar</p>
+<p class="font-body-sm text-xs text-on-surface-variant">Dispatches 48-hour statutory inspection requisition docket</p>
+</div>
+</div>
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-3.5 border-t border-outline-variant/30 flex items-center justify-end gap-3 bg-surface-container-low dark:bg-surface-variant/30">
+<button class="px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container font-headline-sm text-body-sm" onclick="closeModal()">
+          Cancel
+        </button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-4 py-2 rounded-xl font-headline-sm text-body-sm font-medium flex items-center gap-1.5 shadow-sm" onclick="commitSchedule()">
+<span class="material-symbols-outlined text-base">check_circle</span>
+<span>Confirm &amp; Issue EVC Mandate</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Inline Micro-Interactions Script -->
+<script>
+    // Theme Toggle Logic
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        themeIcon.innerText = 'dark_mode';
+      } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+        themeIcon.innerText = 'light_mode';
+      }
+    }
+
+    // Modal Control Logic
+    function openModal() {
+      const modal = document.getElementById('evcModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        card.classList.remove('scale-95');
+        card.classList.add('scale-100');
+      }, 10);
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('evcModal');
+      const card = document.getElementById('modalCard');
+      modal.classList.add('opacity-0');
+      card.classList.add('scale-95');
+      card.classList.remove('scale-100');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    function commitSchedule() {
+      alert("AICTE Statutory Notice: Expert Visiting Committee (EVC) panel confirmed for 28 Feb 2025. Institutional inspection mandate generated and cryptographic hash logged to audit trail.");
+      closeModal();
+    }
+  </script>
+</body></html>

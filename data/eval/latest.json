@@ -1,0 +1,103 @@
+{
+  "timestamp": "2026-10-24T17:00:51.072031+00:00",
+  "total_documents_evaluated": 359,
+  "extraction_overall_accuracy": 100.0,
+  "extraction_fields": {
+    "institution_name": {
+      "correct": 120,
+      "total": 120
+    },
+    "issue_date": {
+      "correct": 40,
+      "total": 40
+    },
+    "expiry_date": {
+      "correct": 80,
+      "total": 80
+    },
+    "certificate_number": {
+      "correct": 79,
+      "total": 79
+    },
+    "ter_transaction_id": {
+      "correct": 40,
+      "total": 40
+    },
+    "land_area_acres": {
+      "correct": 40,
+      "total": 40
+    },
+    "laboratories_count": {
+      "correct": 40,
+      "total": 40
+    },
+    "built_up_area_sqm": {
+      "correct": 39,
+      "total": 39
+    }
+  },
+  "defect_metrics": {
+    "possible_anomaly": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "false_positives_per_100_docs": 0.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "duplicate": {
+      "precision": 1.47,
+      "recall": 100.0,
+      "f1_score": 2.9,
+      "false_positives_per_100_docs": 18.66,
+      "tp": 1,
+      "fp": 67,
+      "fn": 0
+    },
+    "blurred_or_cropped_scan": {
+      "precision": 100.0,
+      "recall": 100.0,
+      "f1_score": 100.0,
+      "false_positives_per_100_docs": 0.0,
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+    },
+    "overall": {
+      "precision": 9.46,
+      "recall": 100.0,
+      "f1_score": 17.28,
+      "false_positives_per_100_docs": 18.66,
+      "tp": 7,
+      "fp": 67,
+      "fn": 0
+    }
+  },
+  "validation_accuracy": {
+    "accuracy_pct": 100.0,
+    "tested_applications": 40,
+    "correct_applications": 40
+  },
+  "verification_performance": {
+    "success_rate_pct": 100.0,
+    "adapters_evaluated": 4,
+    "deterministic_coverage": "all_6_statutory_statuses_supported"
+  },
+  "timings": {
+    "extraction_eval_seconds": 0.118,
+    "anomaly_eval_seconds": 0.253,
+    "validation_ground_truth_seconds": 0.002,
+    "verification_eval_seconds": 0.0,
+    "total_duration_seconds": 0.373
+  },
+  "statutory_language_invariants": {
+    "prohibited_words_checked": [
+      "fake",
+      "forged",
+      "fraud"
+    ],
+    "occurrences_found": 0,
+    "preliminary_indicator_label_verified": true
+  }
+}

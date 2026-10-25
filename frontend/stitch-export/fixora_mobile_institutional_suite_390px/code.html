@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIXORA - Mobile Statutory Scrutiny Portal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#2920d3",
+            "on-background": "#121a37",
+            "on-error-container": "#93000a",
+            "surface": "#fbf8ff",
+            "surface-container-highest": "#dde1ff",
+            "surface-dim": "#d2d8ff",
+            "on-surface": "#121a37",
+            "secondary-fixed-dim": "#2addcd",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#005049",
+            "tertiary": "#775400",
+            "on-tertiary-fixed": "#271900",
+            "on-tertiary-container": "#fff8f3",
+            "on-error": "#ffffff",
+            "outline-variant": "#c6c4d8",
+            "surface-container-low": "#f3f2ff",
+            "tertiary-fixed-dim": "#ffba20",
+            "primary-fixed-dim": "#c1c1ff",
+            "inverse-primary": "#c1c1ff",
+            "inverse-surface": "#282f4d",
+            "on-secondary-fixed": "#00201d",
+            "on-primary-container": "#fbf8ff",
+            "tertiary-container": "#966b00",
+            "primary-fixed": "#e1dfff",
+            "surface-tint": "#4543ea",
+            "on-surface-variant": "#464556",
+            "background": "#fbf8ff",
+            "outline": "#767587",
+            "inverse-on-surface": "#efefff",
+            "surface-container": "#ecedff",
+            "on-secondary": "#ffffff",
+            "on-primary": "#ffffff",
+            "secondary-container": "#57fae9",
+            "error": "#ba1a1a",
+            "secondary": "#006a62",
+            "primary": "#403de6",
+            "surface-bright": "#fbf8ff",
+            "primary-container": "#5b5bff",
+            "surface-variant": "#dde1ff",
+            "surface-container-lowest": "#ffffff",
+            "tertiary-fixed": "#ffdea8",
+            "on-primary-fixed": "#08006b",
+            "secondary-fixed": "#57fae9",
+            "on-secondary-container": "#007168",
+            "surface-container-high": "#e4e7ff",
+            "on-tertiary-fixed-variant": "#5e4200"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-lg": "3rem",
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem",
+            "gutter-sm": "1rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin": "2rem",
+            "space-xl": "2rem",
+            "gutter-lg": "2rem",
+            "margin-sm": "1rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["JetBrains Mono"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-lg": ["JetBrains Mono"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "label-md": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-sm": ["10px", {"lineHeight": "14px", "fontWeight": "500"}],
+            "headline-xl-mobile": ["30px", {"lineHeight": "38px", "fontWeight": "700"}],
+            "label-lg": ["13px", {"lineHeight": "18px", "fontWeight": "600"}],
+            "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+            "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+            "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "label-md": ["11px", {"lineHeight": "16px", "fontWeight": "500"}],
+            "headline-lg-mobile": ["22px", {"lineHeight": "30px", "fontWeight": "700"}],
+            "headline-xl": ["40px", {"lineHeight": "48px", "fontWeight": "700"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      vertical-align: middle;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .custom-scroll {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-high text-on-surface antialiased flex flex-col items-center min-h-screen py-4 md:py-8 px-2 transition-colors duration-200">
+<!-- Desktop Presentation Toolbar & Tab Switcher -->
+<header class="w-full max-w-[420px] mb-3 flex items-center justify-between px-2">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">FIXORA Flow</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed">Mobile 390px</span>
+</div>
+<!-- Theme Toggle -->
+<button aria-label="Toggle Theme" class="p-2 rounded-xl bg-surface-container-lowest text-on-surface shadow-sm border border-outline-variant/30 flex items-center justify-center hover:bg-surface-container transition-colors" id="themeToggleBtn" onclick="toggleDarkMode()">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="dark_mode" id="themeIcon">dark_mode</span>
+</button>
+</header>
+<!-- Interactive Screen Preview Navigator -->
+<div class="w-full max-w-[420px] mb-4 bg-surface-container-lowest dark:bg-inverse-surface p-1.5 rounded-2xl shadow-sm border border-outline-variant/30 flex gap-1">
+<button class="flex-1 py-2 px-2 rounded-xl font-label-md text-label-md text-center transition-all bg-primary-fixed text-on-primary-fixed font-semibold" id="btn-login" onclick="switchScreen('login')">
+      1. Login
+    </button>
+<button class="flex-1 py-2 px-2 rounded-xl font-label-md text-label-md text-center transition-all text-on-surface-variant hover:text-on-surface" id="btn-dashboard" onclick="switchScreen('dashboard')">
+      2. Dashboard
+    </button>
+<button class="flex-1 py-2 px-2 rounded-xl font-label-md text-label-md text-center transition-all text-on-surface-variant hover:text-on-surface" id="btn-detail" onclick="switchScreen('detail')">
+      3. Scrutiny Detail
+    </button>
+</div>
+<!-- Mobile Viewport Frame (390px Canonical Width) -->
+<main class="w-[390px] h-[780px] bg-background dark:bg-inverse-surface rounded-[40px] shadow-2xl border-4 border-outline-variant/40 dark:border-outline/30 overflow-hidden relative flex flex-col transition-all">
+<!-- Mobile Status Bar Mock -->
+<div class="w-full h-8 px-6 pt-1.5 flex justify-between items-center bg-transparent z-50 text-on-surface dark:text-inverse-on-surface select-none">
+<span class="font-label-sm text-label-sm font-semibold">09:41</span>
+<div class="w-20 h-4 bg-on-surface/20 dark:bg-inverse-on-surface/20 rounded-full mx-auto"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="battery_full">battery_full</span>
+</div>
+</div>
+<!-- ================= SCREEN 1: MOBILE LOGIN ================= -->
+<section class="flex-1 flex flex-col overflow-y-auto custom-scroll px-space-lg pb-8 pt-3" id="screen-login">
+<!-- Brand Anchor Header -->
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-1.5">
+<div class="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="verified_user">verified_user</span>
+</div>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">FIXORA</span>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold tracking-wide border border-secondary/20">
+          REGULATORY APEX
+        </span>
+</div>
+<!-- Welcome Banner -->
+<div class="mt-2 mb-6">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface dark:text-inverse-on-surface">Institutional Statutory Portal</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mt-1">AICTE National Scrutiny &amp; Approval Cadre Verification System</p>
+</div>
+<!-- Login Form Card -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface/90 rounded-2xl p-space-md border border-outline-variant/30 shadow-sm flex flex-col gap-3.5 mb-4">
+<!-- Secure Institutional Email -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface dark:text-inverse-on-surface mb-1">Institutional Official Email</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[18px]" data-icon="mail">mail</span>
+<input class="w-full h-[42px] pl-9 pr-3 rounded-xl border border-outline-variant/60 bg-surface dark:bg-surface-container text-on-surface dark:text-inverse-on-surface font-body-sm text-body-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="name@institution.edu.in" type="email" value="principal@apex-tech.edu.in"/>
+</div>
+</div>
+<!-- AICTE Institution ID -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface dark:text-inverse-on-surface mb-1">AICTE Permanent Institution ID</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline text-[18px]" data-icon="badge">badge</span>
+<input class="w-full h-[42px] pl-9 pr-3 rounded-xl border border-outline-variant/60 bg-surface dark:bg-surface-container text-on-surface dark:text-inverse-on-surface font-label-md text-label-md tracking-wider focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="1-XXXXXXXXX" type="text" value="1-439281084"/>
+</div>
+</div>
+<!-- Trigger OTP Action -->
+<button class="w-full h-[44px] mt-1 bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline-sm text-headline-sm font-semibold rounded-xl shadow-md flex items-center justify-center gap-2 hover:opacity-95 active:scale-98 transition-all" onclick="switchScreen('dashboard')">
+<span>Generate Secure OTP</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="key">key</span>
+</button>
+<!-- Biometric Authentication Divider -->
+<div class="flex items-center gap-2 my-1">
+<div class="flex-1 h-px bg-outline-variant/30"></div>
+<span class="font-label-sm text-label-sm text-outline">OR INSTITUTIONAL PASSKEY</span>
+<div class="flex-1 h-px bg-outline-variant/30"></div>
+</div>
+<!-- Biometric Auth Button -->
+<button class="w-full h-[42px] border border-outline-variant/50 hover:bg-surface-container dark:hover:bg-surface-container-high text-primary dark:text-inverse-primary rounded-xl flex items-center justify-center gap-2.5 font-headline-sm text-headline-sm transition-colors" onclick="switchScreen('dashboard')">
+<span class="material-symbols-outlined text-[20px]" data-icon="fingerprint">fingerprint</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="face">face</span>
+<span class="font-body-md text-body-md font-semibold">Verify with FaceID / Biometric</span>
+</button>
+</div>
+<!-- Prototype Advisory Note -->
+<div class="p-3 rounded-xl bg-surface-container dark:bg-surface-container-high border-l-4 border-primary">
+<div class="flex items-center gap-1.5 text-primary dark:text-inverse-primary">
+<span class="material-symbols-outlined text-[16px]" data-icon="info">info</span>
+<span class="font-label-md text-label-md font-semibold">Statutory Advisory Note</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mt-1 leading-tight">
+          Advisory: Prototype running on synthetic data cross-referenced with simulated National Accreditation Council registries.
+        </p>
+</div>
+<div class="mt-auto pt-4 text-center">
+<span class="font-label-sm text-label-sm text-outline">FIXORA v2.4.1 • Statutory Integrity Engine</span>
+</div>
+</section>
+<!-- ================= SCREEN 2: MOBILE INSTITUTION DASHBOARD ================= -->
+<section class="flex-1 hidden flex-col overflow-y-auto custom-scroll px-space-md pt-2 pb-24" id="screen-dashboard">
+<!-- Fixed Header Area -->
+<div class="flex items-center justify-between py-2 border-b border-outline-variant/20 mb-3">
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant">Welcome,</p>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface dark:text-inverse-on-surface truncate max-w-[220px]">
+            Dr. K. Raman (Apex Inst.)
+          </h2>
+</div>
+<span class="font-label-sm text-label-sm font-semibold px-2 py-1 rounded-lg bg-surface-container dark:bg-surface-container-high text-primary dark:text-inverse-primary border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]" data-icon="verified">verified</span>
+          ID: 1-439281084
+        </span>
+</div>
+<!-- Stat Summary Pills (Bento Mini Row) -->
+<div class="grid grid-cols-3 gap-2 mb-3.5">
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-2.5 rounded-xl border border-outline-variant/30 shadow-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant">Active Apps</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">2</span>
+<span class="font-label-sm text-label-sm text-outline">Live</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-2.5 rounded-xl border border-tertiary/20 shadow-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-tertiary-container dark:text-tertiary-fixed font-semibold">Action Req.</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-md text-headline-md font-bold text-tertiary-container dark:text-tertiary-fixed">1</span>
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+</div>
+</div>
+<div class="bg-surface-container-lowest dark:bg-inverse-surface p-2.5 rounded-xl border border-outline-variant/30 shadow-xs flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant">Deficiencies</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-md text-headline-md font-bold text-secondary">0</span>
+<span class="font-label-sm text-label-sm text-secondary">Clean</span>
+</div>
+</div>
+</div>
+<!-- Quick Action: New Application -->
+<button class="w-full h-11 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-xl font-headline-sm text-headline-sm font-semibold shadow-sm flex items-center justify-center gap-2 mb-4 active:scale-98 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_circle">add_circle</span>
+<span>+ New Application</span>
+</button>
+<!-- Section Title -->
+<div class="flex items-center justify-between mb-2">
+<span class="font-headline-sm text-headline-sm text-on-surface dark:text-inverse-on-surface">Recent Scrutiny Filings</span>
+<span class="font-label-sm text-label-sm text-primary dark:text-inverse-primary font-semibold">View All</span>
+</div>
+<!-- Card 1: Action Required / Under Scrutiny (Clickable to screen 3) -->
+<div class="cursor-pointer bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl p-space-md border border-tertiary-fixed-dim/40 shadow-sm hover:shadow-md transition-all mb-3 relative overflow-hidden group" onclick="switchScreen('detail')">
+<div class="absolute top-0 left-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="flex items-center justify-between gap-1 mb-1.5">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container dark:bg-surface-container-high text-on-surface-variant dark:text-outline-variant">
+            APP-2025-8841
+          </span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="schedule">schedule</span>
+            7 days left to rectify
+          </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface dark:text-inverse-on-surface font-bold group-hover:text-primary transition-colors">
+          EoA 2025-26 - Under Scrutiny
+        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mt-0.5 mb-2.5">
+          Extension of Approval • Bachelor of Technology (CSE, ECE, AI&amp;DS)
+        </p>
+<!-- Timeline Bar -->
+<div class="bg-surface-container dark:bg-surface-container-high rounded-full h-2 w-full mb-2 overflow-hidden flex">
+<div class="bg-primary w-2/3 h-full"></div>
+<div class="bg-tertiary-fixed-dim w-1/6 h-full"></div>
+<div class="bg-outline-variant/30 flex-1 h-full"></div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant dark:text-outline-variant">
+<div class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-tertiary text-[14px]" data-icon="report_problem">report_problem</span>
+<span>Mismatch detected: Faculty Cadre</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-semibold flex items-center">
+            Inspect <span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</span>
+</div>
+</div>
+<!-- Card 2: Regular in-progress Application -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-2xl p-space-md border border-outline-variant/30 shadow-xs mb-3">
+<div class="flex items-center justify-between gap-1 mb-1.5">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container dark:bg-surface-container-high text-on-surface-variant dark:text-outline-variant">
+            APP-2025-9012
+          </span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">
+            Stage 2 Completed
+          </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface dark:text-inverse-on-surface font-semibold">
+          New Course Introduction: M.Tech Robotics
+        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant mt-0.5 mb-2">
+          Cadre ratio verified • Fire &amp; Land clearances matched
+        </p>
+<div class="bg-surface-container dark:bg-surface-container-high rounded-full h-2 w-full mb-2 overflow-hidden">
+<div class="bg-secondary w-4/5 h-full"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant">Scrutiny Bureau Clearance Expected: 3d</span>
+<span class="material-symbols-outlined text-secondary text-[16px]" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+</section>
+<!-- ================= SCREEN 3: MOBILE APPLICATION DETAIL ================= -->
+<section class="flex-1 hidden flex-col overflow-y-auto custom-scroll px-space-md pt-2 pb-28" id="screen-detail">
+<!-- Back & Navigation Row -->
+<div class="flex items-center justify-between mb-2">
+<button class="flex items-center gap-1 text-primary dark:text-inverse-primary font-label-md text-label-md font-semibold py-1" onclick="switchScreen('dashboard')">
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_back">arrow_back</span>
+<span>Back to Dashboard</span>
+</button>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-error-container text-on-error-container font-semibold border border-error/20">
+          Requires Rectification
+        </span>
+</div>
+<!-- Application Identifier Header -->
+<div class="mb-3">
+<span class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant tracking-wider uppercase">Statutory Dossier</span>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface">APP-2025-8841</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant dark:text-outline-variant">EoA 2025-26 • Department of Computer Science &amp; Engineering</p>
+</div>
+<!-- AI Assistive Finding Advisory Banner -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface border-l-4 border-primary rounded-xl p-3 shadow-xs mb-3.5">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm text-primary dark:text-inverse-primary font-bold">
+            [AI Assistive Finding: Confidence Score 94.2%]
+          </span>
+<span class="font-label-sm text-label-sm bg-surface-container dark:bg-surface-container-high text-on-surface-variant px-1.5 py-0.5 rounded">
+            Audit v3.1
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface dark:text-inverse-on-surface">
+          Data point differs from National Faculty Database records. Possible anomaly in Professor cadre allocation. Requires manual verification.
+        </p>
+<div class="mt-2 pt-1.5 border-t border-outline-variant/20 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary" data-icon="link">link</span>
+            Source: AICTE Regulatory Cadre API
+          </span>
+<span class="font-label-sm text-label-sm text-primary dark:text-inverse-primary font-medium">Rule 7.1.c</span>
+</div>
+</div>
+<!-- Defect Accordion Cards -->
+<div class="space-y-2.5">
+<h3 class="font-headline-sm text-headline-sm text-on-surface dark:text-inverse-on-surface">Scrutiny Clauses</h3>
+<!-- Accordion 1: Anomaly (Expanded) -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-outline-variant/40 overflow-hidden shadow-xs">
+<div class="p-3 flex items-center justify-between cursor-pointer bg-surface-container-low/40 dark:bg-surface-container-high/20" onclick="toggleAccordion('acc1')">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-error"></span>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface">Faculty Cadre: Missing 1 Professor</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-outline transition-transform duration-200 rotate-180" data-icon="expand_more" id="acc1-icon">expand_more</span>
+</div>
+<div class="p-3 border-t border-outline-variant/20 text-body-sm font-body-sm space-y-2" id="acc1-content">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant dark:text-outline-variant">Prescribed Ratio:</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface dark:text-inverse-on-surface">1 : 2 : 6 (Prof:Assoc:Asst)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant dark:text-outline-variant">Submitted Cadre:</span>
+<span class="font-label-sm text-label-sm text-error font-semibold">0 Professors (Expected: 1)</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container dark:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant dark:text-outline-variant text-[11px] leading-tight">
+              Mismatch detected: Dr. S. Kulkarni has resigned as per State Directorate records dated Jan 12, 2025. Please upload appointment endorsement or replacement dossier.
+            </div>
+</div>
+</div>
+<!-- Accordion 2: Verified Valid (Collapsed) -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-outline-variant/40 overflow-hidden shadow-xs">
+<div class="p-3 flex items-center justify-between cursor-pointer" onclick="toggleAccordion('acc2')">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface">Fire NOC: Verified valid</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-outline transition-transform duration-200" data-icon="expand_more" id="acc2-icon">expand_more</span>
+</div>
+<div class="hidden p-3 border-t border-outline-variant/20 text-body-sm font-body-sm space-y-2" id="acc2-content">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant dark:text-outline-variant">Certificate Authority:</span>
+<span class="font-label-sm text-label-sm font-semibold">State Fire &amp; Rescue Services</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant dark:text-outline-variant">Validity Period:</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Valid till 31-March-2027</span>
+</div>
+<div class="font-label-sm text-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary" data-icon="check_circle">check_circle</span>
+              Match confirmed via State Disaster Management Portal
+            </div>
+</div>
+</div>
+<!-- Accordion 3: Land Title & Building Area -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl border border-outline-variant/40 overflow-hidden shadow-xs">
+<div class="p-3 flex items-center justify-between cursor-pointer" onclick="toggleAccordion('acc3')">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface">Land Title &amp; Built-up Area: 8.5 Acres</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-outline transition-transform duration-200" data-icon="expand_more" id="acc3-icon">expand_more</span>
+</div>
+<div class="hidden p-3 border-t border-outline-variant/20 text-body-sm font-body-sm space-y-2" id="acc3-content">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant dark:text-outline-variant">Survey No:</span>
+<span class="font-label-sm text-label-sm font-semibold">Plot 42/B, Knowledge Park IV</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant dark:text-outline-variant">Built-up Scrutiny:</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">24,300 sq.m (Meets norms)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Bar inside detail canvas -->
+<div class="sticky bottom-20 mt-4 z-30">
+<div class="p-2 rounded-2xl bg-surface-container-lowest/90 dark:bg-inverse-surface/90 backdrop-blur-md border border-outline-variant/40 shadow-lg flex gap-2">
+<button class="flex-1 h-11 bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline-sm text-headline-sm rounded-xl font-semibold shadow-sm flex items-center justify-center gap-1.5 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="upload_file">upload_file</span>
+<span>Submit Rectification</span>
+</button>
+<button class="h-11 px-3 bg-surface-container dark:bg-surface-container-high text-on-surface dark:text-inverse-on-surface rounded-xl flex items-center justify-center border border-outline-variant/40 hover:bg-surface-container-highest transition-colors" title="Download Official Deficiency Report">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+</button>
+</div>
+</div>
+</section>
+<!-- ================= STICKY BOTTOM NAVIGATION BAR (Mandatory Shell) ================= -->
+<nav class="absolute bottom-0 left-0 right-0 h-16 bg-surface-container-lowest/95 dark:bg-inverse-surface/95 backdrop-blur-md shadow-lg flex items-center justify-around px-2 z-40 select-none">
+<!-- 1. Dashboard Tab -->
+<button class="flex flex-col items-center justify-center w-16 py-1 text-primary dark:text-inverse-primary transition-all" id="nav-dashboard" onclick="switchScreen('dashboard')">
+<span class="material-symbols-outlined text-[22px]" data-icon="grid_view">grid_view</span>
+<span class="font-label-sm text-label-sm font-semibold mt-0.5">Dashboard</span>
+</button>
+<!-- 2. Applications Tab (Active indicator badge '1') -->
+<button class="flex flex-col items-center justify-center w-16 py-1 text-on-surface-variant dark:text-outline-variant hover:text-on-surface transition-all relative" id="nav-applications" onclick="switchScreen('detail')">
+<span class="material-symbols-outlined text-[22px]" data-icon="description">description</span>
+<span class="absolute top-0 right-3.5 w-4 h-4 bg-primary text-on-primary font-label-sm text-[10px] leading-4 text-center rounded-full font-bold">1</span>
+<span class="font-label-sm text-label-sm mt-0.5">Applications</span>
+</button>
+<!-- 3. Notices Tab (Badge '3') -->
+<button class="flex flex-col items-center justify-center w-16 py-1 text-on-surface-variant dark:text-outline-variant hover:text-on-surface transition-all relative" id="nav-notices" onclick="alert('Notices drawer: 3 statutory circulars pending acknowledgement.')">
+<span class="material-symbols-outlined text-[22px]" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-3.5 w-4 h-4 bg-tertiary-fixed-dim text-on-tertiary-fixed font-label-sm text-[10px] leading-4 text-center rounded-full font-bold">3</span>
+<span class="font-label-sm text-label-sm mt-0.5">Notices</span>
+</button>
+<!-- 4. Profile Tab -->
+<button class="flex flex-col items-center justify-center w-16 py-1 text-on-surface-variant dark:text-outline-variant hover:text-on-surface transition-all" id="nav-profile" onclick="switchScreen('login')">
+<span class="material-symbols-outlined text-[22px]" data-icon="account_circle">account_circle</span>
+<span class="font-label-sm text-label-sm mt-0.5">Profile</span>
+</button>
+</nav>
+</main>
+<!-- Interactive State Controller Script -->
+<script>
+    function switchScreen(screenKey) {
+      // Screens
+      const sLogin = document.getElementById('screen-login');
+      const sDashboard = document.getElementById('screen-dashboard');
+      const sDetail = document.getElementById('screen-detail');
+
+      // Top Preview Buttons
+      const btnLogin = document.getElementById('btn-login');
+      const btnDash = document.getElementById('btn-dashboard');
+      const btnDetail = document.getElementById('btn-detail');
+
+      // Bottom Nav Items
+      const navDash = document.getElementById('nav-dashboard');
+      const navApps = document.getElementById('nav-applications');
+      const navProf = document.getElementById('nav-profile');
+
+      // Reset display
+      sLogin.classList.add('hidden');
+      sDashboard.classList.add('hidden');
+      sDetail.classList.add('hidden');
+
+      [btnLogin, btnDash, btnDetail].forEach(btn => {
+        btn.className = "flex-1 py-2 px-2 rounded-xl font-label-md text-label-md text-center transition-all text-on-surface-variant hover:text-on-surface";
+      });
+
+      [navDash, navApps, navProf].forEach(nav => {
+        nav.className = "flex flex-col items-center justify-center w-16 py-1 text-on-surface-variant dark:text-outline-variant hover:text-on-surface transition-all relative";
+      });
+
+      if (screenKey === 'login') {
+        sLogin.classList.remove('hidden');
+        btnLogin.className = "flex-1 py-2 px-2 rounded-xl font-label-md text-label-md text-center transition-all bg-primary-fixed text-on-primary-fixed font-semibold";
+        navProf.className = "flex flex-col items-center justify-center w-16 py-1 text-primary dark:text-inverse-primary font-semibold transition-all";
+      } else if (screenKey === 'dashboard') {
+        sDashboard.classList.remove('hidden');
+        btnDash.className = "flex-1 py-2 px-2 rounded-xl font-label-md text-label-md text-center transition-all bg-primary-fixed text-on-primary-fixed font-semibold";
+        navDash.className = "flex flex-col items-center justify-center w-16 py-1 text-primary dark:text-inverse-primary font-semibold transition-all";
+      } else if (screenKey === 'detail') {
+        sDetail.classList.remove('hidden');
+        btnDetail.className = "flex-1 py-2 px-2 rounded-xl font-label-md text-label-md text-center transition-all bg-primary-fixed text-on-primary-fixed font-semibold";
+        navApps.className = "flex flex-col items-center justify-center w-16 py-1 text-primary dark:text-inverse-primary font-semibold transition-all relative";
+      }
+    }
+
+    function toggleAccordion(id) {
+      const content = document.getElementById(id + '-content');
+      const icon = document.getElementById(id + '-icon');
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        content.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    function toggleDarkMode() {
+      const htmlEl = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        themeIcon.innerText = 'dark_mode';
+      } else {
+        htmlEl.classList.add('dark');
+        themeIcon.innerText = 'light_mode';
+      }
+    }
+  </script>
+</body></html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FIXORA Regulatory Intelligence - Notifications &amp; Statutory Alerts</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Typography Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#2920d3",
+            "on-background": "#121a37",
+            "on-error-container": "#93000a",
+            "surface": "#fbf8ff",
+            "surface-container-highest": "#dde1ff",
+            "surface-dim": "#d2d8ff",
+            "on-surface": "#121a37",
+            "secondary-fixed-dim": "#2addcd",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#005049",
+            "tertiary": "#775400",
+            "on-tertiary-fixed": "#271900",
+            "on-tertiary-container": "#fff8f3",
+            "on-error": "#ffffff",
+            "outline-variant": "#c6c4d8",
+            "surface-container-low": "#f3f2ff",
+            "tertiary-fixed-dim": "#ffba20",
+            "primary-fixed-dim": "#c1c1ff",
+            "inverse-primary": "#c1c1ff",
+            "inverse-surface": "#282f4d",
+            "on-secondary-fixed": "#00201d",
+            "on-primary-container": "#fbf8ff",
+            "tertiary-container": "#966b00",
+            "primary-fixed": "#e1dfff",
+            "surface-tint": "#4543ea",
+            "on-surface-variant": "#464556",
+            "background": "#fbf8ff",
+            "outline": "#767587",
+            "inverse-on-surface": "#efefff",
+            "surface-container": "#ecedff",
+            "on-secondary": "#ffffff",
+            "on-primary": "#ffffff",
+            "secondary-container": "#57fae9",
+            "error": "#ba1a1a",
+            "secondary": "#006a62",
+            "primary": "#403de6",
+            "surface-bright": "#fbf8ff",
+            "primary-container": "#5b5bff",
+            "surface-variant": "#dde1ff",
+            "surface-container-lowest": "#ffffff",
+            "tertiary-fixed": "#ffdea8",
+            "on-primary-fixed": "#08006b",
+            "secondary-fixed": "#57fae9",
+            "on-secondary-container": "#007168",
+            "surface-container-high": "#e4e7ff",
+            "on-tertiary-fixed-variant": "#5e4200"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-lg": "3rem",
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem",
+            "gutter-sm": "1rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin": "2rem",
+            "space-xl": "2rem",
+            "gutter-lg": "2rem",
+            "margin-sm": "1rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["JetBrains Mono"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "label-lg": ["JetBrains Mono"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "label-md": ["JetBrains Mono"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-sm": ["10px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "headline-xl-mobile": ["30px", { "lineHeight": "38px", "fontWeight": "700" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["11px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "headline-lg-mobile": ["22px", { "lineHeight": "30px", "fontWeight": "700" }],
+            "headline-xl": ["40px", { "lineHeight": "48px", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(198, 196, 216, 0.4);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(118, 117, 135, 0.6);
+    }
+    .glass-surface {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+    }
+    .dark .glass-surface {
+      background: rgba(20, 23, 46, 0.94);
+      backdrop-filter: blur(14px);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased transition-colors duration-200 overflow-x-hidden min-h-screen flex flex-col font-body-md text-body-md selection:bg-primary selection:text-white">
+<!-- ================= TOP NAVIGATION BAR (Anchor Component) ================= -->
+<header class="w-full px-space-lg max-w-full flex justify-between items-center h-16 sticky top-0 z-40 bg-surface-container-lowest/80 dark:bg-inverse-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
+<!-- Brand / Product Identity -->
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap- space-sm">
+<div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-primary-container flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="verified_user">verified_user</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-md font-headline-md font-bold tracking-tight text-on-surface dark:text-inverse-on-surface leading-tight">
+            FIXORA Regulatory Intelligence
+          </span>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant tracking-wider uppercase">
+            AI-Assisted Statutory Accreditation Panel
+          </span>
+</div>
+</div>
+<!-- Main Navigation Links -->
+<nav class="hidden xl:flex items-center gap-space-md ml-space-md">
+<a class="text-primary dark:text-inverse-primary border-b-2 border-primary dark:border-inverse-primary pb-1 font-semibold text-label-lg font-label-lg transition-colors" href="#">
+          Scrutiny Dossiers
+        </a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-normal pb-1 transition-colors text-label-lg font-label-lg" href="#">
+          Standards Engine
+        </a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-normal pb-1 transition-colors text-label-lg font-label-lg" href="#">
+          Registry Audit
+        </a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-normal pb-1 transition-colors text-label-lg font-label-lg" href="#">
+          Institutional Cadre
+        </a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface font-normal pb-1 transition-colors text-label-lg font-label-lg" href="#">
+          Intelligence Reports
+        </a>
+</nav>
+</div>
+<!-- Right Controls: Search, Theme Toggle, Trailing Actions, Clearance Portal -->
+<div class="flex items-center gap-space-sm">
+<!-- Search Input -->
+<div class="relative hidden lg:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]" data-icon="search">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 h-[36px] bg-surface-container-low dark:bg-inverse-surface border border-outline-variant/40 rounded-lg text-body-sm font-body-sm placeholder:text-outline focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="Search institutional PID, reg..." type="text"/>
+</div>
+<!-- Light / Dark Theme Switcher -->
+<button class="p-2 text-on-surface-variant dark:text-inverse-on-surface hover:bg-surface-container-high/50 dark:hover:bg-surface-variant/20 transition-all rounded-lg flex items-center justify-center" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+<span class="material-symbols-outlined text-[20px]" data-icon="dark_mode" id="themeIcon">dark_mode</span>
+</button>
+<!-- Trailing Icon Actions -->
+<button class="relative p-2 text-primary dark:text-inverse-primary bg-primary-fixed dark:bg-primary/20 hover:bg-surface-container-high/60 transition-all rounded-lg flex items-center justify-center" title="Notifications Active (14 Unread)">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full ring-2 ring-white dark:ring-inverse-surface"></span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-inverse-on-surface hover:bg-surface-container-high/50 dark:hover:bg-surface-variant/20 transition-all rounded-lg flex items-center justify-center" title="Statutory Seal Verified">
+<span class="material-symbols-outlined text-[20px]" data-icon="verified_user">verified_user</span>
+</button>
+<button class="p-2 text-on-surface-variant dark:text-inverse-on-surface hover:bg-surface-container-high/50 dark:hover:bg-surface-variant/20 transition-all rounded-lg flex items-center justify-center" title="Officer Profile">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_circle">account_circle</span>
+</button>
+<!-- Trailing Primary Action -->
+<button class="ml-space-xs px-space-md py-2 bg-gradient-to-r from-primary to-primary-container text-white text-label-lg font-label-lg font-medium rounded-lg shadow-sm hover:brightness-105 active:scale-[0.98] transition-all flex items-center gap-1.5">
+<span>Clearance Portal</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="open_in_new">open_in_new</span>
+</button>
+</div>
+</header>
+<!-- ================= MAIN WORKSPACE BODY (Side Nav + Dashboard Canvas) ================= -->
+<div class="flex-1 flex max-w-full relative">
+<!-- Left Navigation Bar (Anchor Component) -->
+<aside class="h-[calc(100vh-4rem)] flex flex-col justify-between py-space-md px-space-sm w-64 shrink-0 overflow-y-auto bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant/30 hidden md:flex sticky top-16">
+<div class="space-y-space-md">
+<!-- Statutory Panel Header -->
+<div class="px-space-sm py-space-xs flex items-center gap-space-sm border-b border-outline-variant/20 pb-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest dark:bg-surface-variant/40 flex items-center justify-center text-primary dark:text-inverse-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="account_balance">account_balance</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface leading-tight">
+              Statutory Panel
+            </h2>
+<p class="text-label-sm font-label-sm text-outline dark:text-outline-variant">
+              AI Verification Node #402
+            </p>
+</div>
+</div>
+<!-- Call to Action -->
+<button class="w-full bg-surface-container-lowest dark:bg-surface-variant/20 hover:bg-primary/10 text-primary dark:text-inverse-primary border border-primary/30 rounded-lg px-space-md py-2 text-label-md font-label-md font-semibold flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="add_circle">add_circle</span>
+<span>New Scrutiny Dossier</span>
+</button>
+<!-- Primary Verification Tabs -->
+<nav class="space-y-1">
+<a class="bg-primary-fixed dark:bg-primary/20 text-on-primary-fixed dark:text-inverse-primary font-medium rounded-lg px-space-md py-space-sm flex items-center gap-space-sm text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="folder_open">folder_open</span>
+<span>Dossier Overview</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="domain">domain</span>
+<span>Infrastructure &amp; Land</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="groups">groups</span>
+<span>Cadre &amp; Faculty Ratio</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="local_fire_department">local_fire_department</span>
+<span>Building &amp; Fire Clearance</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="map">map</span>
+<span>Geospatial Cross-Check</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="history_edu">history_edu</span>
+<span>Audit Trail &amp; Ledger</span>
+</a>
+</nav>
+</div>
+<!-- Footer Navigation Items -->
+<div class="border-t border-outline-variant/30 pt-space-sm space-y-1">
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="gavel">gavel</span>
+<span>Advisory Standards</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-inverse-surface/60 hover:text-on-surface dark:hover:text-inverse-on-surface rounded-lg px-space-md py-space-sm flex items-center gap-space-sm transition-colors text-body-sm font-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="tune">tune</span>
+<span>System Status</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas (Background Scrutiny Dashboard) -->
+<main class="flex-1 p-space-lg lg:p-space-xl overflow-y-auto max-w-[calc(100vw-16rem)]">
+<div class="max-w-6xl mx-auto space-y-space-lg">
+<!-- Page Header Breadcrumbs & Status -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-2 text-label-md font-label-md text-outline dark:text-outline-variant mb-1">
+<span>National Scrutiny Council</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span>2025 Accreditation Cycle</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary dark:text-inverse-primary font-semibold">Active Review Docket</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface dark:text-inverse-on-surface">
+              Statutory Docket #REG-2025-8841
+            </h1>
+<p class="text-body-md font-body-md text-on-surface-variant dark:text-surface-variant mt-1">
+              Apex Institute of Technology &amp; Management • Permanent ID: PID-1-9284102 • Scrutiny Tier I
+            </p>
+</div>
+<!-- Quick Metrics Bar -->
+<div class="flex items-center gap-space-sm">
+<div class="px-space-md py-2 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 rounded-xl shadow-sm text-right">
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant block">Compliance Index</span>
+<span class="text-headline-sm font-headline-sm font-bold text-primary dark:text-inverse-primary">87.4%</span>
+</div>
+<div class="px-space-md py-2 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 rounded-xl shadow-sm text-right">
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant block">Advisory Warnings</span>
+<span class="text-headline-sm font-headline-sm font-bold text-amber-600 dark:text-amber-400">3 Pending</span>
+</div>
+</div>
+</div>
+<!-- AI Advisory Banner -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest dark:bg-inverse-surface border-l-[3px] border-l-primary border-outline-variant/30 shadow-sm flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[22px] mt-0.5" data-icon="auto_awesome">auto_awesome</span>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-label-md font-label-md font-semibold text-primary dark:text-inverse-primary">[AI Assistive Finding: Confidence Score 96.8%]</span>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container-low text-primary dark:text-inverse-primary border border-primary/20">Source: State Directorate of Technical Education registry ↗</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant dark:text-surface-variant">
+              System performed cross-registry audit against 6 statutory records. 2 items require manual verification by Scrutiny Officer before clearance certificate issuance.
+            </p>
+</div>
+</div>
+<!-- Bento Grid Scrutiny Overview Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Card 1: Land Acreage & Survey -->
+<div class="p-space-md rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-label-lg font-label-lg font-semibold text-on-surface dark:text-inverse-on-surface">Land &amp; Survey Deed</span>
+<span class="px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-green-500/10 text-green-700 dark:text-green-400 border border-green-500/20 font-semibold">Match Confirmed</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant dark:text-surface-variant">
+              Titled 12.45 Acres across survey numbers 108/2A, 108/2B. Geofenced boundaries verified via National Geospatial node.
+            </div>
+<div class="pt-2 border-t border-outline-variant/20 flex justify-between items-center text-label-sm font-label-sm text-outline">
+<span>Ref: B-2024-SV-99</span>
+<span class="text-primary font-medium hover:underline cursor-pointer">Inspect Boundaries ↗</span>
+</div>
+</div>
+<!-- Card 2: Faculty Cadre Ratio -->
+<div class="p-space-md rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-label-lg font-label-lg font-semibold text-on-surface dark:text-inverse-on-surface">Faculty Cadre Ratio</span>
+<span class="px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 font-semibold">Possible Anomaly</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant dark:text-surface-variant">
+              Declared CSE student-to-faculty cadence stands at 1:17.1 against statutory 1:15 standard requirement.
+            </div>
+<div class="pt-2 border-t border-outline-variant/20 flex justify-between items-center text-label-sm font-label-sm text-outline">
+<span>Deficit: 3 Assistant Profs</span>
+<span class="text-rose-600 font-medium hover:underline cursor-pointer">Compare Cadre ↗</span>
+</div>
+</div>
+<!-- Card 3: Fire & Structural Safety -->
+<div class="p-space-md rounded-2xl bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 shadow-[0_1px_3px_rgba(20,23,47,0.03),0_8px_24px_-4px_rgba(91,93,255,0.06)] space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-label-lg font-label-lg font-semibold text-on-surface dark:text-inverse-on-surface">Fire Safety NOC</span>
+<span class="px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 font-semibold">Expiring in 14d</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant dark:text-surface-variant">
+              State Disaster Management clearance renewal is pending submission. Document valid until 15 March 2025.
+            </div>
+<div class="pt-2 border-t border-outline-variant/20 flex justify-between items-center text-label-sm font-label-sm text-outline">
+<span>Certificate: FS-2022-094</span>
+<span class="text-amber-600 font-medium hover:underline cursor-pointer">Issue Reminder ↗</span>
+</div>
+</div>
+</div>
+<!-- Simulated Document Annexure Viewer Placeholder -->
+<div class="bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 rounded-2xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="description">description</span>
+<span class="font-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface">Institutional Compliance Matrix (Form B-4)</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant text-label-sm font-label-sm rounded-lg hover:text-on-surface">Page 1 of 8</button>
+<button class="p-1 text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[18px]" data-icon="zoom_in">zoom_in</span></button>
+<button class="p-1 text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[18px]" data-icon="download">download</span></button>
+</div>
+</div>
+<div class="py-8 flex flex-col items-center justify-center text-center text-outline">
+<span class="material-symbols-outlined text-[44px] text-outline-variant mb-2" data-icon="verified">verified</span>
+<p class="text-body-sm font-body-sm max-w-md">Source documentation loaded in split-pane view. Use statutory drawer to review live alerts and discrepancy findings.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- ================= BACKDROP SCRIM ================= -->
+<div class="fixed inset-0 bg-[#0b0d1e]/40 backdrop-blur-[2px] z-50 transition-opacity duration-300 opacity-100" id="drawerBackdrop" onclick="closeDrawer()"></div>
+<!-- ================= NOTIFICATIONS & STATUTORY ALERTS DRAWER (460px width) ================= -->
+<aside class="fixed top-0 right-0 h-full w-[460px] max-w-full z-50 glass-surface border-l border-outline-variant/40 shadow-[0_24px_48px_-12px_rgba(20,23,47,0.22)] flex flex-col transition-transform duration-300 transform translate-x-0" id="statutoryDrawer">
+<!-- Drawer Header -->
+<div class="px-space-md pt-4 pb-3 border-b border-outline-variant/30 bg-surface-container-lowest/60 dark:bg-inverse-surface/60">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2.5">
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">
+              Notifications &amp; Statutory Alerts
+            </h2>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-primary/10 text-primary dark:text-inverse-primary border border-primary/25 font-bold">
+              14 Unread
+            </span>
+</div>
+<!-- Header Action Icons -->
+<div class="flex items-center gap-1">
+<button class="p-1.5 text-outline hover:text-on-surface dark:hover:text-inverse-on-surface hover:bg-surface-container-high/60 rounded-lg transition-all" title="Drawer Settings">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+</button>
+<button class="p-1.5 text-outline hover:text-error hover:bg-rose-500/10 rounded-lg transition-all" onclick="closeDrawer()" title="Close Drawer (X)">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+</div>
+</div>
+<!-- Mark All As Read Bar -->
+<div class="flex items-center justify-between text-label-sm font-label-sm mb-3">
+<span class="text-outline dark:text-outline-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Real-time scrutiny feed synchronized
+          </span>
+<button class="text-primary dark:text-inverse-primary hover:underline font-semibold flex items-center gap-1" onclick="markAllRead()">
+<span class="material-symbols-outlined text-[14px]" data-icon="done_all">done_all</span>
+<span>Mark all as read</span>
+</button>
+</div>
+<!-- Filter Chips Header -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar">
+<button class="filter-tab px-3 py-1 rounded-full text-label-md font-label-md font-semibold bg-primary text-white shadow-sm transition-all whitespace-nowrap" onclick="setFilter('all', this)">
+            All (14)
+          </button>
+<button class="filter-tab px-3 py-1 rounded-full text-label-md font-label-md font-semibold bg-surface-container-low dark:bg-surface-variant/20 text-on-surface-variant dark:text-surface-variant hover:text-on-surface border border-outline-variant/30 transition-all whitespace-nowrap flex items-center gap-1" onclick="setFilter('high', this)">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+            High Severity (5)
+          </button>
+<button class="filter-tab px-3 py-1 rounded-full text-label-md font-label-md font-semibold bg-surface-container-low dark:bg-surface-variant/20 text-on-surface-variant dark:text-surface-variant hover:text-on-surface border border-outline-variant/30 transition-all whitespace-nowrap flex items-center gap-1" onclick="setFilter('pending', this)">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+            Pending Action (8)
+          </button>
+<button class="filter-tab px-3 py-1 rounded-full text-label-md font-label-md font-semibold bg-surface-container-low dark:bg-surface-variant/20 text-on-surface-variant dark:text-surface-variant hover:text-on-surface border border-outline-variant/30 transition-all whitespace-nowrap" onclick="setFilter('system', this)">
+            System (1)
+          </button>
+</div>
+</div>
+<!-- Drawer Alerts List Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto px-space-md py-space-sm space-y-space-md custom-scrollbar" id="alertsContainer">
+<!-- ================= CATEGORY 1: Missing Document ================= -->
+<div class="alert-item group rounded-xl p-3.5 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 shadow-[0_1px_3px_rgba(20,23,47,0.03)] hover:shadow-md transition-all relative">
+<!-- Top Row: Category Tag, Icon & Timestamp -->
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]" data-icon="warning">warning</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm font-bold text-amber-600 dark:text-amber-400 tracking-wide uppercase block">
+                  Missing Document
+                </span>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant">
+                  Requires manual verification
+                </span>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant shrink-0">12m ago</span>
+</div>
+<!-- Alert Content -->
+<p class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface mb-2 font-medium leading-snug">
+            Mandatory Occupancy Certificate Annexure IV not submitted for <strong class="text-primary dark:text-inverse-primary font-semibold">Apex Institute PID-1-9284102</strong>.
+          </p>
+<!-- Simulated Source Verification Badge -->
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-low dark:bg-surface-variant/20 text-on-surface-variant dark:text-surface-variant border border-outline-variant/20 mb-3 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+<span>Source: Municipal Land Registry Vault ↗</span>
+</div>
+<!-- Action Buttons Deck -->
+<div class="flex items-center gap-1.5 pt-2 border-t border-outline-variant/20">
+<button class="px-2.5 py-1 bg-gradient-to-r from-primary to-primary-container text-white text-label-sm font-label-sm font-medium rounded-lg hover:brightness-105 transition-all shadow-xs">
+              Open Case
+            </button>
+<button class="px-2.5 py-1 bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm font-medium rounded-lg border border-outline-variant/30 hover:bg-surface-container-high transition-all" onclick="dismissAlert(this)">
+              Acknowledge
+            </button>
+<button class="px-2.5 py-1 bg-primary/10 text-primary dark:text-inverse-primary hover:bg-primary/20 text-label-sm font-label-sm font-medium rounded-lg border border-primary/20 transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="outgoing_mail">outgoing_mail</span>
+<span>Request Document</span>
+</button>
+</div>
+</div>
+<!-- ================= CATEGORY 2: Expiring Soon ================= -->
+<div class="alert-item group rounded-xl p-3.5 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 shadow-[0_1px_3px_rgba(20,23,47,0.03)] hover:shadow-md transition-all relative">
+<!-- Top Row -->
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm font-bold text-amber-600 dark:text-amber-400 tracking-wide uppercase block">
+                  Expiring Soon
+                </span>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant">
+                  Statutory Renewal Threshold
+                </span>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant shrink-0">1h ago</span>
+</div>
+<!-- Alert Content -->
+<p class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface mb-2 font-medium leading-snug">
+            Fire Safety NOC expires in <span class="text-amber-600 dark:text-amber-400 font-semibold underline decoration-amber-400/50">14 days on 15 March 2025</span> for <strong class="text-primary dark:text-inverse-primary font-semibold">Green Valley Engineering College APP-2025-4412</strong>.
+          </p>
+<!-- Source Badge -->
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-low dark:bg-surface-variant/20 text-on-surface-variant dark:text-surface-variant border border-outline-variant/20 mb-3 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+<span>Source: State Disaster &amp; Fire Services Gateway ↗</span>
+</div>
+<!-- Action Buttons Deck -->
+<div class="flex items-center gap-1.5 pt-2 border-t border-outline-variant/20">
+<button class="px-2.5 py-1 bg-gradient-to-r from-primary to-primary-container text-white text-label-sm font-label-sm font-medium rounded-lg hover:brightness-105 transition-all shadow-xs">
+              Open Case
+            </button>
+<button class="px-2.5 py-1 bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm font-medium rounded-lg border border-outline-variant/30 hover:bg-surface-container-high transition-all" onclick="dismissAlert(this)">
+              Acknowledge
+            </button>
+<button class="px-2.5 py-1 bg-surface-container-low dark:bg-surface-variant/20 text-outline hover:text-on-surface text-label-sm font-label-sm font-medium rounded-lg border border-outline-variant/30 transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="snooze">snooze</span>
+<span>Snooze 7d</span>
+</button>
+</div>
+</div>
+<!-- ================= CATEGORY 3: Verification Pending Too Long ================= -->
+<div class="alert-item group rounded-xl p-3.5 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 shadow-[0_1px_3px_rgba(20,23,47,0.03)] hover:shadow-md transition-all relative">
+<!-- Top Row -->
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 text-primary dark:text-inverse-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]" data-icon="hourglass_empty">hourglass_empty</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm font-bold text-primary dark:text-inverse-primary tracking-wide uppercase block">
+                  Verification Pending Too Long
+                </span>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant">
+                  Inter-agency sync delay
+                </span>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant shrink-0">3h ago</span>
+</div>
+<!-- Alert Content -->
+<p class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface mb-2 font-medium leading-snug">
+            Land Survey Deed cross-verification pending with State Revenue Portal for <span class="text-primary dark:text-inverse-primary font-semibold">72+ hours</span> on <strong class="text-primary dark:text-inverse-primary font-semibold">Vidya Technical Institute APP-2025-1092</strong>.
+          </p>
+<!-- Source Badge -->
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-low dark:bg-surface-variant/20 text-on-surface-variant dark:text-surface-variant border border-outline-variant/20 mb-3 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Source: State Land Revenue Department API ↗</span>
+</div>
+<!-- Action Buttons Deck -->
+<div class="flex items-center gap-1.5 pt-2 border-t border-outline-variant/20">
+<button class="px-2.5 py-1 bg-gradient-to-r from-primary to-primary-container text-white text-label-sm font-label-sm font-medium rounded-lg hover:brightness-105 transition-all shadow-xs">
+              Open Case
+            </button>
+<button class="px-2.5 py-1 bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm font-medium rounded-lg border border-outline-variant/30 hover:bg-surface-container-high transition-all" onclick="dismissAlert(this)">
+              Acknowledge
+            </button>
+<button class="px-2.5 py-1 bg-primary/10 text-primary dark:text-inverse-primary hover:bg-primary/20 text-label-sm font-label-sm font-medium rounded-lg border border-primary/20 transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="sync">sync</span>
+<span>Retry Handshake</span>
+</button>
+</div>
+</div>
+<!-- ================= CATEGORY 4: Possible Anomaly ================= -->
+<div class="alert-item group rounded-xl p-3.5 bg-surface-container-lowest dark:bg-inverse-surface border border-rose-500/30 shadow-[0_1px_3px_rgba(20,23,47,0.03)] hover:shadow-md transition-all relative">
+<!-- Top Row -->
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]" data-icon="crisis_alert">crisis_alert</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm font-bold text-rose-600 dark:text-rose-400 tracking-wide uppercase block">
+                  Possible Anomaly
+                </span>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant">
+                  AI Assistive score 98.4%
+                </span>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant shrink-0">4h ago</span>
+</div>
+<!-- Alert Content -->
+<p class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface mb-2 font-medium leading-snug">
+            Faculty Cadre ratio shortfall: declared <span class="font-mono text-rose-600 dark:text-rose-400 font-semibold">1:17.1</span> vs mandated <span class="font-mono text-primary font-semibold">1:15</span> baseline in CSE Dept for <strong class="text-primary dark:text-inverse-primary font-semibold">Apex Institute</strong>.
+          </p>
+<!-- Source Badge & Non-punitive Note -->
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-low dark:bg-surface-variant/20 text-on-surface-variant dark:text-surface-variant border border-outline-variant/20 mb-3 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+<span>Source: National Higher Education Faculty Ledger ↗</span>
+</div>
+<!-- Action Buttons Deck -->
+<div class="flex items-center gap-1.5 pt-2 border-t border-outline-variant/20">
+<button class="px-2.5 py-1 bg-gradient-to-r from-primary to-primary-container text-white text-label-sm font-label-sm font-medium rounded-lg hover:brightness-105 transition-all shadow-xs">
+              Open Case
+            </button>
+<button class="px-2.5 py-1 bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm font-medium rounded-lg border border-outline-variant/30 hover:bg-surface-container-high transition-all" onclick="dismissAlert(this)">
+              Acknowledge
+            </button>
+<button class="px-2.5 py-1 bg-rose-500/10 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 text-label-sm font-label-sm font-medium rounded-lg border border-rose-500/20 transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="difference">difference</span>
+<span>View Diff</span>
+</button>
+</div>
+</div>
+<!-- ================= CATEGORY 5: Source Outage ================= -->
+<div class="alert-item group rounded-xl p-3.5 bg-surface-container-lowest dark:bg-inverse-surface border border-outline-variant/30 shadow-[0_1px_3px_rgba(20,23,47,0.03)] hover:shadow-md transition-all relative">
+<!-- Top Row -->
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-slate-500/10 border border-slate-500/20 text-slate-600 dark:text-slate-300 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]" data-icon="cloud_off">cloud_off</span>
+</div>
+<div>
+<span class="text-label-sm font-label-sm font-bold text-slate-600 dark:text-slate-300 tracking-wide uppercase block">
+                  Source Outage
+                </span>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant">
+                  External statutory service degraded
+                </span>
+</div>
+</div>
+<span class="text-label-sm font-label-sm text-outline dark:text-outline-variant shrink-0">6h ago</span>
+</div>
+<!-- Alert Content -->
+<p class="text-body-md font-body-md text-on-surface dark:text-inverse-on-surface mb-2 font-medium leading-snug">
+            National GIS Land Registry API gateway latency spike (504 Gateway Timeout). Automatic cache fallbacks enabled.
+          </p>
+<!-- Source Badge -->
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-low dark:bg-surface-variant/20 text-on-surface-variant dark:text-surface-variant border border-outline-variant/20 mb-3 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+<span>Source: Survey of India Geospatial Portal ↗</span>
+</div>
+<!-- Action Buttons Deck -->
+<div class="flex items-center gap-1.5 pt-2 border-t border-outline-variant/20">
+<button class="px-2.5 py-1 bg-surface-container-low dark:bg-surface-variant/30 text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm font-medium rounded-lg border border-outline-variant/30 hover:bg-surface-container-high transition-all" onclick="dismissAlert(this)">
+              Acknowledge
+            </button>
+<button class="px-2.5 py-1 bg-surface-container-low dark:bg-surface-variant/20 text-primary dark:text-inverse-primary hover:bg-primary/10 text-label-sm font-label-sm font-medium rounded-lg border border-outline-variant/30 transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="monitor_heart">monitor_heart</span>
+<span>System Health</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Controls -->
+<div class="px-space-md py-space-sm border-t border-outline-variant/30 bg-surface-container-lowest/80 dark:bg-inverse-surface/80 flex items-center justify-between">
+<button class="text-label-sm font-label-sm text-outline hover:text-on-surface dark:hover:text-inverse-on-surface flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]" data-icon="tune">tune</span>
+<span>Notification Preferences</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg text-label-sm font-label-sm text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface hover:bg-surface-container-high/60 border border-outline-variant/30 transition-all flex items-center gap-1" onclick="clearAcknowledged()">
+<span class="material-symbols-outlined text-[14px]" data-icon="clear_all">clear_all</span>
+<span>Clear Acknowledged</span>
+</button>
+</div>
+</aside>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        themeIcon.textContent = 'dark_mode';
+      } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+        themeIcon.textContent = 'light_mode';
+      }
+    }
+
+    function closeDrawer() {
+      const drawer = document.getElementById('statutoryDrawer');
+      const backdrop = document.getElementById('drawerBackdrop');
+      drawer.classList.add('translate-x-full');
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function openDrawer() {
+      const drawer = document.getElementById('statutoryDrawer');
+      const backdrop = document.getElementById('drawerBackdrop');
+      drawer.classList.remove('translate-x-full');
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function setFilter(filterType, element) {
+      document.querySelectorAll('.filter-tab').forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-white');
+        btn.classList.add('bg-surface-container-low', 'dark:bg-surface-variant/20', 'text-on-surface-variant');
+      });
+      element.classList.remove('bg-surface-container-low', 'dark:bg-surface-variant/20', 'text-on-surface-variant');
+      element.classList.add('bg-primary', 'text-white');
+    }
+
+    function dismissAlert(button) {
+      const card = button.closest('.alert-item');
+      if (card) {
+        card.style.opacity = '0.4';
+        card.classList.add('border-emerald-500/40');
+        button.innerText = 'Acknowledged ✓';
+        button.disabled = true;
+      }
+    }
+
+    function markAllRead() {
+      document.querySelectorAll('.alert-item').forEach(card => {
+        card.style.opacity = '0.7';
+      });
+      const badge = document.querySelector('header span.bg-error');
+      if (badge) badge.style.display = 'none';
+    }
+
+    function clearAcknowledged() {
+      document.querySelectorAll('.alert-item').forEach(card => {
+        if (card.style.opacity === '0.4') {
+          card.remove();
+        }
+      });
+    }
+  </script>
+</body></html>

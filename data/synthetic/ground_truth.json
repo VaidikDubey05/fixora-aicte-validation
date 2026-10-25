@@ -1,0 +1,489 @@
+{
+  "generated_at": "2026-10-24T12:43:51.129913+00:00",
+  "seed": 42,
+  "total_institutions": 6,
+  "total_applications": 40,
+  "archetypes": [
+    "APP-EOA-DEMO-001-CLEAN",
+    "APP-EOA-DEMO-002-MISSING-EXPIRED",
+    "APP-EOA-DEMO-003-MISMATCH",
+    "APP-EOA-DEMO-004-ALTERED-DUPLICATE",
+    "APP-EOA-DEMO-005-INFRA-SHORTFALL"
+  ],
+  "applications": {
+    "APP-EOA-DEMO-001-CLEAN": {
+      "institution_id": "1-33276541",
+      "institution_name": "Government Engineering College, Pune",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Reference clean application with complete, valid documents conforming to all norms."
+    },
+    "APP-EOA-DEMO-002-MISSING-EXPIRED": {
+      "institution_id": "1-44589210",
+      "institution_name": "Maharashtra Institute of Technology, Mumbai",
+      "category": "MANAGEMENT",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "missing",
+          "document_class": "building_occupancy_certificate",
+          "severity": "review_required",
+          "description": "Statutory Building / Occupancy Certificate is missing."
+        },
+        {
+          "type": "expired",
+          "document_class": "fire_safety_certificate",
+          "severity": "review_required",
+          "description": "Fire Safety Certificate expired on 2023-11-30."
+        }
+      ],
+      "notes": "Missing occupancy certificate and expired fire safety certificate."
+    },
+    "APP-EOA-DEMO-003-MISMATCH": {
+      "institution_id": "1-55691023",
+      "institution_name": "Karnataka Institute of Technology & Management, Bengaluru",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "record_mismatch",
+          "document_class": "form_data",
+          "severity": "review_required",
+          "description": "Applied intake (360) exceeds statutory previous approved intake (120) by >10% without prior council sanction."
+        },
+        {
+          "type": "inconsistent",
+          "document_class": "land_title_deed",
+          "severity": "needs_attention",
+          "description": "Swapped institution name: Land Deed title references 'St. Peters Technical College'."
+        }
+      ],
+      "notes": "Intake mismatch vs AICTE records and institution name inconsistency."
+    },
+    "APP-EOA-DEMO-004-ALTERED-DUPLICATE": {
+      "institution_id": "1-66782345",
+      "institution_name": "National College of Pharmacy, Hyderabad",
+      "category": "PHARMACY",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "possible_anomaly",
+          "document_class": "accreditation_certificate",
+          "severity": "review_required",
+          "label": "Preliminary indicator - human verification required",
+          "description": "Altered expiry date on certificate: text displays 2027 while digital QR code verifies expiry as 2022."
+        },
+        {
+          "type": "duplicate",
+          "document_class": "infrastructure_photo_1",
+          "severity": "needs_attention",
+          "label": "Preliminary indicator - human verification required",
+          "description": "Infrastructure photograph perceptual hash matches previously submitted photograph from GEC Pune."
+        }
+      ],
+      "notes": "Pixel/QR date discrepancy and cross-institution reused infrastructure photograph."
+    },
+    "APP-EOA-DEMO-005-INFRA-SHORTFALL": {
+      "institution_id": "1-77893456",
+      "institution_name": "Delhi Academy of Architecture and Planning, New Delhi",
+      "category": "ARCHITECTURE_AND_PLANNING",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "infrastructure",
+          "document_class": "floor_plan",
+          "severity": "review_required",
+          "infrastructure_output": "recommend_inspection",
+          "description": "Studio/Laboratory shortfall: Floor plan shows only 2 studios vs AICTE norm of 6 studios for 80 intake."
+        },
+        {
+          "type": "infrastructure",
+          "document_class": "form_data",
+          "severity": "needs_attention",
+          "infrastructure_output": "needs_additional_evidence",
+          "description": "Built-up area (4,200 sqm) does not meet the prescribed norm of 6,000 sqm for applied programmes."
+        }
+      ],
+      "notes": "Floor plan studio deficiency and carpet area shortfall."
+    },
+    "APP-EOA-2024-00001": {
+      "institution_id": "1-44589210",
+      "institution_name": "Maharashtra Institute of Technology, Mumbai",
+      "category": "MANAGEMENT",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00002": {
+      "institution_id": "1-55691023",
+      "institution_name": "Karnataka Institute of Technology & Management, Bengaluru",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00003": {
+      "institution_id": "1-66782345",
+      "institution_name": "National College of Pharmacy, Hyderabad",
+      "category": "PHARMACY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00004": {
+      "institution_id": "1-77893456",
+      "institution_name": "Delhi Academy of Architecture and Planning, New Delhi",
+      "category": "ARCHITECTURE_AND_PLANNING",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00005": {
+      "institution_id": "1-88904567",
+      "institution_name": "Tamil Nadu Institute of Hotel Management, Chennai",
+      "category": "HOTEL_MANAGEMENT_AND_CATERING",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "expired",
+          "document_class": "affidavit",
+          "severity": "needs_attention",
+          "description": "Notarized affidavit stamp date is older than 180 days."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00006": {
+      "institution_id": "1-33276541",
+      "institution_name": "Government Engineering College, Pune",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00007": {
+      "institution_id": "1-44589210",
+      "institution_name": "Maharashtra Institute of Technology, Mumbai",
+      "category": "MANAGEMENT",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "blurred_or_cropped_scan",
+          "document_class": "ter_payment_receipt",
+          "severity": "needs_attention",
+          "description": "Uploaded TER Payment receipt is blurred and partially cropped."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00008": {
+      "institution_id": "1-55691023",
+      "institution_name": "Karnataka Institute of Technology & Management, Bengaluru",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00009": {
+      "institution_id": "1-66782345",
+      "institution_name": "National College of Pharmacy, Hyderabad",
+      "category": "PHARMACY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00010": {
+      "institution_id": "1-77893456",
+      "institution_name": "Delhi Academy of Architecture and Planning, New Delhi",
+      "category": "ARCHITECTURE_AND_PLANNING",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "expired",
+          "document_class": "affidavit",
+          "severity": "needs_attention",
+          "description": "Notarized affidavit stamp date is older than 180 days."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00011": {
+      "institution_id": "1-88904567",
+      "institution_name": "Tamil Nadu Institute of Hotel Management, Chennai",
+      "category": "HOTEL_MANAGEMENT_AND_CATERING",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "qr_payload_mismatch",
+          "document_class": "accreditation_certificate",
+          "severity": "review_required",
+          "description": "QR Code payload verification returned URL not matching official NBA portal."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00012": {
+      "institution_id": "1-33276541",
+      "institution_name": "Government Engineering College, Pune",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00013": {
+      "institution_id": "1-44589210",
+      "institution_name": "Maharashtra Institute of Technology, Mumbai",
+      "category": "MANAGEMENT",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00014": {
+      "institution_id": "1-55691023",
+      "institution_name": "Karnataka Institute of Technology & Management, Bengaluru",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "blurred_or_cropped_scan",
+          "document_class": "ter_payment_receipt",
+          "severity": "needs_attention",
+          "description": "Uploaded TER Payment receipt is blurred and partially cropped."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00015": {
+      "institution_id": "1-66782345",
+      "institution_name": "National College of Pharmacy, Hyderabad",
+      "category": "PHARMACY",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "expired",
+          "document_class": "affidavit",
+          "severity": "needs_attention",
+          "description": "Notarized affidavit stamp date is older than 180 days."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00016": {
+      "institution_id": "1-77893456",
+      "institution_name": "Delhi Academy of Architecture and Planning, New Delhi",
+      "category": "ARCHITECTURE_AND_PLANNING",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00017": {
+      "institution_id": "1-88904567",
+      "institution_name": "Tamil Nadu Institute of Hotel Management, Chennai",
+      "category": "HOTEL_MANAGEMENT_AND_CATERING",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00018": {
+      "institution_id": "1-33276541",
+      "institution_name": "Government Engineering College, Pune",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00019": {
+      "institution_id": "1-44589210",
+      "institution_name": "Maharashtra Institute of Technology, Mumbai",
+      "category": "MANAGEMENT",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00020": {
+      "institution_id": "1-55691023",
+      "institution_name": "Karnataka Institute of Technology & Management, Bengaluru",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "expired",
+          "document_class": "affidavit",
+          "severity": "needs_attention",
+          "description": "Notarized affidavit stamp date is older than 180 days."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00021": {
+      "institution_id": "1-66782345",
+      "institution_name": "National College of Pharmacy, Hyderabad",
+      "category": "PHARMACY",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "blurred_or_cropped_scan",
+          "document_class": "ter_payment_receipt",
+          "severity": "needs_attention",
+          "description": "Uploaded TER Payment receipt is blurred and partially cropped."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00022": {
+      "institution_id": "1-77893456",
+      "institution_name": "Delhi Academy of Architecture and Planning, New Delhi",
+      "category": "ARCHITECTURE_AND_PLANNING",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "qr_payload_mismatch",
+          "document_class": "accreditation_certificate",
+          "severity": "review_required",
+          "description": "QR Code payload verification returned URL not matching official NBA portal."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00023": {
+      "institution_id": "1-88904567",
+      "institution_name": "Tamil Nadu Institute of Hotel Management, Chennai",
+      "category": "HOTEL_MANAGEMENT_AND_CATERING",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00024": {
+      "institution_id": "1-33276541",
+      "institution_name": "Government Engineering College, Pune",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00025": {
+      "institution_id": "1-44589210",
+      "institution_name": "Maharashtra Institute of Technology, Mumbai",
+      "category": "MANAGEMENT",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "expired",
+          "document_class": "affidavit",
+          "severity": "needs_attention",
+          "description": "Notarized affidavit stamp date is older than 180 days."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00026": {
+      "institution_id": "1-55691023",
+      "institution_name": "Karnataka Institute of Technology & Management, Bengaluru",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00027": {
+      "institution_id": "1-66782345",
+      "institution_name": "National College of Pharmacy, Hyderabad",
+      "category": "PHARMACY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00028": {
+      "institution_id": "1-77893456",
+      "institution_name": "Delhi Academy of Architecture and Planning, New Delhi",
+      "category": "ARCHITECTURE_AND_PLANNING",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "blurred_or_cropped_scan",
+          "document_class": "ter_payment_receipt",
+          "severity": "needs_attention",
+          "description": "Uploaded TER Payment receipt is blurred and partially cropped."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00029": {
+      "institution_id": "1-88904567",
+      "institution_name": "Tamil Nadu Institute of Hotel Management, Chennai",
+      "category": "HOTEL_MANAGEMENT_AND_CATERING",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00030": {
+      "institution_id": "1-33276541",
+      "institution_name": "Government Engineering College, Pune",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "expired",
+          "document_class": "affidavit",
+          "severity": "needs_attention",
+          "description": "Notarized affidavit stamp date is older than 180 days."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00031": {
+      "institution_id": "1-44589210",
+      "institution_name": "Maharashtra Institute of Technology, Mumbai",
+      "category": "MANAGEMENT",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00032": {
+      "institution_id": "1-55691023",
+      "institution_name": "Karnataka Institute of Technology & Management, Bengaluru",
+      "category": "ENGINEERING_AND_TECHNOLOGY",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00033": {
+      "institution_id": "1-66782345",
+      "institution_name": "National College of Pharmacy, Hyderabad",
+      "category": "PHARMACY",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "qr_payload_mismatch",
+          "document_class": "accreditation_certificate",
+          "severity": "review_required",
+          "description": "QR Code payload verification returned URL not matching official NBA portal."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    },
+    "APP-EOA-2024-00034": {
+      "institution_id": "1-77893456",
+      "institution_name": "Delhi Academy of Architecture and Planning, New Delhi",
+      "category": "ARCHITECTURE_AND_PLANNING",
+      "academic_year": "2024-2025",
+      "defects": [],
+      "notes": "Standard batch application"
+    },
+    "APP-EOA-2024-00035": {
+      "institution_id": "1-88904567",
+      "institution_name": "Tamil Nadu Institute of Hotel Management, Chennai",
+      "category": "HOTEL_MANAGEMENT_AND_CATERING",
+      "academic_year": "2024-2025",
+      "defects": [
+        {
+          "type": "blurred_or_cropped_scan",
+          "document_class": "ter_payment_receipt",
+          "severity": "needs_attention",
+          "description": "Uploaded TER Payment receipt is blurred and partially cropped."
+        }
+      ],
+      "notes": "Application with minor defect injection"
+    }
+  }
+}

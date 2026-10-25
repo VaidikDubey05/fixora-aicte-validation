@@ -1,0 +1,131 @@
+id: "EOA-CHECKLIST"
+name: "Extension of Approval (EoA) Statutory Scrutiny Checklist"
+category: "ALL"
+handbook_edition: "APH 2024-25"
+version: "v1.0"
+effective_from: "2024-04-01T00:00:00Z"
+description: "Deterministic statutory checklist rules evaluated against AICTE Approval Process Handbook norms."
+
+items:
+  - id: "EOA-DOC-001"
+    clause_ref: "APH-2024-CH1-ANNEX-1"
+    severity: "review_required"
+    type: "document_required"
+    document_class: "affidavit"
+    message_template: "Duly signed statutory Affidavit Form 1 uploaded"
+
+  - id: "EOA-DOC-002"
+    clause_ref: "APH-2024-CH2-NOC-FIRE"
+    severity: "review_required"
+    type: "document_required"
+    document_class: "fire_safety_certificate"
+    message_template: "State Fire Safety Service NOC certificate present"
+
+  - id: "EOA-VAL-003"
+    clause_ref: "APH-2024-CH2-FIRE-VALIDITY"
+    severity: "review_required"
+    type: "document_validity"
+    document_class: "fire_safety_certificate"
+    must_not_be_expired: true
+    max_age_days: 365 # PLACEHOLDER
+    message_template: "Fire safety certificate validity within statutory limit"
+
+  - id: "EOA-DOC-004"
+    clause_ref: "APH-2024-CH2-OCCUPANCY"
+    severity: "review_required"
+    type: "document_required"
+    document_class: "building_occupancy_certificate"
+    message_template: "Competent Authority Building Occupancy / Completion Certificate"
+
+  - id: "EOA-DOC-005"
+    clause_ref: "APH-2024-CH3-ACCREDITATION"
+    severity: "needs_attention"
+    type: "document_required"
+    document_class: "accreditation_certificate"
+    message_template: "Valid NBA / NAAC Accreditation Endorsement"
+
+  - id: "EOA-REC-006"
+    clause_ref: "APH-2024-TER-PAYMENT"
+    severity: "review_required"
+    type: "record_status"
+    record_field: "ter_payment_status"
+    expected_status: "PAID"
+    message_template: "TER Fee Payment statutory clearance verified in finance portal"
+
+  - id: "EOA-REC-007"
+    clause_ref: "APH-2024-DEFICIENCY-RECORD"
+    severity: "review_required"
+    type: "record_status"
+    record_field: "deficiency_status"
+    expected_status: "NO_DEFICIENCY"
+    message_template: "Institution free of outstanding AICTE statutory deficiencies"
+
+  - id: "EOA-DOC-008"
+    clause_ref: "APH-2024-CH2-LAND-DEED"
+    severity: "review_required"
+    type: "document_required"
+    document_class: "land_title_deed"
+    message_template: "Registered Land Title Deed / 30-year Government Lease"
+
+  - id: "EOA-NUM-009"
+    clause_ref: "APH-2024-LAND-AREA"
+    severity: "review_required"
+    type: "numeric_threshold"
+    field: "form_data.land_area_acres"
+    min_value: 5.0 # PLACEHOLDER
+    message_template: "Institutional contiguous land acreage meets APH Table 2.1 norm"
+
+  - id: "EOA-MTCH-010"
+    clause_ref: "APH-2024-NAME-MATCH"
+    severity: "review_required"
+    type: "form_to_document_match"
+    form_field: "institution_name"
+    document_field: "land_deed.owner_name"
+    message_template: "Declared applicant institution matches grantee in land deed"
+
+  - id: "EOA-MTCH-011"
+    clause_ref: "APH-2024-INTAKE-CONSISTENCY"
+    severity: "review_required"
+    type: "form_to_record_match"
+    form_field: "total_intake"
+    record_field: "approved_intake"
+    tolerance_percent: 0.0 # PLACEHOLDER
+    message_template: "Declared programme intake matches previous sanctioned allocation"
+
+  - id: "EOA-NUM-012"
+    clause_ref: "APH-2024-FACULTY-COUNT"
+    severity: "needs_attention"
+    type: "numeric_threshold"
+    field: "form_data.faculty_count"
+    min_value: 20 # PLACEHOLDER
+    message_template: "Cadre-wise regular approved faculty head count"
+
+  - id: "EOA-INFR-013"
+    clause_ref: "APH-2024-LABORATORY-NORMS"
+    severity: "review_required"
+    type: "infrastructure_norm"
+    declared_min_labs: 10 # PLACEHOLDER
+    message_template: "Physical instructional laboratories on approved architectural layout"
+
+  - id: "EOA-NUM-014"
+    clause_ref: "APH-2024-BUILT-UP-AREA"
+    severity: "review_required"
+    type: "numeric_threshold"
+    field: "form_data.built_up_area_sqm"
+    min_value: 4000.0 # PLACEHOLDER
+    message_template: "Total built-up instructional and administrative floor space"
+
+  - id: "EOA-COND-015"
+    clause_ref: "APH-2024-CHANGE-NOC"
+    severity: "review_required"
+    type: "conditional"
+    if:
+      field: "form_data.change_type"
+      equals: "CHANGE_OF_SITE"
+    then:
+      id: "EOA-DOC-015-THEN"
+      clause_ref: "APH-2024-CHANGE-OF-SITE-NOC"
+      severity: "review_required"
+      type: "document_required"
+      document_class: "state_government_noc"
+      message_template: "State Government and Affiliating University NOC for change of site"
